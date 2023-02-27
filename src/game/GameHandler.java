@@ -2,9 +2,6 @@ package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
 
 import static game.WindowHandler.view;
 
@@ -13,8 +10,16 @@ public class GameHandler {
 	public static World world;
 
 
-	/** Initialise a new Game. */
 	public GameHandler() {
+		// Add a shutdown hook.
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			// TODO: Add saving to the game
+
+			// Run garbage collection.
+			System.gc();
+		}));
+
+
 		world = new World();
 
 		// Change the frame rate to the desired frame rate.
@@ -43,14 +48,6 @@ public class GameHandler {
 
 
 	public static void startGame() {
-		HashMap<String, Integer> resolution = Config.resolution;
-
-		if (resolution.get("x") > resolution.get("y")) {
-			System.out.println(resolution.get("y"));
-		} else if (resolution.get("x") < resolution.get("y")) {
-			System.out.println(resolution.get("x"));
-		}
-
 		// Make a ground platform
 		Shape shape = new BoxShape(30, 0.5f);
 		StaticBody ground = new StaticBody(world, shape);
@@ -84,7 +81,6 @@ public class GameHandler {
 	}
 
 
-	/** Run the game. */
 	public static void main(String[] args) {
 		new GameHandler();
 	}
