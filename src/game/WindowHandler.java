@@ -2,6 +2,7 @@ package game;
 
 import city.cs.engine.UserView;
 import city.cs.engine.World;
+import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class WindowHandler {
 
 		// Enable debugs.
 		if (Config.DEBUG) {
-			view.setGridResolution(3);
+			view.setGridResolution(3.75f);
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
 		}
 	}
@@ -46,6 +47,8 @@ public class WindowHandler {
 		if (Config.fullscreen) {
 			// Enter full screen.
 			device.setFullScreenWindow(frame);
+			// TODO: BUG: The game window is not the same size as the screen.
+			view.setSize(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight());
 		} else {
 			// Exit full screen.
 			device.setFullScreenWindow(null);
@@ -57,16 +60,16 @@ public class WindowHandler {
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 			// Set the game resolution.
-			HashMap<String, Integer> resolution = Config.resolution;
+			Vec2 resolution = Config.resolution;
 
-			if (resolution.get("x") > resolution.get("y")) {
-				view = new UserView(world, Config.resolution.get("y"), Config.resolution.get("y"));
-			} else if (resolution.get("x") < resolution.get("y")) {
-				view = new UserView(world, Config.resolution.get("x"), Config.resolution.get("x"));
+			if (resolution.x > resolution.y) {
+				view = new UserView(world, (int) resolution.y, (int) resolution.y);
+			} else if (resolution.x < resolution.y) {
+				view = new UserView(world, (int) resolution.x, (int) resolution.x);
 			}
 
 			// Center the game window.
-			frame.setLocation((screenSize.width - Config.resolution.get("x")) / 2, (screenSize.height - Config.resolution.get("y")) / 2);
+			frame.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);
 		}
 	}
 }
