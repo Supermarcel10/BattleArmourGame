@@ -27,10 +27,14 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [ ] Create a basic game grid where everything will be spawned
 - [ ] Basic AI to follow the closest player
 - [ ] Create player controls and shooting
+- [ ] Create enemy spawning
 - [ ] Create pick-ups
 - [ ] Create a "base" to protect
+- [ ] Add a score system
 - [ ] Create more enemies
-- [ ] Update the AI with different AIs for enemies.
+- [ ] Update the AI with different AIs for enemies
+- [ ] Update the images
+- [ ] Animate the images
 
 ## Copyright & Disclosure
 
