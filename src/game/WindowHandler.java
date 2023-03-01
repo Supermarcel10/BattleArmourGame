@@ -6,7 +6,6 @@ import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
 
 
 public class WindowHandler {
