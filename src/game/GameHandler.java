@@ -48,30 +48,32 @@ public class GameHandler {
 
 
 	public static void startGame() {
+		float scaleFactor = Config.resolution.x / 1920;
+
 		// Make a ground platform
-		Shape shape = new BoxShape(30, 0.5f);
+		Shape shape = new BoxShape(30 * scaleFactor, 0.5f  * scaleFactor);
 		StaticBody ground = new StaticBody(world, shape);
-		ground.setPosition(new Vec2(0f, -11.5f));
+		ground.setPosition(new Vec2(0f * scaleFactor, -11.5f * scaleFactor));
 
 		// Make a suspended platform
-		Shape platformShape = new BoxShape(3, 0.5f);
+		Shape platformShape = new BoxShape(3 * scaleFactor, 0.5f  * scaleFactor);
 		StaticBody platform1 = new StaticBody(world, platformShape);
-		platform1.setPosition(new Vec2(8, 0));
+		platform1.setPosition(new Vec2(8 * scaleFactor, 0 * scaleFactor));
 		platform1.setAngle(70);
 
 		// Make a suspended platform
 		StaticBody platform2 = new StaticBody(world, platformShape);
-		platform2.setPosition(  new Vec2(-6, -4));
+		platform2.setPosition(  new Vec2(-6 * scaleFactor, -4 * scaleFactor));
 		platform2.setAngle(50);
 
 		// Make a ball
-		CircleShape ball = new CircleShape(3, 7, 20);
+		CircleShape ball = new CircleShape(3 * scaleFactor, 7 * scaleFactor, 20 * scaleFactor);
 
 
 		// Make a character (with an overlaid image)
-		Shape studentShape = new BoxShape(1,2);
+		Shape studentShape = new BoxShape(1 * scaleFactor,2 * scaleFactor);
 		DynamicBody student = new DynamicBody(world, studentShape);
-		student.setPosition(new Vec2(4,10));
+		student.setPosition(new Vec2(4 * scaleFactor,10 * scaleFactor));
 //		student.addImage(new BodyImage("data/img/student.png", 4));
 
 		// TODO: Research how movement works!
