@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class MainMenu {
 	private static World world = GameHandler.world;
 	private static JButton[] buttons;
