@@ -13,5 +13,15 @@
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>local</groupId>
+            <artifactId>city.cs.engine</artifactId>
+            <version>40</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/CityEngine40/CityEngine.jar</systemPath>
+        </dependency>
+    </dependencies>
     
 </project>
