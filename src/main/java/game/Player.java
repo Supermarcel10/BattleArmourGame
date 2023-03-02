@@ -1,9 +1,9 @@
-package game;
+package main.java.game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import static game.Config.resolution;
+import static main.java.game.Config.resolution;
 
 
 public class Player extends Walker {

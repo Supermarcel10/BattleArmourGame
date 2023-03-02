@@ -1,9 +1,9 @@
-package game;
+package main.java.game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import static game.WindowHandler.view;
+import static main.java.game.WindowHandler.view;
 
 
 public class GameHandler {
