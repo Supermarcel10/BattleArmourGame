@@ -1,4 +1,4 @@
-package game;
+package main.java.game;
 
 import city.cs.engine.World;
 import org.jetbrains.annotations.NotNull;
