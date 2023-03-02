@@ -21,13 +21,10 @@ public class GameHandler {
 		}));
 
 
-		world = new World();
+		world = new World(Config.fps);
 
 		// Disable the gravity.
 		world.setGravity(0);
-
-		// Change the frame rate to the desired frame rate.
-		world.getSimulationSettings().setTargetFrameRate(Config.fps);
 
 		// Create the window and main menu.
 		WindowHandler.createWindow(world);
@@ -43,6 +40,20 @@ public class GameHandler {
 
 		// Start world simulation
 		world.start();
+
+		// Create a thread to print the FPS.
+		Thread thread = new Thread(() -> {
+			while (true) {
+				System.out.println(world.getSimulationSettings().getAveragedFPS());
+				// Sleep for 1 second.
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		thread.start();
 	}
 
 

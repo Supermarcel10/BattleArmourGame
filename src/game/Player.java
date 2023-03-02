@@ -2,13 +2,12 @@ package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
-import org.jetbrains.annotations.NotNull;
 
 import static game.Config.resolution;
 
 
 public class Player extends Walker {
-	float speed = 0.5f;
+	float speed = 8f;
 	Vec2 moveDir = new Vec2(0,0);
 //	final BodyImage image = new BodyImage("data/img/player.png", 4);
 	World world;
@@ -39,10 +38,10 @@ public class Player extends Walker {
 	}
 
 
-	public void update() {
+	public void update(long elapsedNanos) {
 		// Update the position of the player object based on the current movement direction
 		Vec2 position = player.getPosition();
-		position = position.add(moveDir.mul(speed));
+		position = position.add(moveDir.mul(speed * (elapsedNanos / 1000000000.0f)));
 		player.setPosition(position);
 	}
 }
