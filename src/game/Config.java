@@ -10,7 +10,7 @@ public class Config {
 	public static boolean fullscreen = false;
 	public static Vec2 resolution = new Vec2(1920, 1080);
 	public static boolean fpsLock = false;
-	public static int fps = 60;
+	public static int fps = 144;
 	public static String title = "City Game";
 	public static HashMap<Character, String> key_binding = new HashMap<>(){{
 		put('w', "player1-UP");
