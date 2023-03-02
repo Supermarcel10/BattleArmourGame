@@ -1,4 +1,4 @@
-package misc;
+package main.java.misc;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
