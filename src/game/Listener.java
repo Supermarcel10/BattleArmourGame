@@ -3,8 +3,6 @@ package game;
 import city.cs.engine.CircleShape;
 import city.cs.engine.DynamicBody;
 import javax.swing.Timer;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,18 +12,18 @@ import static game.WindowHandler.view;
 
 
 public class Listener implements KeyListener, MouseListener {
-	private Player player;
-	private Timer timer;
+	private final Player player;
+	private long lastTime = System.nanoTime();
 
 	public Listener(Player player) {
 		this.player = player;
-		this.timer = new Timer(16, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				player.update();
-			}
+		Timer timer = new Timer(1, e -> {
+			long currentTime = System.nanoTime();
+			long elapsedTime = currentTime - lastTime;
+			lastTime = currentTime;
+			player.update(elapsedTime);
 		});
-		this.timer.start();
+		timer.start();
 	}
 
 
