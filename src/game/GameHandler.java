@@ -8,13 +8,14 @@ import static game.WindowHandler.view;
 
 public class GameHandler {
 	public static World world;
+	public static Player player;
 
 
 	public GameHandler() {
 		// Add a shutdown hook.
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			// TODO: Add saving to the game
-
+			// TODO: Add saving to the game.
+			// TODO: Add any database close statements here.
 			// Run garbage collection.
 			System.gc();
 		}));
@@ -22,17 +23,15 @@ public class GameHandler {
 
 		world = new World();
 
+		// Disable the gravity.
+		world.setGravity(0);
+
 		// Change the frame rate to the desired frame rate.
 		world.getSimulationSettings().setTargetFrameRate(Config.fps);
 
-		// Create the window and main menu
+		// Create the window and main menu.
 		WindowHandler.createWindow(world);
 		MainMenu.createMenu(WindowHandler.frame);
-
-		// Add Keyboard & Mouse listeners
-		GiveFocus gf = new GiveFocus(view);
-		view.addMouseListener(gf);
-		view.addKeyListener(new Listener());
 
 		while (MainMenu.inMenu) {
 			// TODO: Make menu handling.
@@ -71,15 +70,12 @@ public class GameHandler {
 
 
 		// Make a character (with an overlaid image)
-		Shape studentShape = new BoxShape(1 * scaleFactor,2 * scaleFactor);
-		DynamicBody student = new DynamicBody(world, studentShape);
-		student.setPosition(new Vec2(4 * scaleFactor,10 * scaleFactor));
-//		student.addImage(new BodyImage("data/img/student.png", 4));
+		player = new Player(world);
 
-		// TODO: Research how movement works!
-//		student.move(new Vec2(0, -0.5f));
-
-//		Player player = new Player(100);
+		// Add Keyboard & Mouse listeners.
+		Listener listener = new Listener(player);
+		view.addMouseListener(listener);
+		view.addKeyListener(listener);
 	}
 
 
