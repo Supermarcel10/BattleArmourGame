@@ -1,4 +1,4 @@
-package main.java.game;
+package game;
 
 import city.cs.engine.UserView;
 import city.cs.engine.World;

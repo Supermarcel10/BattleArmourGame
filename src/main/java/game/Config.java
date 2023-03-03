@@ -1,4 +1,4 @@
-package main.java.game;
+package game;
 
 import org.jbox2d.common.Vec2;
 
