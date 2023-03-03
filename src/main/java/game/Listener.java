@@ -4,7 +4,7 @@ import city.cs.engine.CircleShape;
 import city.cs.engine.DynamicBody;
 import javax.swing.Timer;
 
-import game.characters.Player;
+import game.character.Player;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,7 +1,7 @@
 package game;
 
 import city.cs.engine.*;
-import game.characters.Player;
+import game.character.Player;
 import org.jbox2d.common.Vec2;
 
 import static game.WindowHandler.view;
