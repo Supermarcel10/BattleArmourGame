@@ -13,7 +13,6 @@ public class Player extends Body {
 
 	public void spawn() {
 		position = new Vec2(4 * scaleFactor,10 * scaleFactor);
-//		body.addImage(image);
 
 		super.spawn();
 	}

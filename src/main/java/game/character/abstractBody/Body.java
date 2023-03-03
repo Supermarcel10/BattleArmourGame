@@ -5,7 +5,7 @@ import city.cs.engine.DynamicBody;
 import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
-import static game.Config.resolution;
+import static game.input.Config.resolution;
 
 
 public abstract class Body implements IBody {
@@ -14,6 +14,7 @@ public abstract class Body implements IBody {
 	protected Vec2 position;
 	protected Vec2 moveDirection = new Vec2(0, 0);
 	protected DynamicBody body;
+	protected Animation animation;
 
 	protected float scaleFactor = resolution.x / 1920;
 
@@ -33,6 +34,10 @@ public abstract class Body implements IBody {
 
 	public void spawn() {
 		body.setPosition(position);
+	}
+
+	public void destroy() {
+		body.destroy();
 	}
 
 	public void update(long elapsedNanos) {}

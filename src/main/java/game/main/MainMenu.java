@@ -1,4 +1,4 @@
-package game;
+package game.main;
 
 import city.cs.engine.World;
 import org.jetbrains.annotations.NotNull;
@@ -8,12 +8,10 @@ import java.awt.*;
 
 
 public class MainMenu {
-	private static World world = GameHandler.world;
+	private static final World world = GameHandler.world;
 	private static JButton[] buttons;
 	private static JPanel panel;
-
 	public static boolean inMenu = true;
-
 
 	public static void createMenu(@NotNull Frame frame) {
 		panel = new JPanel();
@@ -40,7 +38,6 @@ public class MainMenu {
 		// TODO: Change
 //		changeMenuState(false);
 	}
-
 
 	public static void changeMenuState(boolean state) {
 		panel.setVisible(state);
