@@ -1,9 +1,10 @@
-package main.java.game;
+package game;
 
 import city.cs.engine.*;
+import game.characters.Player;
 import org.jbox2d.common.Vec2;
 
-import static main.java.game.WindowHandler.view;
+import static game.WindowHandler.view;
 
 
 public class GameHandler {
@@ -81,7 +82,7 @@ public class GameHandler {
 
 
 		// Make a character (with an overlaid image)
-		player = new Player(world);
+		player = new Player(world, new Vec2(0, 0));
 
 		// Add Keyboard & Mouse listeners.
 		Listener listener = new Listener(player);
