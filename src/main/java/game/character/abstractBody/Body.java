@@ -1,8 +1,7 @@
-package game.characters;
+package game.character.abstractBody;
 
 import city.cs.engine.BoxShape;
 import city.cs.engine.DynamicBody;
-import city.cs.engine.Shape;
 import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
@@ -16,7 +15,7 @@ public abstract class Body implements IBody {
 	protected Vec2 moveDirection = new Vec2(0, 0);
 	protected DynamicBody body;
 
-	float scaleFactor = resolution.x / 1920;
+	protected float scaleFactor = resolution.x / 1920;
 
 
 	public Body(World world, Vec2 position) {
