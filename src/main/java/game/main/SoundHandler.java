@@ -1,5 +1,6 @@
-package game;
+package game.main;
 
 
 public class SoundHandler {
+
 }

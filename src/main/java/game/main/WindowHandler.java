@@ -1,7 +1,8 @@
-package game;
+package game.main;
 
 import city.cs.engine.UserView;
 import city.cs.engine.World;
+import game.input.Config;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -12,7 +13,6 @@ public class WindowHandler {
 	private static final World world = GameHandler.world;
 	public static final JFrame frame = new JFrame(Config.title);
 	public static UserView view = null;
-
 
 	public static void createWindow(World world) {
 		// Create a user view with the world and resolution provided.
@@ -37,7 +37,6 @@ public class WindowHandler {
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
 		}
 	}
-
 
 	public static void updateWindow() {
 		// Get the default screen device

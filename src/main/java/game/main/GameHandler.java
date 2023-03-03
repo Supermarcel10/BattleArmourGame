@@ -1,16 +1,17 @@
-package game;
+package game.main;
 
 import city.cs.engine.*;
+import game.input.Config;
 import game.character.Player;
+import game.input.Listener;
 import org.jbox2d.common.Vec2;
 
-import static game.WindowHandler.view;
+import static game.main.WindowHandler.view;
 
 
 public class GameHandler {
 	public static World world;
 	public static Player player;
-
 
 	public GameHandler() {
 		// Add a shutdown hook.
@@ -57,7 +58,6 @@ public class GameHandler {
 		thread.start();
 	}
 
-
 	public static void startGame() {
 		float scaleFactor = Config.resolution.x / 1920;
 
@@ -89,7 +89,6 @@ public class GameHandler {
 		view.addMouseListener(listener);
 		view.addKeyListener(listener);
 	}
-
 
 	public static void main(String[] args) {
 		new GameHandler();

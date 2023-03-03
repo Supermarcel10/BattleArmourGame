@@ -1,4 +1,4 @@
-package game;
+package game.input;
 
 import city.cs.engine.CircleShape;
 import city.cs.engine.DynamicBody;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.*;
 
-import static game.WindowHandler.view;
+import static game.main.WindowHandler.view;
 
 
 public class Listener implements KeyListener, MouseListener {

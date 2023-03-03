@@ -13,8 +13,9 @@ public class Pellet extends Body {
 
 	@Override
 	public void spawn() {
-		super.spawn();
 		// implementation here
+
+		super.spawn();
 	}
 
 	@Override
