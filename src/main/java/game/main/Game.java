@@ -9,19 +9,17 @@ import org.jbox2d.common.Vec2;
 import static game.main.WindowHandler.view;
 
 
-public class GameHandler {
+public class Game {
 	public static World world;
 	public static Player player;
 
-	public GameHandler() {
-		// Add a shutdown hook.
+	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			// TODO: Add saving to the game.
 			// TODO: Add any database close statements here.
 			// Run garbage collection.
 			System.gc();
 		}));
-
 
 		world = new World(Config.fps);
 
@@ -38,7 +36,7 @@ public class GameHandler {
 			MainMenu.inMenu = false;
 		}
 
-		startGame();
+		loadGame();
 
 		// Start world simulation
 		world.start();
@@ -58,7 +56,8 @@ public class GameHandler {
 		thread.start();
 	}
 
-	public static void startGame() {
+
+	public static void loadGame() {
 		float scaleFactor = Config.resolution.x / 1920;
 
 		// Make a ground platform
@@ -88,9 +87,5 @@ public class GameHandler {
 		Listener listener = new Listener(player);
 		view.addMouseListener(listener);
 		view.addKeyListener(listener);
-	}
-
-	public static void main(String[] args) {
-		new GameHandler();
 	}
 }

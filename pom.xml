@@ -9,19 +9,96 @@
     <version>1.0</version>
 
     <properties>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </repository>
+
+    </repositories>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <addClasspath>true</addClasspath>
+                    <!--                    <argLine>-Djava.library.path=${project.basedir}/lib/lwjgl-3.3.1/native</argLine>-->
+                    <archive>
+                        <manifest>
+                            <mainClass>game.main.Game</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                            <configuration>
+                                <executable>java</executable>
+                                <arguments>
+<!--                                    <argument>-Djava.library.path=${project.basedir}/lib/lwjgl-3.3.1/native</argument>-->
+                                    <argument>-jar</argument>
+<!--                                    <argument>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</argument>-->
+                                </arguments>
+                            </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
             <groupId>local</groupId>
             <artifactId>city.cs.engine</artifactId>
-            <version>40</version>
+            <version>1.0.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/CityEngine40/CityEngine.jar</systemPath>
         </dependency>
+
+        <!--        Jetbrains annotations-->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>23.0.0</version>
+        </dependency>
+
     </dependencies>
-    
 </project>
