@@ -6,10 +6,10 @@ import java.util.HashMap;
 
 
 public class Config {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	public static boolean fullscreen = false;
-	public static Vec2 resolution = new Vec2(1920, 1080);
-
+//	public static Vec2 resolution = new Vec2(1920, 1080);
+	public static Vec2 resolution = new Vec2(2560, 1440);
 	public static boolean fpsLock = false;
 	public static int fps = 144;
 	public static String title = "City Game";
