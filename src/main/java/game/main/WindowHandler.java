@@ -10,7 +10,7 @@ import java.awt.*;
 
 
 public class WindowHandler {
-	private static final World world = GameHandler.world;
+	private static final World world = Game.world;
 	public static final JFrame frame = new JFrame(Config.title);
 	public static UserView view = null;
 

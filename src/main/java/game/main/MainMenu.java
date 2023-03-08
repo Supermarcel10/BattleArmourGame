@@ -8,7 +8,7 @@ import java.awt.*;
 
 
 public class MainMenu {
-	private static final World world = GameHandler.world;
+	private static final World world = Game.world;
 	private static JButton[] buttons;
 	private static JPanel panel;
 	public static boolean inMenu = true;
