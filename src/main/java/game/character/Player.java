@@ -1,11 +1,10 @@
 package game.character;
 
 import city.cs.engine.*;
-import game.character.abstractBody.Body;
 import org.jbox2d.common.Vec2;
 
 
-public class Player extends Body {
+public class Player extends Tank {
 	public Player(World world, Vec2 position) {
 		super(world, position);
 		spawn();
@@ -13,11 +12,13 @@ public class Player extends Body {
 
 	public void spawn() {
 		position = new Vec2(4 * scaleFactor,10 * scaleFactor);
-
+		speed = 10f;
 		super.spawn();
 	}
 
-	public void shoot() {}
+	public void shoot() {
+		new Pellet(speed, world, body.getPosition());
+	}
 
 	@Override
 	public void update(long elapsedNanos) {
