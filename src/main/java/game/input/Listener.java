@@ -2,32 +2,19 @@ package game.input;
 
 import city.cs.engine.CircleShape;
 import city.cs.engine.DynamicBody;
-import javax.swing.Timer;
 
-import game.character.Player;
+import city.cs.engine.StepEvent;
+import city.cs.engine.StepListener;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.*;
 
+import static game.main.Game.player;
 import static game.main.WindowHandler.view;
 
 
-public class Listener implements KeyListener, MouseListener {
-	private final Player player;
-	private long lastTime = System.nanoTime();
-
-	public Listener(Player player) {
-		this.player = player;
-		Timer timer = new Timer(1, e -> {
-			long currentTime = System.nanoTime();
-			long elapsedTime = currentTime - lastTime;
-			lastTime = currentTime;
-			player.update(elapsedTime);
-		});
-		timer.start();
-	}
-
+public class Listener implements KeyListener, MouseListener, StepListener {
 	@Override
 	public void mouseClicked(@NotNull MouseEvent e) {
 		System.out.printf("Mouse button %d clicked at %d, %d%n", e.getButton(), e.getX(), e.getY());
@@ -36,22 +23,9 @@ public class Listener implements KeyListener, MouseListener {
 		ball.setPosition(view.viewToWorld(e.getPoint()));
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
+	@Override public void mouseEntered(MouseEvent e) {
 		view.requestFocus();
 	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {}
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(@NotNull KeyEvent e) {
@@ -73,4 +47,15 @@ public class Listener implements KeyListener, MouseListener {
 			default -> {}
 		}
 	}
+
+	@Override
+	public void preStep(StepEvent stepEvent) {
+		player.update();
+	}
+
+	@Override public void postStep(StepEvent stepEvent) {}
+	@Override public void mousePressed(MouseEvent e) {}
+	@Override public void mouseReleased(MouseEvent e) {}
+	@Override public void mouseExited(MouseEvent e) {}
+	@Override public void keyTyped(KeyEvent e) {}
 }
