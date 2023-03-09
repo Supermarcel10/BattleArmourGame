@@ -7,6 +7,7 @@ import org.jbox2d.common.Vec2;
 public class Player extends Tank {
 	public Player(World world, Vec2 position) {
 		super(world, position);
+		attachBody();
 		spawn();
 	}
 

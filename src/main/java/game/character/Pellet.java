@@ -15,7 +15,6 @@ public class Pellet extends Body {
 	public void spawn() {
 		// TODO: Get player direction and make the pellet move in that direction.
 		setMoveDirection(new Vec2(0, 0));
-		body.destroy();
 		body = new DynamicBody(world, new CircleShape(0.5f * scaleFactor, position));
 		GhostlyFixture fixture =  new GhostlyFixture(body, new CircleShape(0.5f * scaleFactor, position));
 		fixture.setDensity(0f);
