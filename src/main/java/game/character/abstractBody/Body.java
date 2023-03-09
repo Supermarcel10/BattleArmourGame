@@ -13,7 +13,7 @@ import static game.input.Config.resolution;
 public abstract class Body implements IBody {
 	protected float speed = 8f;
 	protected World world;
-	protected Vec2 position;
+	public Vec2 position;
 	protected Vec2 moveDirection = new Vec2(0, 0);
 	protected DynamicBody body;
 	protected Animation animation;
@@ -52,7 +52,7 @@ public abstract class Body implements IBody {
 		body.destroy();
 	}
 
-	public void update(long elapsedNanos) {}
+	public void update() {}
 
 	public void setMoveDirection(Vec2 direction) {
 		moveDirection = direction;

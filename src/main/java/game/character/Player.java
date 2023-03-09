@@ -13,7 +13,7 @@ public class Player extends Tank {
 
 	public void spawn() {
 		position = new Vec2(4 * scaleFactor,10 * scaleFactor);
-		speed = 10f;
+		speed = 0.4f;
 		super.spawn();
 	}
 
@@ -22,10 +22,9 @@ public class Player extends Tank {
 	}
 
 	@Override
-	public void update(long elapsedNanos) {
+	public void update() {
 		// Update the position of the player object based on the current movement direction
-		Vec2 position = body.getPosition();
-		position = position.add(moveDirection.mul(speed * (elapsedNanos / 1000000000.0f)));
+		position = position.add(moveDirection.mul(speed));
 		body.setPosition(position);
 	}
 }

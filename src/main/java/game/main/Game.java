@@ -1,9 +1,6 @@
 package game.main;
 
-import city.cs.engine.BoxShape;
-import city.cs.engine.World;
-import city.cs.engine.StaticBody;
-import city.cs.engine.Shape;
+import city.cs.engine.*;
 import game.input.Config;
 import game.character.Player;
 import game.input.Listener;
@@ -45,6 +42,12 @@ public class Game {
 
 		loadGame();
 
+		// Add Keyboard & Mouse listeners.
+		Listener listener = new Listener();
+		view.addMouseListener(listener);
+		view.addKeyListener(listener);
+		world.addStepListener(listener);
+
 		// Start world simulation
 		world.start();
 
@@ -84,10 +87,5 @@ public class Game {
 
 		// Make a character (with an overlaid image)
 		player = new Player(world, new Vec2(0, 0));
-
-		// Add Keyboard & Mouse listeners.
-		Listener listener = new Listener(player);
-		view.addMouseListener(listener);
-		view.addKeyListener(listener);
 	}
 }
