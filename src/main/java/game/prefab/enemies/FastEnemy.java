@@ -20,6 +20,7 @@ public class FastEnemy extends Enemy {
 	@Override
 	public void spawn() {
 		speed = 0.6f;
+		scoreValue = 250;
 		setMaxHealth(1);
 		body.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
 		super.spawn();

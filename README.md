@@ -25,19 +25,18 @@ I will also make custom perks and balance the game in the way I believe it is di
 
 - [ ] Create the general UI layout
 - [x] Create a basic game grid where everything will be spawned
-- [ ] Basic AI to follow the closest player
 - [x] Create player controls 
 - [ ] Create player shooting
 - [ ] Create enemy spawning
 - [ ] Create pick-ups
 - [x] Create a "base" to protect
 - [x] Add a score system
-- [ ] Add a way to gain score
+- [x] Add a way to gain score
 - [ ] Add a "start" screen
 - [ ] Add a "pause" screen
 - [ ] Add a "game over" screen
 - [ ] Add a high-score system
-- [ ] Create more enemies
+- [x] Create more enemies
 - [ ] Update the AI with different AIs for enemies
 - [x] Add texture images to the game
 - [ ] Animate the images

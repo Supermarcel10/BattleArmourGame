@@ -25,6 +25,7 @@ public class ExplodingEnemy extends Enemy {
 	@Override
 	public void spawn() {
 		speed = 0.5f;
+		scoreValue = 250;
 		setMaxHealth(1);
 		body.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
 		super.spawn();
