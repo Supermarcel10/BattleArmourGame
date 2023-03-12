@@ -10,6 +10,9 @@ import game.prefab.blocks.Edge;
 import game.prefab.Player;
 import game.input.Listener;
 import game.prefab.enemies.BasicEnemy;
+import game.prefab.enemies.ExplodingEnemy;
+import game.prefab.enemies.FastEnemy;
+import game.prefab.enemies.HeavyEnemy;
 import org.jbox2d.common.Vec2;
 
 import static game.input.Config.resolution;
@@ -109,9 +112,10 @@ public class Game {
 
 		// Make a character (with an overlaid image).
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
-		player = new Player(world, new Vec2(0, 5), tankShape);
+		player = new Player(world, new Vec2(0, 0), tankShape);
 
 		// Make an enemy.
-		enemies[0] =  new BasicEnemy(world, new Vec2(5, 5), tankShape);
+		// TODO: FIX SPAWNING NOT WORKING ON SPECIFIC COORDINATES.
+		enemies[0] =  new ExplodingEnemy(world, new Vec2(0, 5), tankShape);
 	}
 }
