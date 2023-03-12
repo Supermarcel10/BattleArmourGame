@@ -1,10 +1,8 @@
 package game.input;
 
-import city.cs.engine.CircleShape;
-import city.cs.engine.DynamicBody;
-
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
+import game.main.WindowHandler;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,14 +13,6 @@ import static game.main.WindowHandler.view;
 
 
 public class Listener implements KeyListener, MouseListener, StepListener {
-	@Override
-	public void mouseClicked(@NotNull MouseEvent e) {
-		System.out.printf("Mouse button %d clicked at %d, %d%n", e.getButton(), e.getX(), e.getY());
-
-		DynamicBody ball = new DynamicBody(view.getWorld(), new CircleShape(1f));
-		ball.setPosition(view.viewToWorld(e.getPoint()));
-	}
-
 	@Override public void mouseEntered(MouseEvent e) {
 		view.requestFocus();
 	}
@@ -51,9 +41,13 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	@Override
 	public void preStep(StepEvent stepEvent) {
 		player.update();
+
+		// TODO: Update this to only update the score label when the score changes.
+		WindowHandler.updateScore();
 	}
 
 	@Override public void postStep(StepEvent stepEvent) {}
+	@Override public void mouseClicked(@NotNull MouseEvent e) {}
 	@Override public void mousePressed(MouseEvent e) {}
 	@Override public void mouseReleased(MouseEvent e) {}
 	@Override public void mouseExited(MouseEvent e) {}

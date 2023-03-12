@@ -9,14 +9,12 @@ import game.prefab.blocks.Brick;
 import game.prefab.blocks.Edge;
 import game.prefab.Player;
 import game.input.Listener;
-import game.prefab.enemies.BasicEnemy;
 import game.prefab.enemies.ExplodingEnemy;
-import game.prefab.enemies.FastEnemy;
-import game.prefab.enemies.HeavyEnemy;
 import org.jbox2d.common.Vec2;
 
 import static game.input.Config.resolution;
 import static game.main.WindowHandler.view;
+import static java.lang.Thread.sleep;
 
 
 public class Game {
@@ -30,7 +28,7 @@ public class Game {
 	public static int score = 0;
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			// TODO: Add saving to the game.
 			// TODO: Add any database close statements here.
@@ -48,11 +46,11 @@ public class Game {
 
 		while (WindowHandler.inMenu) {
 			// TODO: Make menu handling.
-
 			WindowHandler.inMenu = false;
 		}
 
 		loadGame();
+		WindowHandler.createGameOverlay();
 
 		// Add Keyboard & Mouse listeners.
 		Listener listener = new Listener();
@@ -69,7 +67,7 @@ public class Game {
 				System.out.println(world.getSimulationSettings().getAveragedFPS());
 				// Sleep for 1 second.
 				try {
-					Thread.sleep(1000);
+					sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

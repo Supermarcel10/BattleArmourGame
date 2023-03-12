@@ -8,12 +8,16 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
-import static game.main.Game.gridSize;
+import static game.main.Game.*;
 
 
 public class WindowHandler {
 	private static final World world = Game.world;
+	private static JLayeredPane layeredPane;
 	public static final JFrame frame = new JFrame(Config.title);
 	public static UserView view = null;
 
@@ -21,20 +25,30 @@ public class WindowHandler {
 	private static JPanel menuPanel;
 	public static boolean inMenu = true;
 
+	public static JLabel scoreLabel;
+
+
 	public static void createWindow(World world) {
 		// Create a user view with the world and resolution provided.
 		view = new UserView(world, 0, 0);
 
 		updateWindow();
 
-		frame.add(view);
+		layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(view.getPreferredSize());
+		layeredPane.setOpaque(false); // Set the background color to be transparent
 
-		// Size the frame to fill the view.
-		frame.pack();
+		// Add the view to the layered pane at the bottom layer with an explicit position and size.
+		layeredPane.add(view, 1);
+		view.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
+
+		// Add the layered pane to the frame.
+		frame.setContentPane(layeredPane);
 
 		// Set exit on close.
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		frame.pack();
 		frame.setVisible(true);
 		view.requestFocus();
 
@@ -86,9 +100,9 @@ public class WindowHandler {
 	public static void createMenu() {
 		menuPanel = new JPanel();
 		menuButtons = new JButton[] {
-				new JButton("New Game"),
-				new JButton("Load Game"),
-				new JButton("Options")
+			new JButton("New Game"),
+			new JButton("Load Game"),
+			new JButton("Options")
 		};
 
 		Font font = new Font("Arial", Font.PLAIN, 80);
@@ -116,5 +130,62 @@ public class WindowHandler {
 		}
 
 		inMenu = state;
+	}
+
+	public static void createOptionsMenu() {
+
+	}
+
+	public static void createLoadMenu() {
+
+	}
+
+	public static void createNewGameMenu() {
+
+	}
+
+	public static void createPauseMenu() {
+
+	}
+
+	public static void createDeathMenu() {
+
+	}
+
+	public static void createGameOverlay() {
+		Font font;
+		try {
+			// Open & register the font with the GraphicsEnvironment
+			Font ttf = Font.createFont(Font.TRUETYPE_FONT, new File(Config.font.get("default")));
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(ttf);
+
+			font = ttf.deriveFont(Font.PLAIN, (int) Math.round(gridSize * 1.8));
+		} catch (IOException | FontFormatException e) {
+			font = new Font("Algerian", Font.BOLD, (int) Math.round(gridSize * 1.8));
+		}
+
+		// Create a new JPanel to hold the score label.
+		JPanel overlayPanel = new JPanel();
+		overlayPanel.setOpaque(false); // Transparent
+
+		// Create a new JLabel for the score and add it to the overlay panel.
+		scoreLabel = new JLabel("SCORE: " + score, SwingConstants.CENTER);
+		scoreLabel.setFont(font);
+		scoreLabel.setForeground(Color.WHITE);
+		scoreLabel.setOpaque(false); // Transparent
+		overlayPanel.add(scoreLabel);
+
+		// Add the overlay panel to the layered pane at a higher layer than the UserView.
+		layeredPane.add(overlayPanel, JLayeredPane.PALETTE_LAYER);
+
+		// Set the size of the overlay panel to match the size of the UserView.
+		overlayPanel.setSize(view.getPreferredSize().width, scoreLabel.getPreferredSize().height + 10);
+
+		// Adjust the bounds of the scoreLabel to avoid being clipped by the overlayPanel.
+		scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 1, 1, 1));
+	}
+
+	public static void updateScore() {
+		scoreLabel.setText("SCORE: " + score);
 	}
 }
