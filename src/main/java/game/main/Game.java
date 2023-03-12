@@ -73,22 +73,18 @@ public class Game {
 
 
 	public static void loadGame() {
-		scaledGridSize = (float) (((27 * scaleFactor) / gridSize) / scaleFactor);
+		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		Block[][] blocks = new Block[gridSize][gridSize];
 
-		// Create the edges of the world.
+		// Iterate over the world grid
 		for (int i = 0; i < gridSize; i++) {
 			for (int j = 0; j < gridSize; j++) {
+				// Create the edges of the world.
 				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-					// Create a static body for the cell
-					new Edge(world, i, j);
+					blocks[i][j] = new Edge(world, i, j);
 				}
-			}
-		}
 
-		// Make an example array of bricks.
-		for (int i = 1; i < gridSize - 1; i++) {
-			for (int j = 1; j < gridSize - 1; j++) {
+				// Make bricks.
 				if (i % 2 != 1 && j % 3 != 1) {
 					blocks[i][j] = new Brick(world, i - (gridSize / 2), j - (gridSize / 2));
 				}
