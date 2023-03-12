@@ -94,10 +94,5 @@ public class Game {
 		// Make a character (with an overlaid image).
 		Shape playerShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
 		player = new Player(world, new Vec2(0, 0), playerShape);
-
-		System.out.println("Game loaded.");
-
-//		StaticBody brick = new StaticBody(world, brickShape);
-//		brick.addImage(brickImage);
 	}
 }

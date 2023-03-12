@@ -1,6 +1,7 @@
 package game.prefab;
 
 import city.cs.engine.*;
+import game.input.Config;
 import game.objects.Tank;
 import org.jbox2d.common.Vec2;
 
@@ -21,6 +22,7 @@ public class Player extends Tank {
 	public void spawn() {
 		position = new Vec2(4 * scaleFactor,10 * scaleFactor);
 		speed = 0.4f;
+		body.addImage(new BodyImage(Config.image.get("player"), 3 * scaleFactor));
 		super.spawn();
 	}
 
@@ -33,6 +35,11 @@ public class Player extends Tank {
 		// Update the position of the player object based on the current movement direction
 		position = position.add(moveDirection.mul(speed * scaleFactor));
 		body.setPosition(position);
-		body.setAngle(0);
+
+		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
+			float degrees = (float) (450 - Math.toDegrees(Math.atan2(moveDirection.y, moveDirection.x))) % 360;
+			body.setAngle(degrees * (float) Math.PI / -180);
+		}
+//		body.setAngle(0 * (float) Math.PI / -180);
 	}
 }

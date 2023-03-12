@@ -26,5 +26,7 @@ public class Config {
 	public static HashMap<String, String> image = new HashMap<>() {{
 		put("edge", CD + "\\src\\main\\resources\\img\\blocks\\edge.png");
 		put("wall", CD + "\\src\\main\\resources\\img\\blocks\\brick.png");
+
+		put("player", CD + "\\src\\main\\resources\\img\\player\\player.gif");
 	}};
 }

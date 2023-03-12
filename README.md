@@ -24,9 +24,10 @@ I will also make custom perks and balance the game in the way I believe it is di
 ## TODOs
 
 - [ ] Create the general UI layout
-- [ ] Create a basic game grid where everything will be spawned
+- [x] Create a basic game grid where everything will be spawned
 - [ ] Basic AI to follow the closest player
-- [ ] Create player controls and shooting
+- [x] Create player controls 
+- [ ] Create player shooting
 - [ ] Create enemy spawning
 - [ ] Create pick-ups
 - [ ] Create a "base" to protect
