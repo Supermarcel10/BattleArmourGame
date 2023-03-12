@@ -8,6 +8,8 @@ import org.jbox2d.common.Vec2;
 import javax.swing.*;
 import java.awt.*;
 
+import static game.main.Game.gridSize;
+
 
 public class WindowHandler {
 	private static final World world = Game.world;
@@ -60,11 +62,14 @@ public class WindowHandler {
 			// Set the game resolution.
 			Vec2 resolution = Config.resolution;
 
-			if (resolution.x > resolution.y) {
-				view = new UserView(world, (int) resolution.y, (int) resolution.y);
-			} else if (resolution.x < resolution.y) {
-				view = new UserView(world, (int) resolution.x, (int) resolution.x);
-			}
+			// Create the user view. Round the resolution to the nearest multiple of gridSize to reduce pixel peaking.
+			view = resolution.x > resolution.y ?
+					new UserView(world,
+							(int) (resolution.y / gridSize) * gridSize,
+							(int) (resolution.y / gridSize) * gridSize) :
+					new UserView(world,
+							(int) (resolution.x / gridSize) * gridSize,
+							(int) (resolution.x / gridSize) * gridSize) ;
 
 			// Center the game window.
 			frame.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);

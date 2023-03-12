@@ -1,7 +1,7 @@
-package game.character;
+package game.prefab;
 
 import city.cs.engine.*;
-import game.character.abstractBody.Body;
+import game.objects.abstractBody.Body;
 import org.jbox2d.common.Vec2;
 
 
