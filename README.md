@@ -31,10 +31,15 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [ ] Create enemy spawning
 - [ ] Create pick-ups
 - [x] Create a "base" to protect
-- [ ] Add a score system
+- [x] Add a score system
+- [ ] Add a way to gain score
+- [ ] Add a "start" screen
+- [ ] Add a "pause" screen
+- [ ] Add a "game over" screen
+- [ ] Add a high-score system
 - [ ] Create more enemies
 - [ ] Update the AI with different AIs for enemies
-- [ ] Update the images
+- [x] Add texture images to the game
 - [ ] Animate the images
 
 ## Copyright & Disclosure
