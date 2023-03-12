@@ -2,7 +2,7 @@ package game.objects;
 
 import city.cs.engine.World;
 import game.objects.abstractBody.Body;
-import game.prefab.Pellet;
+import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
 
 
@@ -26,7 +26,7 @@ public class Tank extends Body {
 
 	public void shoot() {
 		// TODO: FIX SHOOTING!
-		new Pellet(speed, world, body.getPosition());
+		new Shot(speed, world, body.getPosition(), moveDirection);
 	}
 
 	public void setMaxHealth(int maxHealth) {

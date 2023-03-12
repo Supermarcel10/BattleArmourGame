@@ -30,7 +30,11 @@ public class Player extends Tank {
 	public void update() {
 		// Update the position of the player object based on the current movement direction
 		position = position.add(moveDirection.mul(speed * scaleFactor));
-		body.setPosition(position);
+
+		// Movement smoothing
+		float roundedX = ((float) Math.round(position.x * 5) / 5.0f);
+		float roundedY = ((float) Math.round(position.y * 5) / 5.0f);
+		body.setPosition(new Vec2(roundedX, roundedY));
 
 		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
 			float degrees = (float) (450 - Math.toDegrees(Math.atan2(moveDirection.y, moveDirection.x))) % 360;
