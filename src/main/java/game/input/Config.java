@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 
 public class Config {
-	private static final String CD = System.getProperty("user.dir");
+	private static final String CD = System.getProperty("user.dir") + "\\src\\main\\resources\\";
 	public static final boolean DEBUG = false;
 
 	public static boolean fullscreen = false;
@@ -24,9 +24,14 @@ public class Config {
 	}};
 
 	public static HashMap<String, String> image = new HashMap<>() {{
-		put("edge", CD + "\\src\\main\\resources\\img\\blocks\\edge.png");
-		put("wall", CD + "\\src\\main\\resources\\img\\blocks\\brick.png");
+		put("edge", CD + "img\\blocks\\edge.png");
+		put("wall", CD + "img\\blocks\\brick.png");
+		put("base", CD + "img\\blocks\\base.png");
 
-		put("player", CD + "\\src\\main\\resources\\img\\player\\player.gif");
+		put("player", CD + "img\\player\\player.gif");
+		put("basicEnemy", CD + "img\\enemy\\basicEnemy.gif");
+		put("heavyEnemy", CD + "img\\enemy\\heavyEnemy.gif");
+		put("fastEnemy", CD + "img\\enemy\\fastEnemy.gif");
+		put("explodingEnemy", CD + "img\\enemy\\explodingEnemy.gif");
 	}};
 }

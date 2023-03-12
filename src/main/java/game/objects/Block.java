@@ -12,6 +12,8 @@ public class Block {
 	private final Shape shape;
 	private final BodyImage image;
 	protected StaticBody body;
+	protected int maxHealth = 1;
+	protected int health = maxHealth;
 
 	public Block(Shape shape, BodyImage image) {
 		this.shape = shape;
@@ -38,5 +40,22 @@ public class Block {
 		body = new StaticBody(world, shape);
 		body.addImage(image).setOffset(offset);
 		body.setPosition(position);
+	}
+
+	public Block damage(int damage) {
+		for (int i = 0; i < damage; i++) {
+			damage();
+		}
+		return this;
+	}
+
+	public Block damage() {
+		health--;
+
+		if (health <= 0) {
+			body.destroy();
+		}
+		// TODO: Add damage animation.
+		return this;
 	}
 }

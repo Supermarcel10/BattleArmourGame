@@ -4,6 +4,7 @@ import city.cs.engine.UserView;
 import city.cs.engine.World;
 import game.input.Config;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,10 @@ public class WindowHandler {
 	private static final World world = Game.world;
 	public static final JFrame frame = new JFrame(Config.title);
 	public static UserView view = null;
+
+	private static JButton[] menuButtons;
+	private static JPanel menuPanel;
+	public static boolean inMenu = true;
 
 	public static void createWindow(World world) {
 		// Create a user view with the world and resolution provided.
@@ -38,6 +43,8 @@ public class WindowHandler {
 			view.setGridResolution(3.75f);
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
 		}
+
+		createMenu();
 	}
 
 	public static void updateWindow() {
@@ -74,5 +81,40 @@ public class WindowHandler {
 			// Center the game window.
 			frame.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);
 		}
+	}
+
+	public static void createMenu() {
+		menuPanel = new JPanel();
+		menuButtons = new JButton[] {
+				new JButton("New Game"),
+				new JButton("Load Game"),
+				new JButton("Options")
+		};
+
+		Font font = new Font("Arial", Font.PLAIN, 80);
+
+		for (JButton button : menuButtons) {
+			button.setFont(font);
+			button.setSize(500, 500);
+
+			button.setBackground(Color.WHITE);
+			button.setForeground(Color.BLACK);
+
+			menuPanel.add(button);
+		}
+
+		frame.add(menuPanel);
+
+		// TODO: Change once implemented.
+//		changeMenuState(false);
+	}
+
+	public static void changeMenuState(boolean state) {
+		menuPanel.setVisible(state);
+		for (JButton button : menuButtons) {
+			button.setVisible(state);
+		}
+
+		inMenu = state;
 	}
 }
