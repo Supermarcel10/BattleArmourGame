@@ -45,6 +45,11 @@ public abstract class Body extends DynamicBody implements IBody {
 		body.setPosition(new Vec2(((scaledGridSize * 2) * position.x) * scaleFactor, ((scaledGridSize * 2) * position.y) * scaleFactor));
 	}
 
+	@Override
+	public void addCollisionListener(CollisionListener listener) {
+		body.addCollisionListener(listener);
+	}
+
 	public void destroy() {
 		body.destroy();
 	}

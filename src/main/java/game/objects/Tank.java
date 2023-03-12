@@ -24,8 +24,8 @@ public class Tank extends Body {
 	public void shoot() {
 		// Get the player direction based on the angle of the tank.
 		Vec2 moveDirection = new Vec2(
-			(float) Math.round(Math.cos(Math.round(body.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
-			(float) Math.round(Math.sin(Math.round(body.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
+			(float) -Math.round(Math.sin(Math.round(body.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
+			(float) Math.round(Math.cos(Math.round(body.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
 		new Shot(speed, world, body.getPosition(), moveDirection, this);

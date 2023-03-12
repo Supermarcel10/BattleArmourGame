@@ -9,7 +9,7 @@ import javax.swing.*;
 
 
 public class Shot extends Body {
-	private static final float speed = 10f;
+	private static final float speed = 12f;
 	protected Tank shooter;
 	private Vec2 travelDirection;
 
@@ -25,6 +25,7 @@ public class Shot extends Body {
 		// Set the body's move direction.
 		setMoveDirection(travelDirection);
 		body = new DynamicBody(world, new CircleShape(0.5f * scaleFactor, position));
+		body.applyImpulse(travelDirection.mul(speed));
 		// TODO: Fix stuff with the ghostly fixture.
 		// TODO: Fix accelerating the body.
 //		GhostlyFixture fixture =  new GhostlyFixture(body, new CircleShape(0.5f * scaleFactor, position));

@@ -136,10 +136,17 @@ public class Game {
 		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
 		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
 
-		enemies[0].addCollisionListener(COL_LISTENER);
-	}
+		// Engage the collision listeners.
+		for (Enemy enemy : enemies) {
+			if (enemy != null) enemy.addCollisionListener(COL_LISTENER);
+		}
 
-	public static void engageListener(@NotNull Shot shot) {
-		shot.addCollisionListener(COL_LISTENER);
+		for (Block[] b1 : blocks) {
+			for (Block b2 : b1) {
+				if (b2 != null) b2.addCollisionListener(COL_LISTENER);
+			}
+		}
+
+		player.addCollisionListener(COL_LISTENER);
 	}
 }
