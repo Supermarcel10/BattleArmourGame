@@ -20,14 +20,10 @@ public class Player extends Tank {
 	}
 
 	public void spawn() {
-		position = new Vec2(4 * scaleFactor,10 * scaleFactor);
 		speed = 0.4f;
+		setMaxHealth(1);
 		body.addImage(new BodyImage(Config.image.get("player"), 3 * scaleFactor));
 		super.spawn();
-	}
-
-	public void shoot() {
-		new Pellet(speed, world, body.getPosition());
 	}
 
 	@Override

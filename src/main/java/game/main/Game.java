@@ -3,10 +3,13 @@ package game.main;
 import city.cs.engine.*;
 import game.input.Config;
 import game.objects.Block;
-import game.prefab.Brick;
-import game.prefab.Edge;
+import game.objects.Enemy;
+import game.prefab.blocks.Base;
+import game.prefab.blocks.Brick;
+import game.prefab.blocks.Edge;
 import game.prefab.Player;
 import game.input.Listener;
+import game.prefab.enemies.BasicEnemy;
 import org.jbox2d.common.Vec2;
 
 import static game.input.Config.resolution;
@@ -18,9 +21,11 @@ public class Game {
 	public static Player player;
 	public static float scaleFactor = resolution.x / 1920;
 	public static int gridSize = 15;
+	public static final int hGridSize = gridSize / 2;
 	public static float scaledGridSize;
 
 	public static int score = 0;
+
 
 	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -37,12 +42,11 @@ public class Game {
 
 		// Create the window and main menu.
 		WindowHandler.createWindow(world);
-		MainMenu.createMenu(WindowHandler.frame);
 
-		while (MainMenu.inMenu) {
+		while (WindowHandler.inMenu) {
 			// TODO: Make menu handling.
 
-			MainMenu.inMenu = false;
+			WindowHandler.inMenu = false;
 		}
 
 		loadGame();
@@ -75,6 +79,7 @@ public class Game {
 	public static void loadGame() {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		Block[][] blocks = new Block[gridSize][gridSize];
+		Enemy[] enemies = new Enemy[gridSize * 2];
 
 		// Iterate over the world grid
 		for (int i = 0; i < gridSize; i++) {
@@ -88,11 +93,25 @@ public class Game {
 				if (i % 2 != 1 && j % 3 != 1) {
 					blocks[i][j] = new Brick(world, i - (gridSize / 2), j - (gridSize / 2));
 				}
+
+				// Always create a standard base layout.
+				if (i == gridSize / 2 && j == 1) {
+					// Create a base.
+					blocks[i][j] = new Base(world, i - (gridSize / 2), j - (gridSize / 2));
+				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
+					// If no block exists, create a brick border.
+					if (blocks[i][j] == null) {
+						blocks[i][j] = new Brick(world, i - hGridSize, j - hGridSize);
+					}
+				}
 			}
 		}
 
 		// Make a character (with an overlaid image).
-		Shape playerShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
-		player = new Player(world, new Vec2(0, 0), playerShape);
+		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
+		player = new Player(world, new Vec2(0, 5), tankShape);
+
+		// Make an enemy.
+		enemies[0] =  new BasicEnemy(world, new Vec2(5, 5), tankShape);
 	}
 }

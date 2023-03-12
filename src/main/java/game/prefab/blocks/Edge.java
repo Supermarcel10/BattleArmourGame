@@ -1,4 +1,4 @@
-package game.prefab;
+package game.prefab.blocks;
 
 import city.cs.engine.*;
 import game.input.Config;

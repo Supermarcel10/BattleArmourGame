@@ -30,7 +30,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [ ] Create player shooting
 - [ ] Create enemy spawning
 - [ ] Create pick-ups
-- [ ] Create a "base" to protect
+- [x] Create a "base" to protect
 - [ ] Add a score system
 - [ ] Create more enemies
 - [ ] Update the AI with different AIs for enemies
