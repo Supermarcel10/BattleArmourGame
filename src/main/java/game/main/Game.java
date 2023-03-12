@@ -1,9 +1,12 @@
 package game.main;
 
 import city.cs.engine.*;
+import city.cs.engine.Shape;
+import game.input.ColListener;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
+import game.prefab.Shot;
 import game.prefab.blocks.Base;
 import game.prefab.blocks.Brick;
 import game.prefab.blocks.Edge;
@@ -14,6 +17,10 @@ import game.prefab.enemies.ExplodingEnemy;
 import game.prefab.enemies.FastEnemy;
 import game.prefab.enemies.HeavyEnemy;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
+
+import javax.swing.*;
+import java.awt.*;
 
 import static game.input.Config.resolution;
 import static game.main.WindowHandler.view;
@@ -23,6 +30,11 @@ import static java.lang.Thread.sleep;
 public class Game {
 	public static World world;
 	public static Player player;
+	public static Block[][] blocks;
+	public static Enemy[] enemies;
+
+	private static final ColListener COL_LISTENER = new ColListener();
+
 	public static float scaleFactor = resolution.x / 1920;
 	public static int gridSize = 15;
 	public static final int hGridSize = gridSize / 2;
@@ -41,9 +53,6 @@ public class Game {
 
 		world = new World(Config.fps);
 
-		// Disable the gravity.
-		world.setGravity(0);
-
 		// Create the window and main menu.
 		WindowHandler.createWindow(world);
 
@@ -51,6 +60,12 @@ public class Game {
 			// TODO: Make menu handling.
 			WindowHandler.inMenu = false;
 		}
+
+		// Disable the gravity and change background color.
+		world.setGravity(0);
+		view.setBackground(Color.decode("#fcf8de"));
+
+		JFrame debugView = new DebugViewer(world, 900, 900);
 
 		loadGame();
 		WindowHandler.createGameOverlay();
@@ -82,8 +97,8 @@ public class Game {
 
 	public static void loadGame() {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
-		Block[][] blocks = new Block[gridSize][gridSize];
-		Enemy[] enemies = new Enemy[gridSize * 2];
+		blocks = new Block[gridSize][gridSize];
+		enemies = new Enemy[gridSize * 2];
 
 		// Iterate over the world grid
 		for (int i = 0; i < gridSize; i++) {
@@ -120,5 +135,11 @@ public class Game {
 		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
 		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
 		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
+
+		enemies[0].addCollisionListener(COL_LISTENER);
+	}
+
+	public static void engageListener(@NotNull Shot shot) {
+		shot.addCollisionListener(COL_LISTENER);
 	}
 }

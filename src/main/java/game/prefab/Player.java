@@ -40,6 +40,5 @@ public class Player extends Tank {
 			float degrees = (float) (450 - Math.toDegrees(Math.atan2(moveDirection.y, moveDirection.x))) % 360;
 			body.setAngle(degrees * (float) Math.PI / -180);
 		}
-//		body.setAngle(0 * (float) Math.PI / -180);
 	}
 }

@@ -1,34 +1,29 @@
 package game.objects.abstractBody;
 
-import city.cs.engine.BoxShape;
-import city.cs.engine.DynamicBody;
-import city.cs.engine.Shape;
-import city.cs.engine.World;
+import city.cs.engine.*;
+import game.main.Game;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
-import static game.input.Config.resolution;
-import static game.main.Game.scaleFactor;
 import static game.main.Game.scaledGridSize;
 
 
-public abstract class Body implements IBody {
+public abstract class Body extends DynamicBody implements IBody {
 	protected float speed = 8f;
 	protected World world;
 	public Vec2 position;
 	protected Vec2 moveDirection = new Vec2(0, 0);
 	protected DynamicBody body;
-	protected Animation animation;
-
-	protected float scaleFactor = resolution.x / 1920;
-
+	protected float scaleFactor = Game.scaleFactor;
 
 	public Body(World world, Vec2 position) {
+		super(world);
 		this.world = world;
 		this.position = position;
 	}
 
 	public Body(float speed, World world, Vec2 position) {
+		super(world);
 		this.speed = speed;
 		this.world = world;
 		this.position = position;
@@ -54,8 +49,6 @@ public abstract class Body implements IBody {
 		body.destroy();
 	}
 
-	public void update() {}
-
 	public void setMoveDirection(Vec2 direction) {
 		moveDirection = direction;
 	}
@@ -63,4 +56,6 @@ public abstract class Body implements IBody {
 	public Vec2 getMoveDirection() {
 		return moveDirection;
 	}
+
+	public void update() {}
 }
