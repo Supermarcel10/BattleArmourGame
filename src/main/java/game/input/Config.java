@@ -32,6 +32,6 @@ public class Config {
 		put("basicEnemy", CD + "img\\enemy\\basicEnemy.gif");
 		put("heavyEnemy", CD + "img\\enemy\\heavyEnemy.gif");
 		put("fastEnemy", CD + "img\\enemy\\fastEnemy.gif");
-		put("explodingEnemy", CD + "img\\enemy\\explodingEnemy.gif");
+		put("explodingEnemy", CD + "img\\enemy\\explosiveEnemy.gif");
 	}};
 }
