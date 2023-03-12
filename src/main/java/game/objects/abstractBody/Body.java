@@ -1,4 +1,4 @@
-package game.character.abstractBody;
+package game.objects.abstractBody;
 
 import city.cs.engine.BoxShape;
 import city.cs.engine.DynamicBody;

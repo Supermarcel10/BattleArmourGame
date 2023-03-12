@@ -1,4 +1,4 @@
-package game.character.abstractBody;
+package game.objects.abstractBody;
 
 
 public interface IBody {

@@ -1,6 +1,7 @@
-package game.character;
+package game.prefab;
 
 import city.cs.engine.*;
+import game.objects.Tank;
 import org.jbox2d.common.Vec2;
 
 
@@ -8,6 +9,12 @@ public class Player extends Tank {
 	public Player(World world, Vec2 position) {
 		super(world, position);
 		attachBody();
+		spawn();
+	}
+
+	public Player(World world, Vec2 position, Shape bodyShape) {
+		super(world, position);
+		attachBody(bodyShape);
 		spawn();
 	}
 
@@ -26,5 +33,6 @@ public class Player extends Tank {
 		// Update the position of the player object based on the current movement direction
 		position = position.add(moveDirection.mul(speed));
 		body.setPosition(position);
+		body.setAngle(0);
 	}
 }

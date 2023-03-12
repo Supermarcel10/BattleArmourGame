@@ -2,7 +2,10 @@ package game.main;
 
 import city.cs.engine.*;
 import game.input.Config;
-import game.character.Player;
+import game.objects.Block;
+import game.prefab.Brick;
+import game.prefab.Edge;
+import game.prefab.Player;
 import game.input.Listener;
 import org.jbox2d.common.Vec2;
 
@@ -14,6 +17,8 @@ public class Game {
 	public static World world;
 	public static Player player;
 	public static float scaleFactor = resolution.x / 1920;
+	public static int gridSize = 15;
+	public static float scaledGridSize;
 
 	public static int score = 0;
 
@@ -68,24 +73,35 @@ public class Game {
 
 
 	public static void loadGame() {
-		int size = 13;
-		float scaledSize = (float) (((40.5 * scaleFactor) / size) / 2);
+		scaledGridSize = (float) (((27 * scaleFactor) / gridSize) / scaleFactor);
+		Block[][] blocks = new Block[gridSize][gridSize];
 
-		Shape shape = new BoxShape(scaledSize * scaleFactor, scaledSize * scaleFactor,
-				new Vec2((-24.5f + ((size - 11) * -.1675f)) * scaleFactor, (-24.5f + ((size - 11) * -.1675f)) * scaleFactor));
-
-		// Create static bodies for each cell
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
+		// Create the edges of the world.
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j++) {
+				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
 					// Create a static body for the cell
-					StaticBody body = new StaticBody(world, shape);
-					body.setPosition(new Vec2(((scaledSize * 2) * i) * scaleFactor, ((scaledSize * 2) * j) * scaleFactor));
+					new Edge(world, i, j);
 				}
 			}
 		}
 
-		// Make a character (with an overlaid image)
-		player = new Player(world, new Vec2(0, 0));
+		// Make an example array of bricks.
+		for (int i = 1; i < gridSize - 1; i++) {
+			for (int j = 1; j < gridSize - 1; j++) {
+				if (i % 2 != 1 && j % 3 != 1) {
+					blocks[i][j] = new Brick(world, i - (gridSize / 2), j - (gridSize / 2));
+				}
+			}
+		}
+
+		// Make a character (with an overlaid image).
+		Shape playerShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
+		player = new Player(world, new Vec2(0, 0), playerShape);
+
+		System.out.println("Game loaded.");
+
+//		StaticBody brick = new StaticBody(world, brickShape);
+//		brick.addImage(brickImage);
 	}
 }
