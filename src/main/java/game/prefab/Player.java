@@ -31,7 +31,7 @@ public class Player extends Tank {
 	@Override
 	public void update() {
 		// Update the position of the player object based on the current movement direction
-		position = position.add(moveDirection.mul(speed));
+		position = position.add(moveDirection.mul(speed * scaleFactor));
 		body.setPosition(position);
 		body.setAngle(0);
 	}
