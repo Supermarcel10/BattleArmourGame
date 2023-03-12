@@ -39,5 +39,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 
 ## Copyright & Disclosure
 
+PressStart2P font is used in this project, which is licensed under the [SIL Open Font License]().
+
 At present the game doesn't utilise any sounds, music or external images.
 This information will be updated once the game is slowly completed.
