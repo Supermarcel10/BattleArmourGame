@@ -8,6 +8,8 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import static game.input.Config.resolution;
+import static game.main.Game.scaleFactor;
+import static game.main.Game.scaledGridSize;
 
 
 public abstract class Body implements IBody {
@@ -45,7 +47,7 @@ public abstract class Body implements IBody {
 	}
 
 	public void spawn() {
-		body.setPosition(position);
+		body.setPosition(new Vec2(((scaledGridSize * 2) * position.x) * scaleFactor, ((scaledGridSize * 2) * position.y) * scaleFactor));
 	}
 
 	public void destroy() {
