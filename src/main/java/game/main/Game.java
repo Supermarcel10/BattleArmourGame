@@ -9,7 +9,10 @@ import game.prefab.blocks.Brick;
 import game.prefab.blocks.Edge;
 import game.prefab.Player;
 import game.input.Listener;
+import game.prefab.enemies.BasicEnemy;
 import game.prefab.enemies.ExplodingEnemy;
+import game.prefab.enemies.FastEnemy;
+import game.prefab.enemies.HeavyEnemy;
 import org.jbox2d.common.Vec2;
 
 import static game.input.Config.resolution;
@@ -92,7 +95,7 @@ public class Game {
 
 				// Make bricks.
 				if (i % 2 != 1 && j % 3 != 1) {
-					blocks[i][j] = new Brick(world, i - (gridSize / 2), j - (gridSize / 2));
+					blocks[i][j] = new Brick(world, i - hGridSize, j - hGridSize);
 				}
 
 				// Always create a standard base layout.
@@ -112,8 +115,10 @@ public class Game {
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
 		player = new Player(world, new Vec2(0, 0), tankShape);
 
-		// Make an enemy.
-		// TODO: FIX SPAWNING NOT WORKING ON SPECIFIC COORDINATES.
-		enemies[0] =  new ExplodingEnemy(world, new Vec2(0, 5), tankShape);
+		// Make a few enemies for testing.
+		enemies[0] =  new ExplodingEnemy(world, new Vec2(-6, 6), tankShape);
+		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
+		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
+		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
 	}
 }

@@ -18,12 +18,6 @@ public class Tank extends Body {
 		super(speed, world, position);
 	}
 
-	public void spawn() {
-		position = new Vec2(0 * scaleFactor,0 * scaleFactor);
-		speed = 0.4f;
-		super.spawn();
-	}
-
 	public void shoot() {
 		// TODO: FIX SHOOTING!
 		new Shot(speed, world, body.getPosition(), moveDirection);
