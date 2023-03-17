@@ -6,7 +6,6 @@ import game.input.ColListener;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
-import game.prefab.Shot;
 import game.prefab.blocks.Base;
 import game.prefab.blocks.Brick;
 import game.prefab.blocks.Edge;
@@ -17,9 +16,7 @@ import game.prefab.enemies.ExplodingEnemy;
 import game.prefab.enemies.FastEnemy;
 import game.prefab.enemies.HeavyEnemy;
 import org.jbox2d.common.Vec2;
-import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static game.input.Config.resolution;
@@ -109,7 +106,7 @@ public class Game {
 				}
 
 				// Make bricks.
-				if (i % 2 != 1 && j % 3 != 1) {
+				if (!(i == 0 || j == 0) && i % 2 != 1 && j % 3 != 1) {
 					blocks[i][j] = new Brick(world, i - hGridSize, j - hGridSize);
 				}
 
