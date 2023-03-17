@@ -106,7 +106,7 @@ public class Game {
 				}
 
 				// Make bricks.
-				if (!(i == 0 || j == 0) && i % 2 != 1 && j % 3 != 1) {
+				if (!(i == 0 || j == 0 || i == gridSize - 1 || j == gridSize - 1) && i % 2 != 1 && j % 3 != 1) {
 					blocks[i][j] = new Brick(world, i - hGridSize, j - hGridSize);
 				}
 
