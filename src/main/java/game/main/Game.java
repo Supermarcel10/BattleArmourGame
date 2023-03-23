@@ -29,12 +29,14 @@ public class Game {
 	public static Block[][] blocks;
 	public static Enemy[] enemies;
 
+	public static Vec2 basePos;
+
 	public static float scaleFactor = resolution.x / 1920;
 	public static int gridSize = 15;
 	public static final int hGridSize = gridSize / 2;
 	public static float scaledGridSize;
 
-	public static int score = 0;
+	public static int score = 0, postUpdateScore = 0;
 
 
 	public static void main(String[] args) throws InterruptedException {
@@ -109,6 +111,7 @@ public class Game {
 				// Always create a standard base layout.
 				if (i == gridSize / 2 && j == 1) {
 					// Create a base.
+					basePos = new Vec2(i, j);
 					blocks[i][j] = new Base(i - (gridSize / 2), j - (gridSize / 2));
 				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
 					//If no block exists, create a brick border.

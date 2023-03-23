@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.*;
 
-import static game.main.Game.player;
+import static game.main.Game.*;
 import static game.main.WindowHandler.view;
 
 
@@ -46,8 +46,15 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	public void preStep(StepEvent stepEvent) {
 		if (player != null) player.update();
 
-		// TODO: Update this to only update the score label when the score changes.
-		WindowHandler.updateScore();
+		if (blocks[(int) basePos.x][(int) basePos.y].health <= 0 || (player != null && player.health <= 0)) {
+			WindowHandler.createDeathMenu();
+			world.stop();
+		}
+
+		if (postUpdateScore != score) {
+			WindowHandler.updateScore();
+			postUpdateScore = score;
+		}
 	}
 
 	@Override public void postStep(StepEvent stepEvent) {}

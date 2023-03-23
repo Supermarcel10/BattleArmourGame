@@ -10,7 +10,8 @@ public class Block extends StaticBody {
 	private final BodyImage image;
 	protected boolean damageable = true;
 	protected int maxHealth = 1;
-	protected int health = maxHealth;
+	public int health = maxHealth;
+	public int destroyScore = 40, damageScore = 10;
 
 	public Block(Shape shape, BodyImage image) {
 		super(world, shape);
@@ -32,8 +33,12 @@ public class Block extends StaticBody {
 		if (!damageable) return;
 
 		health--;
+		score += damageScore;
 
-		if (health <= 0) destroy();
+		if (health <= 0) {
+			destroy();
+			score += destroyScore;
+		}
 		// TODO: Add damage animation.
 	}
 }
