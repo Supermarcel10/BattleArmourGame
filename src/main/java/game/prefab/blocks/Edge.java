@@ -17,6 +17,7 @@ public class Edge extends Block {
 				new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor)
 		);
 
+		damageable = false;
 		createBody(x, y);
 	}
 }

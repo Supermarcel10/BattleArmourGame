@@ -111,10 +111,11 @@ public class Game {
 					// Create a base.
 					blocks[i][j] = new Base(i - (gridSize / 2), j - (gridSize / 2));
 				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
-//					 If no block exists, create a brick border.
- 				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-					blocks[i][j] = new Edge(i, j);
-				}
+					//If no block exists, create a brick border.
+	                if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
+						blocks[i][j] = new Edge(i, j);
+					}
+
 					if (blocks[i][j] == null) {
 						blocks[i][j] = new Brick(i - hGridSize, j - hGridSize);
 					}
@@ -126,10 +127,10 @@ public class Game {
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
 		player = new Player(world, new Vec2(0, 0), tankShape);
 
-//		// Make a few enemies for testing.
-//		enemies[0] =  new ExplodingEnemy(world, new Vec2(-6, 6), tankShape);
-//		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
-//		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
-//		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
+		// Make a few enemies for testing.
+		enemies[0] =  new ExplodingEnemy(world, new Vec2(-6, 6), tankShape);
+		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
+		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
+		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
 	}
 }

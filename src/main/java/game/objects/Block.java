@@ -8,7 +8,7 @@ import static game.main.Game.*;
 
 public class Block extends StaticBody {
 	private final BodyImage image;
-	protected boolean damageable = false;
+	protected boolean damageable = true;
 	protected int maxHealth = 1;
 	protected int health = maxHealth;
 

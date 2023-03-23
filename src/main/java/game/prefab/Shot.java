@@ -56,6 +56,15 @@ public class Shot extends Body implements SensorListener {
 			b.damage();
 			sensorEvent.getSensor().getBody().destroy();
 		}
+
+		if (sensorEvent.getContactBody() instanceof Tank t) {
+			shooter.applyForce(new Vec2(0, 1000));
+			System.out.println(t.getPosition());
+			System.out.println(shooter.getPosition());
+			System.out.println("Hit tank");
+//			t.damage();
+//			sensorEvent.getSensor().getBody().destroy();
+		}   
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}

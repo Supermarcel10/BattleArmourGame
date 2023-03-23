@@ -19,7 +19,6 @@ public class Base extends Block {
 				new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor)
 		);
 
-		maxHealth = 1;
 		createBody(x, y);
 	}
 }

@@ -19,7 +19,6 @@ public class Brick extends Block {
 			new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor)
 		);
 
-		damageable = true;
 		maxHealth = 3;
 		health = maxHealth;
 
