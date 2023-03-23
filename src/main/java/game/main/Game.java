@@ -2,7 +2,6 @@ package game.main;
 
 import city.cs.engine.*;
 import city.cs.engine.Shape;
-import game.input.ColListener;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
@@ -29,8 +28,6 @@ public class Game {
 	public static Player player;
 	public static Block[][] blocks;
 	public static Enemy[] enemies;
-
-	private static final ColListener COL_LISTENER = new ColListener();
 
 	public static float scaleFactor = resolution.x / 1920;
 	public static int gridSize = 15;
@@ -91,7 +88,6 @@ public class Game {
 //		thread.start();
 	}
 
-
 	public static void loadGame() {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
@@ -102,22 +98,25 @@ public class Game {
 			for (int j = 0; j < gridSize; j++) {
 				// Create the edges of the world.
 				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-					blocks[i][j] = new Edge(world, i, j);
+					blocks[i][j] = new Edge((int) scaledGridSize * (-7 + i), (int) scaledGridSize * (-7 + j));
 				}
 
 				// Make bricks.
 				if (!(i == 0 || j == 0 || i == gridSize - 1 || j == gridSize - 1) && i % 2 != 1 && j % 3 != 1) {
-					blocks[i][j] = new Brick(world, i - hGridSize, j - hGridSize);
+					blocks[i][j] = new Brick(i - hGridSize, j - hGridSize);
 				}
 
 				// Always create a standard base layout.
 				if (i == gridSize / 2 && j == 1) {
 					// Create a base.
-					blocks[i][j] = new Base(world, i - (gridSize / 2), j - (gridSize / 2));
+					blocks[i][j] = new Base(i - (gridSize / 2), j - (gridSize / 2));
 				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
-					// If no block exists, create a brick border.
+//					 If no block exists, create a brick border.
+ 				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
+					blocks[i][j] = new Edge(i, j);
+				}
 					if (blocks[i][j] == null) {
-						blocks[i][j] = new Brick(world, i - hGridSize, j - hGridSize);
+						blocks[i][j] = new Brick(i - hGridSize, j - hGridSize);
 					}
 				}
 			}
@@ -127,23 +126,10 @@ public class Game {
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
 		player = new Player(world, new Vec2(0, 0), tankShape);
 
-		// Make a few enemies for testing.
-		enemies[0] =  new ExplodingEnemy(world, new Vec2(-6, 6), tankShape);
-		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
-		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
-		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
-
-		// Engage the collision listeners.
-		for (Enemy enemy : enemies) {
-			if (enemy != null) enemy.addCollisionListener(COL_LISTENER);
-		}
-
-		for (Block[] b1 : blocks) {
-			for (Block b2 : b1) {
-				if (b2 != null) b2.addCollisionListener(COL_LISTENER);
-			}
-		}
-
-		player.addCollisionListener(COL_LISTENER);
+//		// Make a few enemies for testing.
+//		enemies[0] =  new ExplodingEnemy(world, new Vec2(-6, 6), tankShape);
+//		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
+//		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
+//		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
 	}
 }

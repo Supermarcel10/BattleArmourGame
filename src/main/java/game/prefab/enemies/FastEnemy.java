@@ -13,7 +13,7 @@ public class FastEnemy extends Enemy {
 
 	public FastEnemy(World world, Vec2 position, Shape bodyShape) {
 		super(world, position);
-		attachBody(bodyShape);
+//		attachBody(bodyShape);
 		spawn();
 	}
 
@@ -22,7 +22,7 @@ public class FastEnemy extends Enemy {
 		speed = 0.6f;
 		scoreValue = 250;
 		setMaxHealth(1);
-		body.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
+		this.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
 		super.spawn();
 	}
 }

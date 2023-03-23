@@ -11,14 +11,12 @@ import static game.main.Game.*;
 public class Edge extends Block {
 	private static final String IMAGE = Config.image.get("edge");
 
-	public Edge(World world, int x, int y) {
+	public Edge(int x, int y) {
 		super(
-			new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor,
-			new Vec2((-24.5f + ((gridSize - 11) * -.1675f)) * scaleFactor, (-24.5f + ((gridSize - 11) * -.1675f)) * scaleFactor)),
-			new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor),
-			new Vec2(-25.18f * scaleFactor, -25.18f * scaleFactor)
+				new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor),
+				new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor)
 		);
 
-		createBody(world, x, y);
+		createBody(x, y);
 	}
 }

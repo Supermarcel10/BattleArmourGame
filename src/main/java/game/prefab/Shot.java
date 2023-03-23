@@ -1,6 +1,7 @@
 package game.prefab;
 
 import city.cs.engine.*;
+import game.objects.Block;
 import game.objects.Tank;
 import game.objects.abstractBody.Body;
 import org.jbox2d.common.Vec2;
@@ -8,10 +9,10 @@ import org.jbox2d.common.Vec2;
 import javax.swing.*;
 
 
-public class Shot extends Body {
-	private static final float speed = 12f;
+public class Shot extends Body implements SensorListener {
+	private static final float speed = 100f;
 	protected Tank shooter;
-	private Vec2 travelDirection;
+	private final Vec2 travelDirection;
 
 	public Shot(float speed, World world, Vec2 position, Vec2 travelDirection, Tank shooter) {
 		super(speed, world, position);
@@ -20,26 +21,42 @@ public class Shot extends Body {
 		spawn();
 	}
 
-	@Override
+//	@Override
 	public void spawn() {
 		// Set the body's move direction.
 		setMoveDirection(travelDirection);
-		body = new DynamicBody(world, new CircleShape(0.5f * scaleFactor, position));
-		body.applyImpulse(travelDirection.mul(speed));
-		// TODO: Fix stuff with the ghostly fixture.
-		// TODO: Fix accelerating the body.
-//		GhostlyFixture fixture =  new GhostlyFixture(body, new CircleShape(0.5f * scaleFactor, position));
-//		fixture.setDensity(0f);
-		body.setFillColor(java.awt.Color.RED);
-//		body.setGravityScale(0);
-//		body.setBullet(true);
-//		body.setClipped(true);
 
-//		 Destroy the body after 10 seconds.
+		// Create a new ghostly fixture
+		new GhostlyFixture(this, new CircleShape(0.5f * scaleFactor));
+		Sensor sensor = new Sensor(this, new CircleShape(0.5f * scaleFactor));
+
+		// Apply impulse
+		applyImpulse(travelDirection.mul(speed));
+
+		// Change properties
+		setFillColor(java.awt.Color.RED);
+		setGravityScale(0);
+		setBullet(true);
+		setClipped(true);
+
+		// Add collision listener.
+		sensor.addSensorListener(this);
+
+		// Destroy the body after 10 seconds.
 		new Timer(10000, e -> {
-			if (body != null) {
-				body.destroy();
-			}
+			this.destroy();
 		}).start();
 	}
+
+	@Override
+	public void beginContact(SensorEvent sensorEvent) {
+		System.out.println(sensorEvent.getContactBody().getClass());
+		if (sensorEvent.getContactBody() instanceof Block b) {
+			System.out.println("Hit block");
+			b.damage();
+			sensorEvent.getSensor().getBody().destroy();
+		}
+	}
+
+	@Override public void endContact(SensorEvent sensorEvent) {}
 }

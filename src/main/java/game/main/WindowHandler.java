@@ -1,5 +1,6 @@
 package game.main;
 
+import city.cs.engine.DebugViewer;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
 import game.input.Config;
@@ -54,6 +55,7 @@ public class WindowHandler {
 
 		// Enable debugs.
 		if (Config.DEBUG) {
+			new DebugViewer(world, (int) Config.resolution.x, (int) Config.resolution.y);
 			view.setGridResolution(3.75f);
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
 		}
@@ -159,9 +161,9 @@ public class WindowHandler {
 			Font ttf = Font.createFont(Font.TRUETYPE_FONT, new File(Config.font.get("default")));
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(ttf);
 
-			font = ttf.deriveFont(Font.PLAIN, (int) Math.round(gridSize * 1.8));
+			font = ttf.deriveFont(Font.PLAIN, (int) Math.round(gridSize * 1.8 * scaleFactor));
 		} catch (IOException | FontFormatException e) {
-			font = new Font("Algerian", Font.BOLD, (int) Math.round(gridSize * 1.8));
+			font = new Font("Algerian", Font.BOLD, (int) Math.round(gridSize * 1.8 * scaleFactor));
 		}
 
 		// Create a new JPanel to hold the score label.

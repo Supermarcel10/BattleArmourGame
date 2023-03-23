@@ -13,7 +13,7 @@ public class ExplodingEnemy extends Enemy {
 
 	public ExplodingEnemy(World world, Vec2 position, Shape bodyShape) {
 		super(world, position);
-		attachBody(bodyShape);
+//		attachBody(bodyShape);
 		spawn();
 	}
 
@@ -27,7 +27,7 @@ public class ExplodingEnemy extends Enemy {
 		speed = 0.5f;
 		scoreValue = 250;
 		setMaxHealth(1);
-		body.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
+		this.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
 		super.spawn();
 	}
 }

@@ -13,13 +13,16 @@ import static game.main.Game.scaledGridSize;
 public class Brick extends Block {
 	private static final String IMAGE = Config.image.get("wall");
 
-	public Brick(World world, int x, int y) {
+	public Brick(int x, int y) {
 		super(
 			new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor),
 			new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor)
 		);
 
+		damageable = true;
 		maxHealth = 3;
-		createBody(world, x, y);
+		health = maxHealth;
+
+		createBody(x, y);
 	}
 }

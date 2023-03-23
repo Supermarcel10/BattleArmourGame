@@ -19,6 +19,8 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 	@Override
 	public void keyPressed(@NotNull KeyEvent e) {
+		if (player == null) return;
+
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_A -> player.setMoveDirection(new Vec2(-1, 0));
 			case KeyEvent.VK_D -> player.setMoveDirection(new Vec2(1, 0));
@@ -30,6 +32,8 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 	@Override
 	public void keyReleased(@NotNull KeyEvent e) {
+		if (player == null) return;
+
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_A, KeyEvent.VK_D -> player.setMoveDirection(new Vec2(0, player.getMoveDirection().y));
 			case KeyEvent.VK_W, KeyEvent.VK_S -> player.setMoveDirection(new Vec2(player.getMoveDirection().x, 0));
@@ -40,7 +44,7 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 	@Override
 	public void preStep(StepEvent stepEvent) {
-		player.update();
+		if (player != null) player.update();
 
 		// TODO: Update this to only update the score label when the score changes.
 		WindowHandler.updateScore();

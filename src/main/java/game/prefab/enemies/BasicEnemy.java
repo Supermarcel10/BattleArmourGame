@@ -13,7 +13,7 @@ public class BasicEnemy extends Enemy {
 
 	public BasicEnemy(World world, Vec2 position, Shape bodyShape) {
 		super(world, position);
-		attachBody(bodyShape);
+//		attachBody(bodyShape);
 		spawn();
 	}
 
@@ -22,7 +22,7 @@ public class BasicEnemy extends Enemy {
 		speed = 0.4f;
 		scoreValue = 100;
 		setMaxHealth(1);
-		body.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
+		this.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
 		super.spawn();
 	}
 }

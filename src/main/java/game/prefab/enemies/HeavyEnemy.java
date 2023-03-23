@@ -13,7 +13,7 @@ public class HeavyEnemy extends Enemy {
 
 	public HeavyEnemy(World world, Vec2 position, Shape bodyShape) {
 		super(world, position);
-		attachBody(bodyShape);
+//		attachBody(bodyShape);
 		spawn();
 	}
 
@@ -22,7 +22,7 @@ public class HeavyEnemy extends Enemy {
 		speed = 0.3f;
 		scoreValue = 300;
 		setMaxHealth(3);
-		body.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
+		this.addImage(new BodyImage(IMAGE, 3 * scaleFactor));
 		super.spawn();
 	}
 }

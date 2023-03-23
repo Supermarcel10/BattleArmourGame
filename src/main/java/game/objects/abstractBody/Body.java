@@ -11,47 +11,37 @@ import static game.main.Game.scaledGridSize;
 public abstract class Body extends DynamicBody implements IBody {
 	protected float speed = 8f;
 	protected World world;
-	public Vec2 position;
 	protected Vec2 moveDirection = new Vec2(0, 0);
-	protected DynamicBody body;
 	protected float scaleFactor = Game.scaleFactor;
 
 	public Body(World world, Vec2 position) {
 		super(world);
 		this.world = world;
-		this.position = position;
+		setPosition(position);
 	}
 
 	public Body(float speed, World world, Vec2 position) {
 		super(world);
 		this.speed = speed;
 		this.world = world;
-		this.position = position;
+		setPosition(position);
 	}
 
-	public void attachBody() {
-		body = new DynamicBody(world, new BoxShape(1 * scaleFactor,2 * scaleFactor));
+	public Body(World world, Vec2 position, Shape bodyShape) {
+		super(world, bodyShape);
+		this.world = world;
+		setPosition(position);
 	}
 
-	public void attachBody(Shape shape) {
-		body = new DynamicBody(world, shape);
-	}
-
-	public void attachBody(@NotNull Vec2 size) {
-		body = new DynamicBody(world, new BoxShape(size.x * scaleFactor,size.y * scaleFactor));
+	public Body(float speed, World world, Vec2 position, Shape bodyShape) {
+		super(world, bodyShape);
+		this.speed = speed;
+		this.world = world;
+		setPosition(position);
 	}
 
 	public void spawn() {
-		body.setPosition(new Vec2(((scaledGridSize * 2) * position.x) * scaleFactor, ((scaledGridSize * 2) * position.y) * scaleFactor));
-	}
-
-	@Override
-	public void addCollisionListener(CollisionListener listener) {
-		body.addCollisionListener(listener);
-	}
-
-	public void destroy() {
-		body.destroy();
+		this.setPosition(new Vec2(((scaledGridSize * 2) * getPosition().x) * scaleFactor, ((scaledGridSize * 2) * getPosition().y) * scaleFactor));
 	}
 
 	public void setMoveDirection(Vec2 direction) {

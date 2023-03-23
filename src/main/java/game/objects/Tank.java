@@ -1,5 +1,6 @@
 package game.objects;
 
+import city.cs.engine.Shape;
 import city.cs.engine.World;
 import game.main.Game;
 import game.objects.abstractBody.Body;
@@ -21,14 +22,22 @@ public class Tank extends Body {
 		super(speed, world, position);
 	}
 
+	public Tank(World world, Vec2 position, Shape bodyShape) {
+		super(world, position, bodyShape);
+	}
+
+	public Tank(float speed, World world, Vec2 position, Shape bodyShape) {
+		super(speed, world, position, bodyShape);
+	}
+
 	public void shoot() {
 		// Get the player direction based on the angle of the tank.
 		Vec2 moveDirection = new Vec2(
-			(float) -Math.round(Math.sin(Math.round(body.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
-			(float) Math.round(Math.cos(Math.round(body.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
+			(float) -Math.round(Math.sin(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
+			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		new Shot(speed, world, body.getPosition(), moveDirection, this);
+		new Shot(speed, world, this.getPosition(), moveDirection, this);
 	}
 
 	public void damage(int damage) {
