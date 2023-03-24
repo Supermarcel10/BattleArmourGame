@@ -136,5 +136,21 @@ public class Game {
 		enemies.add(new FastEnemy(world, new Vec2(6, 6), tankShape));
 
 		SoundHandler.playBackgroundMusic();
+
+		// Spawn enemies progressively.
+		Thread proceduralSpawnEnemy = new Thread(() -> {
+			while (true) {
+				if (enemies.size() < 10) {
+					enemies.add(new BasicEnemy(new Vec2((int) (Math.random() * 12) - 6, 6), tankShape));
+				}
+
+				try {
+					sleep(5000 + (int) (Math.random() * 5000));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+//		proceduralSpawnEnemy.start();
 	}
 }
