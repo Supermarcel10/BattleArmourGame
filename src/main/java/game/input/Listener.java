@@ -27,7 +27,9 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 				case KeyEvent.VK_S -> player[0].setMoveDirection(new Vec2(0, -1));
 				case KeyEvent.VK_SPACE -> player[0].shoot();
 			}
-		} else if (player[1] != null) {
+		}
+
+		if (player[1] != null) {
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_LEFT -> player[1].setMoveDirection(new Vec2(-1, 0));
 				case KeyEvent.VK_RIGHT -> player[1].setMoveDirection(new Vec2(1, 0));
@@ -45,7 +47,9 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 				case KeyEvent.VK_A, KeyEvent.VK_D -> player[0].setMoveDirection(new Vec2(0, player[0].getMoveDirection().y));
 				case KeyEvent.VK_W, KeyEvent.VK_S -> player[0].setMoveDirection(new Vec2(player[0].getMoveDirection().x, 0));
 			}
-		} else if (player[1] != null) {
+		}
+
+		if (player[1] != null) {
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> player[1].setMoveDirection(new Vec2(0, player[1].getMoveDirection().y));
 				case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> player[1].setMoveDirection(new Vec2(player[0].getMoveDirection().x, 0));
