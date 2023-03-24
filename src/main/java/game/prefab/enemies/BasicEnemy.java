@@ -12,8 +12,7 @@ public class BasicEnemy extends Enemy {
 	private static final String IMAGE = Config.image.get("basicEnemy");
 
 	public BasicEnemy(World world, Vec2 position, Shape bodyShape) {
-		super(world, position);
-//		attachBody(bodyShape);
+		super(world, position, bodyShape);
 		spawn();
 	}
 

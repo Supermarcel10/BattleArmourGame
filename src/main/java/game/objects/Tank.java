@@ -50,7 +50,6 @@ public class Tank extends Body {
 		health--;
 		// TODO: Add explosion effect.
 		if (health == 0) {
-			System.out.println("Enemy destroyed!");
 			score += scoreValue;
 			destroy();
 		}

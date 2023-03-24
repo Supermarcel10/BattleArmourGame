@@ -21,7 +21,6 @@ public class Shot extends Body implements SensorListener {
 		spawn();
 	}
 
-//	@Override
 	public void spawn() {
 		// Set the body's move direction.
 		setMoveDirection(travelDirection);
@@ -50,21 +49,22 @@ public class Shot extends Body implements SensorListener {
 
 	@Override
 	public void beginContact(SensorEvent sensorEvent) {
-		System.out.println(sensorEvent.getContactBody().getClass());
 		if (sensorEvent.getContactBody() instanceof Block b) {
-			System.out.println("Hit block");
 			b.damage();
 			sensorEvent.getSensor().getBody().destroy();
+			// TODO: Consider destroying the whole class object.
 		}
 
-		if (sensorEvent.getContactBody() instanceof Tank t) {
-			shooter.applyForce(new Vec2(0, 1000));
-			System.out.println(t.getPosition());
-			System.out.println(shooter.getPosition());
-			System.out.println("Hit tank");
-//			t.damage();
-//			sensorEvent.getSensor().getBody().destroy();
-		}   
+		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
+			t.damage();
+			sensorEvent.getSensor().getBody().destroy();
+			// TODO: Consider destroying the whole class object.
+		}
+
+		if (sensorEvent.getContactBody() instanceof Shot s && s != this) {
+			s.destroy();
+			sensorEvent.getSensor().getBody().destroy();
+		}
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}
