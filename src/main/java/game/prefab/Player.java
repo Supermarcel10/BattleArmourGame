@@ -21,6 +21,7 @@ public class Player extends Tank {
 		speed = 0.4f;
 		setMaxHealth(1);
 		this.addImage(new BodyImage(Config.image.get("player"), 3 * scaleFactor));
+		scoreValue = -5000;
 		super.spawn();
 	}
 

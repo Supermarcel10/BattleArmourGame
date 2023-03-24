@@ -17,6 +17,7 @@ import game.prefab.enemies.HeavyEnemy;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
+import java.util.HashSet;
 
 import static game.input.Config.resolution;
 import static game.main.WindowHandler.view;
@@ -25,9 +26,9 @@ import static java.lang.Thread.sleep;
 
 public class Game {
 	public static World world;
-	public static Player player;
+	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
-	public static Enemy[] enemies;
+	public static HashSet<Enemy> enemies = new HashSet<>();
 
 	public static Vec2 basePos;
 
@@ -91,7 +92,6 @@ public class Game {
 	public static void loadGame() {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
-		enemies = new Enemy[gridSize * 2];
 
 		// Iterate over the world grid
 		for (int i = 0; i < gridSize; i++) {
@@ -126,12 +126,13 @@ public class Game {
 
 		// Make a character (with an overlaid image).
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
-		player = new Player(world, new Vec2(0, 0), tankShape);
+		player[0] = new Player(world, new Vec2(-1, 0), tankShape);
+		player[1] = new Player(world, new Vec2(1, 0), tankShape);
 
 		// Make a few enemies for testing.
-		enemies[0] =  new ExplodingEnemy(world, new Vec2(-6, 6), tankShape);
-		enemies[1] =  new BasicEnemy(world, new Vec2(-2, 6), tankShape);
-		enemies[2] =  new HeavyEnemy(world, new Vec2(2, 6), tankShape);
-		enemies[3] =  new FastEnemy(world, new Vec2(6, 6), tankShape);
+		enemies.add(new ExplodingEnemy(world, new Vec2(-6, 6), tankShape));
+		enemies.add(new BasicEnemy(world, new Vec2(-2, 6), tankShape));
+		enemies.add(new HeavyEnemy(world, new Vec2(2, 6), tankShape));
+		enemies.add(new FastEnemy(world, new Vec2(6, 6), tankShape));
 	}
 }

@@ -21,6 +21,10 @@ public class Config {
 		put('a', "player1-LEFT");
 		put('s', "player1-DOWN");
 		put('d', "player1-RIGHT");
+		put('↑', "player2-UP");
+		put('←', "player2-LEFT");
+		put('↓', "player2-DOWN");
+		put('→', "player2-RIGHT");
 	}};
 
 	public static HashMap<String, String> image = new HashMap<>() {{

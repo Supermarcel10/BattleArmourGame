@@ -19,34 +19,46 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 	@Override
 	public void keyPressed(@NotNull KeyEvent e) {
-		if (player == null) return;
-
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_A -> player.setMoveDirection(new Vec2(-1, 0));
-			case KeyEvent.VK_D -> player.setMoveDirection(new Vec2(1, 0));
-			case KeyEvent.VK_W -> player.setMoveDirection(new Vec2(0, 1));
-			case KeyEvent.VK_S -> player.setMoveDirection(new Vec2(0, -1));
-			default -> {}
+		if (player[0] != null) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_A -> player[0].setMoveDirection(new Vec2(-1, 0));
+				case KeyEvent.VK_D -> player[0].setMoveDirection(new Vec2(1, 0));
+				case KeyEvent.VK_W -> player[0].setMoveDirection(new Vec2(0, 1));
+				case KeyEvent.VK_S -> player[0].setMoveDirection(new Vec2(0, -1));
+				case KeyEvent.VK_SPACE -> player[0].shoot();
+			}
+		} else if (player[1] != null) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_LEFT -> player[1].setMoveDirection(new Vec2(-1, 0));
+				case KeyEvent.VK_RIGHT -> player[1].setMoveDirection(new Vec2(1, 0));
+				case KeyEvent.VK_UP -> player[1].setMoveDirection(new Vec2(0, 1));
+				case KeyEvent.VK_DOWN -> player[1].setMoveDirection(new Vec2(0, -1));
+				case KeyEvent.VK_ENTER -> player[1].shoot();
+			}
 		}
 	}
 
 	@Override
 	public void keyReleased(@NotNull KeyEvent e) {
-		if (player == null) return;
-
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_A, KeyEvent.VK_D -> player.setMoveDirection(new Vec2(0, player.getMoveDirection().y));
-			case KeyEvent.VK_W, KeyEvent.VK_S -> player.setMoveDirection(new Vec2(player.getMoveDirection().x, 0));
-			case KeyEvent.VK_SPACE -> player.shoot();
-			default -> {}
+		if (player[0] != null) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_A, KeyEvent.VK_D -> player[0].setMoveDirection(new Vec2(0, player[0].getMoveDirection().y));
+				case KeyEvent.VK_W, KeyEvent.VK_S -> player[0].setMoveDirection(new Vec2(player[0].getMoveDirection().x, 0));
+			}
+		} else if (player[1] != null) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> player[1].setMoveDirection(new Vec2(0, player[1].getMoveDirection().y));
+				case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> player[1].setMoveDirection(new Vec2(player[0].getMoveDirection().x, 0));
+			}
 		}
 	}
 
 	@Override
 	public void preStep(StepEvent stepEvent) {
-		if (player != null) player.update();
+		if (player[0] != null) player[0].update();
+		if (player[1] != null) player[1].update();
 
-		if (blocks[(int) basePos.x][(int) basePos.y].health <= 0 || (player != null && player.health <= 0)) {
+		if (blocks[(int) basePos.x][(int) basePos.y].health <= 0 || ((player[0] != null && player[0].health <= 0) && (player[1] != null && player[1].health <= 0))) {
 			WindowHandler.createDeathMenu();
 			world.stop();
 		}
