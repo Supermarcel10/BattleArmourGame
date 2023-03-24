@@ -5,6 +5,7 @@ import city.cs.engine.Shape;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
+import game.prefab.Shot;
 import game.prefab.blocks.Base;
 import game.prefab.blocks.Brick;
 import game.prefab.blocks.Edge;
@@ -29,6 +30,7 @@ public class Game {
 	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
 	public static HashSet<Enemy> enemies = new HashSet<>();
+	public static HashSet<Shot> shots = new HashSet<>();
 
 	public static Vec2 basePos;
 
@@ -40,7 +42,7 @@ public class Game {
 	public static int score = 0, postUpdateScore = 0;
 
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			// TODO: Add saving to the game.
 			// TODO: Add any database close statements here.
@@ -126,14 +128,16 @@ public class Game {
 
 		// Make a character (with an overlaid image).
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
-		player[0] = new Player(world, new Vec2(-1, 0), tankShape);
-		player[1] = new Player(world, new Vec2(1, 0), tankShape);
+		player[0] = new Player(new Vec2(-1, 0), tankShape);
+		player[1] = new Player(new Vec2(1, 0), tankShape);
 
 		// Make a few enemies for testing.
-		enemies.add(new ExplodingEnemy(world, new Vec2(-6, 6), tankShape));
-		enemies.add(new BasicEnemy(world, new Vec2(-2, 6), tankShape));
-		enemies.add(new HeavyEnemy(world, new Vec2(2, 6), tankShape));
-		enemies.add(new FastEnemy(world, new Vec2(6, 6), tankShape));
+//		new Spawner(new ExplodingEnemy(new Vec2(-6, 6), tankShape));
+
+		enemies.add(new ExplodingEnemy(new Vec2(-6, 6), tankShape));
+		enemies.add(new BasicEnemy(new Vec2(-2, 6), tankShape));
+		enemies.add(new HeavyEnemy(new Vec2(2, 6), tankShape));
+		enemies.add(new FastEnemy(new Vec2(6, 6), tankShape));
 
 		SoundHandler.playBackgroundMusic();
 

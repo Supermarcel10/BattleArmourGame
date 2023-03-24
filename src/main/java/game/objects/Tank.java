@@ -7,6 +7,7 @@ import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
 
 import static game.main.Game.score;
+import static game.main.Game.shots;
 
 
 public class Tank extends Body {
@@ -41,7 +42,7 @@ public class Tank extends Body {
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		new Shot(speed, world, this.getPosition(), moveDirection, this);
+		shots.add(new Shot(speed, world, this.getPosition(), moveDirection, this));
 	}
 
 	public void damage(int damage) {

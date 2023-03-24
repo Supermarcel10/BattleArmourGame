@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
+import static game.main.Game.shots;
+
 
 public class Shot extends Body implements SensorListener {
 	private static final float speed = 100f;
@@ -53,19 +55,24 @@ public class Shot extends Body implements SensorListener {
 		if (sensorEvent.getContactBody() instanceof Block b) {
 			b.damage();
 			sensorEvent.getSensor().getBody().destroy();
-			// TODO: Consider destroying the whole class object.
+
+			shots.remove(this);
 		}
 
 		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
 			t.damage();
 			sensorEvent.getSensor().getBody().destroy();
-			// TODO: Consider destroying the whole class object.
+
+			shots.remove(this);
 		}
+
 
 		// TODO: BUG: Fix this, where the shot cannot find other shots.
 //		if (sensorEvent.getContactBody() instanceof Shot s && s != this) {
 //			s.destroy();
 //			sensorEvent.getSensor().getBody().destroy();
+//
+//			shots.remove(this);
 //		}
 	}
 
