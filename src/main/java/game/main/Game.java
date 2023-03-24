@@ -61,8 +61,6 @@ public class Game {
 		world.setGravity(0);
 		view.setBackground(Color.decode("#fcf8de"));
 
-//		new DebugViewer(world, (int) resolution.x, (int) resolution.y);
-
 		loadGame();
 		WindowHandler.createGameOverlay();
 

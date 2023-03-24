@@ -19,6 +19,8 @@ public class Base extends Block {
 				new BodyImage(IMAGE, scaledGridSize * 2 * scaleFactor)
 		);
 
+		destroyScore = 0;
+		damageScore = 0;
 		createBody(x, y);
 	}
 }
