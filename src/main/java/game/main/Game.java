@@ -134,5 +134,7 @@ public class Game {
 		enemies.add(new BasicEnemy(world, new Vec2(-2, 6), tankShape));
 		enemies.add(new HeavyEnemy(world, new Vec2(2, 6), tankShape));
 		enemies.add(new FastEnemy(world, new Vec2(6, 6), tankShape));
+
+		SoundHandler.playBackgroundMusic();
 	}
 }
