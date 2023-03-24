@@ -8,6 +8,9 @@ import static game.main.Game.*;
 
 public class Block extends StaticBody {
 	private final BodyImage image;
+	protected static SoundClip damageSound;
+	protected static SoundClip destroySound;
+
 	protected boolean damageable = true;
 	protected int maxHealth = 1;
 	public int health = maxHealth;

@@ -1,8 +1,8 @@
 package game.objects;
 
 import city.cs.engine.Shape;
+import city.cs.engine.SoundClip;
 import city.cs.engine.World;
-import game.main.Game;
 import game.objects.abstractBody.Body;
 import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
@@ -11,6 +11,9 @@ import static game.main.Game.score;
 
 
 public class Tank extends Body {
+	protected static SoundClip damageSound;
+	protected static SoundClip destroySound;
+
 	protected int scoreValue = 0;
 	public int health;
 
