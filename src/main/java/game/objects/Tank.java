@@ -2,7 +2,6 @@ package game.objects;
 
 import city.cs.engine.Shape;
 import city.cs.engine.SoundClip;
-import city.cs.engine.World;
 import game.objects.abstractBody.Body;
 import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
@@ -17,20 +16,20 @@ public class Tank extends Body {
 	protected int scoreValue = 0;
 	public int health;
 
-	public Tank(World world, Vec2 position) {
-		super(world, position);
+	public Tank(Vec2 position) {
+		super(position);
 	}
 
-	public Tank(float speed, World world, Vec2 position) {
-		super(speed, world, position);
+	public Tank(float speed, Vec2 position) {
+		super(speed, position);
 	}
 
-	public Tank(World world, Vec2 position, Shape bodyShape) {
-		super(world, position, bodyShape);
+	public Tank(Vec2 position, Shape bodyShape) {
+		super(position, bodyShape);
 	}
 
-	public Tank(float speed, World world, Vec2 position, Shape bodyShape) {
-		super(speed, world, position, bodyShape);
+	public Tank(float speed, Vec2 position, Shape bodyShape) {
+		super(speed, position, bodyShape);
 	}
 
 	public void shoot() {

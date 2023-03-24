@@ -3,40 +3,35 @@ package game.objects.abstractBody;
 import city.cs.engine.*;
 import game.main.Game;
 import org.jbox2d.common.Vec2;
-import org.jetbrains.annotations.NotNull;
 
 import static game.main.Game.scaledGridSize;
 
 
 public abstract class Body extends DynamicBody implements IBody {
 	protected float speed = 8f;
-	protected World world;
+	protected World world = Game.world;
 	protected Vec2 moveDirection = new Vec2(0, 0);
 	protected float scaleFactor = Game.scaleFactor;
 
-	public Body(World world, Vec2 position) {
-		super(world);
-		this.world = world;
+	public Body(Vec2 position) {
+		super(Game.world);
 		setPosition(position);
 	}
 
-	public Body(float speed, World world, Vec2 position) {
-		super(world);
+	public Body(float speed, Vec2 position) {
+		super(Game.world);
 		this.speed = speed;
-		this.world = world;
 		setPosition(position);
 	}
 
-	public Body(World world, Vec2 position, Shape bodyShape) {
-		super(world, bodyShape);
-		this.world = world;
+	public Body(Vec2 position, Shape bodyShape) {
+		super(Game.world, bodyShape);
 		setPosition(position);
 	}
 
-	public Body(float speed, World world, Vec2 position, Shape bodyShape) {
-		super(world, bodyShape);
+	public Body(float speed, Vec2 position, Shape bodyShape) {
+		super(Game.world, bodyShape);
 		this.speed = speed;
-		this.world = world;
 		setPosition(position);
 	}
 

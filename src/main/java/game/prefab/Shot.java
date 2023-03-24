@@ -5,6 +5,7 @@ import game.objects.Block;
 import game.objects.Tank;
 import game.objects.abstractBody.Body;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
@@ -15,7 +16,7 @@ public class Shot extends Body implements SensorListener {
 	private final Vec2 travelDirection;
 
 	public Shot(float speed, World world, Vec2 position, Vec2 travelDirection, Tank shooter) {
-		super(speed, world, position);
+		super(speed, position);
 		this.shooter = shooter;
 		this.travelDirection = travelDirection;
 		spawn();
@@ -48,7 +49,7 @@ public class Shot extends Body implements SensorListener {
 	}
 
 	@Override
-	public void beginContact(SensorEvent sensorEvent) {
+	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b) {
 			b.damage();
 			sensorEvent.getSensor().getBody().destroy();
@@ -61,10 +62,11 @@ public class Shot extends Body implements SensorListener {
 			// TODO: Consider destroying the whole class object.
 		}
 
-		if (sensorEvent.getContactBody() instanceof Shot s && s != this) {
-			s.destroy();
-			sensorEvent.getSensor().getBody().destroy();
-		}
+		// TODO: BUG: Fix this, where the shot cannot find other shots.
+//		if (sensorEvent.getContactBody() instanceof Shot s && s != this) {
+//			s.destroy();
+//			sensorEvent.getSensor().getBody().destroy();
+//		}
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}
