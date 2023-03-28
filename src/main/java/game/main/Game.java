@@ -5,6 +5,7 @@ import city.cs.engine.Shape;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
+import game.prefab.TankType;
 import game.prefab.Shot;
 import game.prefab.blocks.Base;
 import game.prefab.blocks.Brick;
@@ -12,7 +13,6 @@ import game.prefab.blocks.Edge;
 import game.prefab.Player;
 import game.input.Listener;
 import game.prefab.blocks.Spawner;
-import game.prefab.enemies.*;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
@@ -27,6 +27,7 @@ public class Game {
 	public static World world;
 	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
+	public static HashSet<Spawner> spawners = new HashSet<>();
 	public static HashSet<Enemy> enemies = new HashSet<>();
 	public static HashSet<Shot> shots = new HashSet<>();
 
@@ -125,34 +126,34 @@ public class Game {
 		}
 
 		// Make a character (with an overlaid image).
-		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
-		player[0] = new Player(new Vec2(-1, 0));
-		player[1] = new Player(new Vec2(1, 0));
+		spawners.add(new Spawner(TankType.PLAYER, new Vec2(-1, 0)));
+		spawners.add(new Spawner(TankType.PLAYER, new Vec2(1, 0)));
+//		player[0] = new Player(new Vec2(-1, 0));
+//		player[1] = new Player(new Vec2(1, 0));
 
 		// Make a few enemies for testing.
-//		enemies.add(new ExplodingEnemy(new Vec2(-6, 6), tankShape));
-//		enemies.add(new BasicEnemy(new Vec2(-2, 6), tankShape));
-//		enemies.add(new HeavyEnemy(new Vec2(2, 6), tankShape));
-//		enemies.add(new FastEnemy(new Vec2(6, 6), tankShape));
-
-		new Spawner(EnemyType.BASIC, new Vec2(0, 6));
+		new Spawner(TankType.EXPLODING, new Vec2(-6, 6));
+		new Spawner(TankType.BASIC, new Vec2(-2, 6));
+		new Spawner(TankType.HEAVY, new Vec2(2, 6));
+		new Spawner(TankType.FAST, new Vec2(6, 6));
 
 		SoundHandler.playBackgroundMusic();
 
 		// Spawn enemies progressively.
-		Thread proceduralSpawnEnemy = new Thread(() -> {
-			while (true) {
-				if (enemies.size() < 10) {
-//					enemies.add(new BasicEnemy(new Vec2((int) (Math.random() * 12) - 6, 6), tankShape));
-				}
+		new Thread(Game::enemySpawn).start();
+	}
 
-				try {
-					sleep(5000 + (int) (Math.random() * 5000));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+	private static void enemySpawn() {
+		while (true) {
+			if (enemies.size() < 3) {
+				new Spawner(TankType.BASIC, new Vec2((int) (Math.random() * 12) - 6, 6));
 			}
-		});
-//		proceduralSpawnEnemy.start();
+
+			try {
+				sleep(5000 + (int) (Math.random() * 5000));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

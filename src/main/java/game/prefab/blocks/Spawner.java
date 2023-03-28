@@ -1,27 +1,29 @@
 package game.prefab.blocks;
 
 import city.cs.engine.*;
-import game.input.Config;
+import game.main.Game;
 import game.objects.Enemy;
-import game.objects.Tank;
 import game.objects.abstractBody.Body;
-import game.prefab.enemies.EnemyType;
+import game.prefab.Player;
+import game.prefab.TankType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.Objects;
 
 import static game.main.Game.enemies;
-import static java.lang.Thread.sleep;
+import static game.main.Game.spawners;
 
 
 public class Spawner extends Body {
 	// TODO: FIX THIS
-	public Spawner(@NotNull EnemyType type, Vec2 pos) {
+	public Spawner(@NotNull TankType type, Vec2 pos) {
 		super(pos);
+
+		spawners.add(this);
 
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, new CircleShape(scaleFactor * 2));
@@ -32,15 +34,27 @@ public class Spawner extends Body {
 		setClipped(true);
 
 
-		new Thread(() -> {
-			try {
-				sleep(1000);
+
+		if (type == TankType.PLAYER) {
+			Player player = type.createPlayer(pos);
+			int numOfPlayers = (int) Arrays.stream(Game.player).filter(Objects::nonNull).count();
+			Game.player[numOfPlayers] = player;
+		} else {
+			// Spawn enemy after 1 second.
+			Timer t = new Timer(1000, e -> {
 				Enemy enemy = type.createEnemy(pos);
 				enemy.spawn();
 				enemies.add(enemy);
-				this.destroy();
-			} catch (InterruptedException ignored) {
-			}
-		}).start();
+
+				// Stop after first execution.
+				((Timer) e.getSource()).stop();
+			});
+
+			t.start();
+			t = null; // Release Timer object for garbage collection.
+		}
+
+		this.destroy();
+		spawners.remove(this);
 	}
 }

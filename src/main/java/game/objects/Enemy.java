@@ -1,10 +1,8 @@
 package game.objects;
 
 import city.cs.engine.BodyImage;
-import city.cs.engine.Shape;
-import city.cs.engine.World;
 import game.prefab.Player;
-import game.prefab.enemies.EnemyType;
+import game.prefab.TankType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +14,7 @@ public class Enemy extends Tank {
 		super(position);
 	}
 
-	public Enemy(@NotNull EnemyType type, Vec2 position) {
+	public Enemy(@NotNull TankType type, Vec2 position) {
 		super(position);
 		this.addImage(new BodyImage(type.image, 3 * scaleFactor));
 		this.setMaxHealth(type.health);
