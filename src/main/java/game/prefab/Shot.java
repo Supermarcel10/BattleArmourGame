@@ -1,6 +1,7 @@
 package game.prefab;
 
 import city.cs.engine.*;
+import game.main.Game;
 import game.objects.Block;
 import game.objects.Tank;
 import game.objects.abstractBody.Body;
@@ -15,16 +16,12 @@ import static game.main.Game.shots;
 public class Shot extends Body implements SensorListener {
 	private static final float speed = 100f;
 	protected Tank shooter;
-	private final Vec2 travelDirection;
 
-	public Shot(float speed, Vec2 position, Vec2 travelDirection, Tank shooter) {
+	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter) {
 		super(speed, position);
 		this.shooter = shooter;
-		this.travelDirection = travelDirection;
-		spawn();
-	}
+		shots.add(this);
 
-	public void spawn() {
 		// Set the body's move direction.
 		setMoveDirection(travelDirection);
 
@@ -47,6 +44,7 @@ public class Shot extends Body implements SensorListener {
 		// Destroy the body after 10 seconds.
 		new Timer(10000, e -> {
 			this.destroy();
+			shots.remove(this);
 		}).start();
 	}
 

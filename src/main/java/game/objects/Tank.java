@@ -37,7 +37,7 @@ public class Tank extends Body {
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		Game.shots.add(new Shot(speed, this.getPosition(), moveDirection, this));
+		new Shot(this.getPosition(), moveDirection, this);
 	}
 
 	public void damage(int damage) {
