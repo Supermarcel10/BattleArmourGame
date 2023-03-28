@@ -1,16 +1,17 @@
 package game.objects;
 
+import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import city.cs.engine.SoundClip;
+import game.main.Game;
 import game.objects.abstractBody.Body;
 import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
 
-import static game.main.Game.score;
-import static game.main.Game.shots;
-
 
 public class Tank extends Body {
+	private static Shape shape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
+
 	protected static SoundClip damageSound;
 	protected static SoundClip destroySound;
 
@@ -18,19 +19,11 @@ public class Tank extends Body {
 	public int health;
 
 	public Tank(Vec2 position) {
-		super(position);
+		super(position, shape);
 	}
 
 	public Tank(float speed, Vec2 position) {
-		super(speed, position);
-	}
-
-	public Tank(Vec2 position, Shape bodyShape) {
-		super(position, bodyShape);
-	}
-
-	public Tank(float speed, Vec2 position, Shape bodyShape) {
-		super(speed, position, bodyShape);
+		super(speed, position, shape);
 	}
 
 	public void shoot() {
@@ -42,7 +35,7 @@ public class Tank extends Body {
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		shots.add(new Shot(speed, world, this.getPosition(), moveDirection, this));
+		Game.shots.add(new Shot(speed, world, this.getPosition(), moveDirection, this));
 	}
 
 	public void damage(int damage) {
@@ -55,7 +48,7 @@ public class Tank extends Body {
 		health--;
 		// TODO: Add explosion effect.
 		if (health == 0) {
-			score += scoreValue;
+			Game.score += scoreValue;
 			destroy();
 		}
 	}

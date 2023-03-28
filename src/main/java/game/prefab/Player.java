@@ -12,11 +12,6 @@ public class Player extends Tank {
 		spawn();
 	}
 
-	public Player(Vec2 position, Shape bodyShape) {
-		super(position, bodyShape);
-		spawn();
-	}
-
 	public void spawn() {
 		speed = 0.4f;
 		setMaxHealth(1);

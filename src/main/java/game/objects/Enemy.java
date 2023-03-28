@@ -1,9 +1,12 @@
 package game.objects;
 
+import city.cs.engine.BodyImage;
 import city.cs.engine.Shape;
 import city.cs.engine.World;
 import game.prefab.Player;
+import game.prefab.enemies.EnemyType;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 
 public class Enemy extends Tank {
@@ -13,15 +16,19 @@ public class Enemy extends Tank {
 		super(position);
 	}
 
-	public Enemy(Vec2 position, Shape bodyShape) {
-		super(position, bodyShape);
+	public Enemy(@NotNull EnemyType type, Vec2 position) {
+		super(position);
+		this.addImage(new BodyImage(type.image, 3 * scaleFactor));
+		this.setMaxHealth(type.health);
+		this.speed = type.speed;
+		this.scoreValue = type.scoreValue;
 	}
 
-	public Enemy(float speed, Vec2 position) {
-		super(speed, position);
+	public static void traceToPlayer() {
+
 	}
 
-	public Enemy(float speed, Vec2 position, Shape bodyShape) {
-		super(speed, position, bodyShape);
+	public static void traceToBase() {
+
 	}
 }

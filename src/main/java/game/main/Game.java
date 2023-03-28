@@ -11,10 +11,8 @@ import game.prefab.blocks.Brick;
 import game.prefab.blocks.Edge;
 import game.prefab.Player;
 import game.input.Listener;
-import game.prefab.enemies.BasicEnemy;
-import game.prefab.enemies.ExplodingEnemy;
-import game.prefab.enemies.FastEnemy;
-import game.prefab.enemies.HeavyEnemy;
+import game.prefab.blocks.Spawner;
+import game.prefab.enemies.*;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
@@ -128,16 +126,16 @@ public class Game {
 
 		// Make a character (with an overlaid image).
 		Shape tankShape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
-		player[0] = new Player(new Vec2(-1, 0), tankShape);
-		player[1] = new Player(new Vec2(1, 0), tankShape);
+		player[0] = new Player(new Vec2(-1, 0));
+		player[1] = new Player(new Vec2(1, 0));
 
 		// Make a few enemies for testing.
-//		new Spawner(new ExplodingEnemy(new Vec2(-6, 6), tankShape));
+//		enemies.add(new ExplodingEnemy(new Vec2(-6, 6), tankShape));
+//		enemies.add(new BasicEnemy(new Vec2(-2, 6), tankShape));
+//		enemies.add(new HeavyEnemy(new Vec2(2, 6), tankShape));
+//		enemies.add(new FastEnemy(new Vec2(6, 6), tankShape));
 
-		enemies.add(new ExplodingEnemy(new Vec2(-6, 6), tankShape));
-		enemies.add(new BasicEnemy(new Vec2(-2, 6), tankShape));
-		enemies.add(new HeavyEnemy(new Vec2(2, 6), tankShape));
-		enemies.add(new FastEnemy(new Vec2(6, 6), tankShape));
+		new Spawner(EnemyType.BASIC, new Vec2(0, 6));
 
 		SoundHandler.playBackgroundMusic();
 
@@ -145,7 +143,7 @@ public class Game {
 		Thread proceduralSpawnEnemy = new Thread(() -> {
 			while (true) {
 				if (enemies.size() < 10) {
-					enemies.add(new BasicEnemy(new Vec2((int) (Math.random() * 12) - 6, 6), tankShape));
+//					enemies.add(new BasicEnemy(new Vec2((int) (Math.random() * 12) - 6, 6), tankShape));
 				}
 
 				try {
