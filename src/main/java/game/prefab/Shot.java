@@ -1,7 +1,6 @@
 package game.prefab;
 
 import city.cs.engine.*;
-import game.main.Game;
 import game.objects.Block;
 import game.objects.Tank;
 import game.objects.abstractBody.Body;
