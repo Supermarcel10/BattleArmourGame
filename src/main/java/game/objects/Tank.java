@@ -10,7 +10,7 @@ import org.jbox2d.common.Vec2;
 
 
 public class Tank extends Body {
-	private static Shape shape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
+	private static final Shape shape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
 
 	protected static SoundClip damageSound;
 	protected static SoundClip destroySound;
@@ -35,7 +35,7 @@ public class Tank extends Body {
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		Game.shots.add(new Shot(speed, world, this.getPosition(), moveDirection, this));
+		Game.shots.add(new Shot(speed, this.getPosition(), moveDirection, this));
 	}
 
 	public void damage(int damage) {

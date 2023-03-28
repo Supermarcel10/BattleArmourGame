@@ -17,7 +17,7 @@ public class Shot extends Body implements SensorListener {
 	protected Tank shooter;
 	private final Vec2 travelDirection;
 
-	public Shot(float speed, World world, Vec2 position, Vec2 travelDirection, Tank shooter) {
+	public Shot(float speed, Vec2 position, Vec2 travelDirection, Tank shooter) {
 		super(speed, position);
 		this.shooter = shooter;
 		this.travelDirection = travelDirection;
