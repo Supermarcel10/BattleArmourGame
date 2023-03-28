@@ -8,6 +8,8 @@ import game.objects.abstractBody.Body;
 import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
 
+import static game.main.Game.enemies;
+
 
 public class Tank extends Body {
 	private static final Shape shape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
@@ -46,10 +48,19 @@ public class Tank extends Body {
 
 	public void damage() {
 		health--;
+
 		// TODO: Add explosion effect.
 		if (health == 0) {
 			Game.score += scoreValue;
 			destroy();
+			enemies.remove(this);
+
+			// Play the destroy sound if it exists.
+			if (destroySound != null) {
+				destroySound.play();
+			}
+		} else if (damageSound != null) {
+			damageSound.play();
 		}
 	}
 
