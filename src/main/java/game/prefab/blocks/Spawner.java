@@ -45,7 +45,7 @@ public class Spawner extends Body {
 
 				// Stop after first execution to allow for GC.
 				((Timer) e.getSource()).stop();
-			});
+			}).start();
 		}
 
 		this.destroy();
