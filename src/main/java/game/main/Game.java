@@ -1,18 +1,14 @@
 package game.main;
 
 import city.cs.engine.*;
-import city.cs.engine.Shape;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
 import game.prefab.TankType;
 import game.prefab.Shot;
-import game.prefab.blocks.Base;
-import game.prefab.blocks.Brick;
-import game.prefab.blocks.Edge;
+import game.prefab.blocks.*;
 import game.prefab.Player;
 import game.input.Listener;
-import game.prefab.blocks.Spawner;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
@@ -99,27 +95,27 @@ public class Game {
 			for (int j = 0; j < gridSize; j++) {
 				// Create the edges of the world.
 				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-					blocks[i][j] = new Edge((int) scaledGridSize * (-7 + i), (int) scaledGridSize * (-7 + j));
+					blocks[i][j] = new Block(BlockType.EDGE, (int) scaledGridSize * (-7 + i), (int) scaledGridSize * (-7 + j));
 				}
 
 				// Make bricks.
 				if (!(i == 0 || j == 0 || i == gridSize - 1 || j == gridSize - 1) && i % 2 != 1 && j % 3 != 1) {
-					blocks[i][j] = new Brick(i - hGridSize, j - hGridSize);
+					blocks[i][j] = new Block(BlockType.BRICK, i - hGridSize, j - hGridSize);
 				}
 
 				// Always create a standard base layout.
 				if (i == gridSize / 2 && j == 1) {
 					// Create a base.
 					basePos = new Vec2(i, j);
-					blocks[i][j] = new Base(i - (gridSize / 2), j - (gridSize / 2));
+					blocks[i][j] = new Block(BlockType.BASE, i - (gridSize / 2), j - (gridSize / 2));
 				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
 					//If no block exists, create a brick border.
 	                if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-						blocks[i][j] = new Edge(i, j);
+						blocks[i][j] = new Block(BlockType.EDGE, i, j);
 					}
 
 					if (blocks[i][j] == null) {
-						blocks[i][j] = new Brick(i - hGridSize, j - hGridSize);
+						blocks[i][j] = new Block(BlockType.BRICK, i - hGridSize, j - hGridSize);
 					}
 				}
 			}
