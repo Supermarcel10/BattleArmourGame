@@ -19,7 +19,6 @@ import static game.main.Game.spawners;
 
 
 public class Spawner extends Body {
-	// TODO: FIX THIS
 	public Spawner(@NotNull TankType type, Vec2 pos) {
 		super(pos);
 
