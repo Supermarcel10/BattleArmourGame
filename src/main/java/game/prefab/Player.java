@@ -1,7 +1,6 @@
 package game.prefab;
 
 import city.cs.engine.*;
-import game.input.Config;
 import game.objects.Tank;
 import org.jbox2d.common.Vec2;
 
@@ -9,15 +8,13 @@ import org.jbox2d.common.Vec2;
 public class Player extends Tank {
 	public Player(Vec2 position) {
 		super(position);
-		spawn();
-	}
 
-	public void spawn() {
-		speed = 0.4f;
-		setMaxHealth(1);
-		this.addImage(new BodyImage(Config.image.get("player"), 3 * scaleFactor));
-		scoreValue = -5000;
-		super.spawn();
+		speed = TankType.PLAYER.speed;
+		setMaxHealth(TankType.PLAYER.health);
+		this.addImage(new BodyImage(TankType.PLAYER.image, 3 * scaleFactor));
+		scoreValue = TankType.PLAYER.scoreValue;
+
+		spawn();
 	}
 
 	@Override
