@@ -51,4 +51,8 @@ public class Spawner extends Body {
 		this.destroy();
 		spawners.remove(this);
 	}
+
+	public Spawner(@NotNull TankType type, float x, float y) {
+		this(type, new Vec2(x, y));
+	}
 }
