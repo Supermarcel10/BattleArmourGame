@@ -10,10 +10,6 @@ import org.jetbrains.annotations.NotNull;
 public class Enemy extends Tank {
 	public Player target;
 
-	public Enemy(Vec2 position) {
-		super(position);
-	}
-
 	public Enemy(@NotNull TankType type, Vec2 position) {
 		super(position);
 		this.addImage(new BodyImage(type.image, 3 * scaleFactor));
