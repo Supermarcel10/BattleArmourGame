@@ -128,8 +128,6 @@ public class Game {
 		// Make a character (with an overlaid image).
 		spawners.add(new Spawner(TankType.PLAYER, new Vec2(-1, 0)));
 		spawners.add(new Spawner(TankType.PLAYER, new Vec2(1, 0)));
-//		player[0] = new Player(new Vec2(-1, 0));
-//		player[1] = new Player(new Vec2(1, 0));
 
 		// Make a few enemies for testing.
 		new Spawner(TankType.EXPLODING, new Vec2(-6, 6));
