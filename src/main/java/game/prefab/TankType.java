@@ -1,14 +1,9 @@
 package game.prefab;
 
-import city.cs.engine.BoxShape;
-import city.cs.engine.Shape;
 import game.input.Config;
 import game.objects.Enemy;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
-
-import static game.main.Game.scaleFactor;
-import static game.main.Game.scaledGridSize;
 
 
 public enum TankType {
