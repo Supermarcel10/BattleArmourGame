@@ -32,25 +32,20 @@ public class Spawner extends Body {
 		setGravityScale(0);
 		setClipped(true);
 
-
-
 		if (type == TankType.PLAYER) {
 			Player player = type.createPlayer(pos);
 			int numOfPlayers = (int) Arrays.stream(Game.player).filter(Objects::nonNull).count();
 			Game.player[numOfPlayers] = player;
 		} else {
 			// Spawn enemy after 1 second.
-			Timer t = new Timer(1000, e -> {
+			new Timer(1000, e -> {
 				Enemy enemy = type.createEnemy(pos);
 				enemy.spawn();
 				enemies.add(enemy);
 
-				// Stop after first execution.
+				// Stop after first execution to allow for GC.
 				((Timer) e.getSource()).stop();
 			});
-
-			t.start();
-			t = null; // Release Timer object for garbage collection.
 		}
 
 		this.destroy();
