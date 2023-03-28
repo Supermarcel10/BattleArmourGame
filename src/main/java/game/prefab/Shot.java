@@ -45,6 +45,9 @@ public class Shot extends Body implements SensorListener {
 		new Timer(10000, e -> {
 			this.destroy();
 			shots.remove(this);
+
+			// Stop after first execution to allow for GC.
+			((Timer) e.getSource()).stop();
 		}).start();
 	}
 
