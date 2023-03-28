@@ -28,7 +28,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Create a basic game grid where everything will be spawned
 - [x] Create player controls 
 - [x] Create player shooting
-- [ ] Create enemy spawning
+- [x] Create enemy spawning
 - [ ] Create pick-ups
 - [x] Create a "base" to protect
 - [x] Add a score system
@@ -38,6 +38,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [ ] Add a "game over" screen
 - [ ] Add a high-score system
 - [x] Create more enemies
+- [ ] Make co-op harder
 - [ ] Update the AI with different AIs for enemies
 - [x] Add texture images to the game
 - [ ] Animate the images
