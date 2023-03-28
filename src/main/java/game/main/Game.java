@@ -4,10 +4,7 @@ import city.cs.engine.*;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
-import game.prefab.TankType;
-import game.prefab.Shot;
-import game.prefab.blocks.*;
-import game.prefab.Player;
+import game.prefab.*;
 import game.input.Listener;
 import org.jbox2d.common.Vec2;
 
@@ -23,7 +20,7 @@ public class Game {
 	public static World world;
 	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
-	public static HashSet<Spawner> spawners = new HashSet<>();
+	public static HashSet<Spawn> spawners = new HashSet<>();
 	public static HashSet<Enemy> enemies = new HashSet<>();
 	public static HashSet<Shot> shots = new HashSet<>();
 
@@ -122,14 +119,14 @@ public class Game {
 		}
 
 		// Make a character (with an overlaid image).
-		new Spawner(TankType.PLAYER, new Vec2(-1, 0));
-		new Spawner(TankType.PLAYER, new Vec2(1, 0));
+		new Spawn(TankType.PLAYER, new Vec2(-1, 0));
+		new Spawn(TankType.PLAYER, new Vec2(1, 0));
 
 		// Make a few enemies for testing.
-		new Spawner(TankType.EXPLODING, new Vec2(-6, 6));
-		new Spawner(TankType.BASIC, new Vec2(-2, 6));
-		new Spawner(TankType.HEAVY, new Vec2(2, 6));
-		new Spawner(TankType.FAST, new Vec2(6, 6));
+		new Spawn(TankType.EXPLODING, new Vec2(-6, 6));
+		new Spawn(TankType.BASIC, new Vec2(-2, 6));
+		new Spawn(TankType.HEAVY, new Vec2(2, 6));
+		new Spawn(TankType.FAST, new Vec2(6, 6));
 
 		SoundHandler.playBackgroundMusic();
 
@@ -140,7 +137,7 @@ public class Game {
 	private static void enemySpawn() {
 		while (true) {
 			if (enemies.size() < 3) {
-				new Spawner(TankType.BASIC, new Vec2((int) (Math.random() * 12) - 6, 6));
+				new Spawn(TankType.BASIC, new Vec2((int) (Math.random() * 12) - 6, 6));
 			}
 
 			try {

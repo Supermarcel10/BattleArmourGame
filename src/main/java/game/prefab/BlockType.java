@@ -1,4 +1,4 @@
-package game.prefab.blocks;
+package game.prefab;
 
 import game.input.Config;
 

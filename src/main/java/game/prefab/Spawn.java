@@ -1,11 +1,9 @@
-package game.prefab.blocks;
+package game.prefab;
 
 import city.cs.engine.*;
 import game.main.Game;
 import game.objects.Enemy;
 import game.objects.abstractBody.Body;
-import game.prefab.Player;
-import game.prefab.TankType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,8 +16,8 @@ import static game.main.Game.enemies;
 import static game.main.Game.spawners;
 
 
-public class Spawner extends Body {
-	public Spawner(@NotNull TankType type, Vec2 pos) {
+public class Spawn extends Body {
+	public Spawn(@NotNull TankType type, Vec2 pos) {
 		super(pos);
 
 		spawners.add(this);
@@ -52,7 +50,7 @@ public class Spawner extends Body {
 		spawners.remove(this);
 	}
 
-	public Spawner(@NotNull TankType type, float x, float y) {
+	public Spawn(@NotNull TankType type, float x, float y) {
 		this(type, new Vec2(x, y));
 	}
 }

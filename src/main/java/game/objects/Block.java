@@ -1,7 +1,7 @@
 package game.objects;
 
 import city.cs.engine.*;
-import game.prefab.blocks.BlockType;
+import game.prefab.BlockType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
