@@ -8,11 +8,17 @@ import game.objects.abstractBody.Body;
 import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
+
 import static game.main.Game.enemies;
 
 
 public class Tank extends Body {
 	private static final Shape shape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
+
+	private boolean canShoot = true;
+	private int shootingDelay = 500;
+	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
 	protected static SoundClip damageSound;
 	protected static SoundClip destroySound;
@@ -22,16 +28,24 @@ public class Tank extends Body {
 
 	public Tank(Vec2 position) {
 		super(position, shape);
+		shootingTimer.setRepeats(false);
 	}
 
 	public Tank(float speed, Vec2 position) {
 		super(speed, position, shape);
+		shootingTimer.setRepeats(false);
 	}
 
 	public void shoot() {
-		// Get the tank direction based on the angle of it.
-		// TODO: Limit shooting speed.
+		// Limit the tank shooting speed.
+		if (!canShoot) {
+			return;
+		}
 
+		canShoot = false;
+		shootingTimer.restart();
+
+		// Get the tank direction based on the angle of it.
 		Vec2 moveDirection = new Vec2(
 			(float) -Math.round(Math.sin(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
