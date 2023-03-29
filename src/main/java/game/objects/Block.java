@@ -43,11 +43,7 @@ public class Block extends StaticBody {
 
 	public void createBody(@NotNull Vec2 position) {
 		addImage(image);
-//		position.x *= (scaledGridSize * 2) * scaleFactor;
-//		position.y *= (scaledGridSize * 2) * scaleFactor;
-
 		position = position.mul((scaledGridSize * 2) * scaleFactor);
-
 		setPosition(position);
 	}
 
