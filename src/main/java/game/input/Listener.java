@@ -3,6 +3,7 @@ package game.input;
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
 import game.main.WindowHandler;
+import game.objects.Enemy;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -61,6 +62,8 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	public void preStep(StepEvent stepEvent) {
 		if (player[0] != null) player[0].update();
 		if (player[1] != null) player[1].update();
+
+		for (Enemy enemy : enemies) enemy.update();
 
 		if (blocks[(int) basePos.x][(int) basePos.y].health <= 0 || ((player[0] != null && player[0].health <= 0) && (player[1] != null && player[1].health <= 0))) {
 			WindowHandler.createDeathMenu();
