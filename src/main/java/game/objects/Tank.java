@@ -23,7 +23,7 @@ public class Tank extends Body {
 	protected static SoundClip damageSound;
 	protected static SoundClip destroySound;
 
-	protected int scoreValue = 0;
+	protected int scoreValue;
 	public int health;
 
 	public Tank(Vec2 position) {
