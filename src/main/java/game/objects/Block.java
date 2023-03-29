@@ -47,13 +47,6 @@ public class Block extends StaticBody {
 		setPosition(position);
 	}
 
-
-	public void damage(int damage) {
-		for (int i = 0; i < damage; i++) {
-			damage();
-		}
-	}
-
 	public void damage() {
 		if (!damageable) return;
 
