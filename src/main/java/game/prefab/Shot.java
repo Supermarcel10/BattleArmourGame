@@ -13,12 +13,25 @@ import static game.main.Game.shots;
 
 
 public class Shot extends Body implements SensorListener {
-	private static final float speed = 100f;
+	public float speed = 150f;
 	protected Tank shooter;
 
-	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter) {
+	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed) {
 		super(speed, position);
 		this.shooter = shooter;
+		this.speed = speed;
+
+		spawn(travelDirection);
+	}
+
+	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter) {
+		super(150f, position);
+		this.shooter = shooter;
+
+		spawn(travelDirection);
+	}
+
+	private void spawn(Vec2 travelDirection) {
 		shots.add(this);
 
 		// Set the body's move direction.
