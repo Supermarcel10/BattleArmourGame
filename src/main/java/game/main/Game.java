@@ -128,10 +128,11 @@ public class Game {
 		new Spawn(TankType.HEAVY, new Vec2(2, 6));
 		new Spawn(TankType.FAST, new Vec2(6, 6));
 
+		// Play background music.
 		SoundHandler.playBackgroundMusic();
 
 		// Spawn enemies progressively.
-		new Thread(Game::enemySpawn).start();
+//		new Thread(Game::enemySpawn).start();
 	}
 
 	private static void enemySpawn() {
