@@ -19,14 +19,26 @@ public class Player extends Tank {
 
 	@Override
 	public void update() {
-		// Update the position of the player object based on the current movement direction
-		setPosition(getPosition().add(moveDirection.mul(speed * scaleFactor)));
+		// Get the updated player object position based on the current movement direction and speed.
+		Vec2 newPosition = getPosition().add(moveDirection.mul(speed * scaleFactor));
 
-		// Movement smoothing
-		float roundedX = ((float) Math.round(getPosition().x * 5) / 5.0f);
-		float roundedY = ((float) Math.round(getPosition().y * 5) / 5.0f);
-		this.setPosition(new Vec2(roundedX, roundedY));
+		for (Body b : this.getBodiesInContact()) {
+			for (Fixture f : b.getFixtureList()) {
+				if (f.getBody() instanceof Tank) {
+					 break;
+				}
 
+				if (f.intersects(newPosition, halfSize, halfSize)) {
+					return;
+				}
+			}
+		}
+
+		// TODO: Consider smoothing out movement.
+		// If no collisions occur, move the player.
+		setPosition(newPosition);
+
+		// Angle the player towards the moving direction.
 		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
 			float degrees = (float) (450 - Math.toDegrees(Math.atan2(moveDirection.y, moveDirection.x))) % 360;
 			this.setAngle(degrees * (float) Math.PI / -180);
