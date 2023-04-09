@@ -14,7 +14,8 @@ import static game.main.Game.enemies;
 
 
 public class Tank extends Body {
-	private static final Shape shape = new BoxShape(scaledGridSize * scaleFactor * .8f, scaledGridSize * scaleFactor * .8f);
+	protected static float halfSize = scaledGridSize * scaleFactor * .8f;
+	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
 	private boolean canShoot = true;
 	private int shootingDelay = 500;
