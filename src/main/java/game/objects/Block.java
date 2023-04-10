@@ -10,7 +10,7 @@ import static game.main.Game.*;
 
 public class Block extends StaticBody {
 	private static final BoxShape shape = new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor);
-	private static int destroyScore, damageScore;
+	private int destroyScore, damageScore;
 	private static BodyImage image;
 
 	// TODO: Consider putting in ENUM
@@ -34,11 +34,6 @@ public class Block extends StaticBody {
 
 	public Block(@NotNull BlockType type, int x, int y) {
 		this(type, new Vec2(x, y));
-	}
-
-	public Block(BodyImage image) {
-		super(world, shape);
-		Block.image = image;
 	}
 
 	public void createBody(@NotNull Vec2 position) {
