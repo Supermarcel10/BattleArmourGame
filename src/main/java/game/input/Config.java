@@ -40,14 +40,14 @@ public class Config {
 	}};
 
 	public static HashMap<String, String> sound = new HashMap<>() {{
-//		put("playerDeath", CD + "sound/playerDeath.wav");
-//		put("enemyDeath", CD + "sound/enemyDeath.wav");
-//		put("explosion", CD + "sound/explosion.wav");
+		put("playerDeath", CD + "sound/playerDeath.wav");
+		put("enemyDeath", CD + "sound/enemyDeath.wav");
+		put("explosion", CD + "sound/explosion.wav");
 	}};
 
 	public static HashMap<String, String> music = new HashMap<>() {{
-//		put("menu", CD + "music/menu.mp3");
-//		put("game", CD + "music/game.mp3");
+		put("menu", CD + "music/menu.mp3");
+		put("game", CD + "music/game.mp3");
 	}};
 
 	public static HashMap<String, String> font = new HashMap<>() {{
