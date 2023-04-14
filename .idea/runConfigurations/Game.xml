@@ -4,7 +4,7 @@
     <module name="CityGame" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="game.main.*" />
+        <option name="PATTERN" value="game.window.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

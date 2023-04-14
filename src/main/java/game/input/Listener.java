@@ -2,6 +2,7 @@ package game.input;
 
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
+import game.window.WindowDeath;
 import game.window.WindowHandler;
 import game.objects.Enemy;
 import org.jbox2d.common.Vec2;
@@ -22,7 +23,7 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	public void keyPressed(@NotNull KeyEvent e) {
 		if (Config.DEBUG){
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_1 -> WindowHandler.createDeathMenu();
+				case KeyEvent.VK_1 -> WindowDeath.createDeathMenu();
 			}
 		}
 
@@ -72,7 +73,7 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 		for (Enemy enemy : enemies) enemy.update();
 
 		if (blocks[(int) basePos.x][(int) basePos.y].health <= 0 || ((player[0] != null && player[0].health <= 0) && (player[1] != null && player[1].health <= 0))) {
-			WindowHandler.createDeathMenu();
+			WindowDeath.createDeathMenu();
 			world.stop();
 		}
 
