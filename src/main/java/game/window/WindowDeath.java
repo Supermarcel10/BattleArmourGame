@@ -8,10 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static game.main.Game.*;
-import static game.window.WindowHandler.*;
 
 
-public class WindowDeath extends WindowCommons {
+public class WindowDeath extends WindowHandler {
 	public static void createDeathMenu() {
 		lblScore.setVisible(false);
 
@@ -105,7 +104,7 @@ public class WindowDeath extends WindowCommons {
 		t2.start();
 
 		btnMainMenu.addActionListener(e -> {
-			changeMenuState(true);
+			WindowMenu.changeMenuState(true);
 			pnlOverlay.setVisible(false);
 		});
 

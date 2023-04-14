@@ -15,6 +15,7 @@ import static game.main.Game.*;
 
 public class WindowHandler extends WindowCommons {
 	private static final World world = Game.world;
+
 	protected static final JLayeredPane pnlMain = new JLayeredPane();
 	protected static final JLayeredPane pnlOverlay = new JLayeredPane();
 	public static final JFrame root = new JFrame(Config.title);
@@ -58,7 +59,7 @@ public class WindowHandler extends WindowCommons {
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
 		}
 
-		createMenu();
+		WindowMenu.createMenu();
 	}
 
 	public static void updateWindow() {
@@ -95,41 +96,6 @@ public class WindowHandler extends WindowCommons {
 			// Center the game window.
 			root.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);
 		}
-	}
-
-	public static void createMenu() {
-		pnlMenu = new JPanel();
-		btnsMenu = new JButton[] {
-			new JButton("New Game"),
-			new JButton("Load Game"),
-			new JButton("Options")
-		};
-
-		Font font = new Font("Arial", Font.PLAIN, 80);
-
-		for (JButton button : btnsMenu) {
-			button.setFont(font);
-			button.setSize(500, 500);
-
-			button.setBackground(Color.WHITE);
-			button.setForeground(Color.BLACK);
-
-			pnlMenu.add(button);
-		}
-
-		root.add(pnlMenu);
-
-		// TODO: Change once implemented.
-//		changeMenuState(false);
-	}
-
-	protected static void changeMenuState(boolean state) {
-		pnlMenu.setVisible(state);
-		for (JButton button : btnsMenu) {
-			button.setVisible(state);
-		}
-
-		inMenu = state;
 	}
 
 	public static void createOptionsMenu() {
