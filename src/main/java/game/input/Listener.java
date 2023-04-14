@@ -20,6 +20,12 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 	@Override
 	public void keyPressed(@NotNull KeyEvent e) {
+		if (Config.DEBUG){
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_1 -> WindowHandler.createDeathMenu();
+			}
+		}
+
 		if (player[0] != null) {
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_A -> player[0].setMoveDirection(new Vec2(-1, 0));
