@@ -16,9 +16,9 @@ public class Pickup extends Body implements CollisionListener {
 	public Pickup(PerkType type, Vec2 position) {
 		super(position, shape);
 		this.type = type;
+		this.addCollisionListener(this);
 
 		spawn();
-		this.addCollisionListener(this);
 	}
 
 	public void spawn() {
