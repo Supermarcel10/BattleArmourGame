@@ -138,6 +138,7 @@ public class Game {
 	}
 
 	private static void enemySpawn() {
+		// TODO: Make sure newly spawned characters don't spawn inside of blocks or other characters.
 		while (true) {
 			if (enemies.size() < 3) {
 				new Spawn(TankType.BASIC, new Vec2((int) (Math.random() * 12) - 6, 6));
