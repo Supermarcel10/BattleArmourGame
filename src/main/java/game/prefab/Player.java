@@ -1,11 +1,17 @@
 package game.prefab;
 
 import city.cs.engine.*;
+import game.objects.Pickup;
 import game.objects.Tank;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
+import java.util.HashMap;
+
 
 public class Player extends Tank {
+	public HashMap<PerkType, Integer[]> perks = new HashMap<>();
+
 	public Player(Vec2 position) {
 		super(position);
 
@@ -15,6 +21,23 @@ public class Player extends Tank {
 		scoreValue = TankType.PLAYER.scoreValue;
 
 		spawn();
+	}
+
+	public void pickUp(Pickup pickup) {
+		if (pickup.type.bulletCount != 0) {
+			perks.put(pickup.type, new Integer[]{pickup.type.duration, pickup.type.bulletCount});
+		} else {
+			perks.put(pickup.type, new Integer[]{pickup.type.duration});
+		}
+
+		Timer timer = new Timer(pickup.type.duration * 1000, e -> {
+			perks.remove(pickup.type);
+		});
+
+		timer.setRepeats(false);
+		timer.start();
+
+		pickup.destroy();
 	}
 
 	@Override
