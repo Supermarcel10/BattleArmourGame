@@ -70,7 +70,7 @@ public class WindowHandler {
 		pnlOverlay.setSize(view.getPreferredSize());
 
 		// Enable debugs.
-		if (Config.DEBUG) {
+		if (Config.DEBUG_DRAW) {
 			new DebugViewer(world, (int) Config.resolution.x, (int) Config.resolution.y);
 			view.setGridResolution(3.75f);
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
