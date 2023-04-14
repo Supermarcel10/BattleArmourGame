@@ -39,10 +39,13 @@ public class Config {
 		put("explodingEnemy", CD + "img/enemy/explosiveEnemy.gif");
 	}};
 
-	public static HashMap<String, String> sound = new HashMap<>() {{
-		put("playerDeath", CD + "sound/playerDeath.wav");
-		put("enemyDeath", CD + "sound/enemyDeath.wav");
-		put("explosion", CD + "sound/explosion.wav");
+	public static HashMap<String, String> tankSound = new HashMap<>() {{
+		put("shot", CD + "sound/tank/shoot.mp3");
+		put("death", CD + "sound/tank/death.mp3");
+	}};
+
+	public static HashMap<String, String> blockSound = new HashMap<>() {{
+		put("damage", CD + "sound/blocks/brick.mp3");
 	}};
 
 	public static HashMap<String, String> music = new HashMap<>() {{
