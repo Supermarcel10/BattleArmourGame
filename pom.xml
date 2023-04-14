@@ -93,6 +93,13 @@
             <systemPath>${basedir}/lib/CityEngine40/CityEngine.jar</systemPath>
         </dependency>
 
+        <!--        MP3 Library-->
+        <dependency>
+            <groupId>javazoom</groupId>
+            <artifactId>jlayer</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
         <!--        Jetbrains annotations-->
         <dependency>
             <groupId>org.jetbrains</groupId>
