@@ -158,10 +158,9 @@ public class WindowHandler {
 			// Open & register the font with the GraphicsEnvironment
 			Font ttf = Font.createFont(Font.TRUETYPE_FONT, new File(Config.font.get("default")));
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(ttf);
-			// TODO: Fix resolution scaling for text.
-			font = ttf.deriveFont(Font.PLAIN, (int) Math.round(gridSize * 2.5 * scaledGridSize));
+			font = ttf.deriveFont(Font.PLAIN, Math.round(scaleFactor * 60));
 		} catch (IOException | FontFormatException e) {
-			font = new Font("Algerian", Font.BOLD, (int) Math.round(gridSize * 2.5 * scaledGridSize));
+			font = new Font("Algerian", Font.BOLD, Math.round(scaleFactor * 60));
 		}
 
 		// Create a new JPanel to hold the score label.
