@@ -12,18 +12,20 @@ public enum BlockType {
 	public int maxHealth = 1;
 	public boolean damageable = true;
 	public int destroyScore = 40, damageScore = 10;
-
-	BlockType(String image, int maxHealth, int destroyScore) {
-		this.image = image;
-		this.maxHealth = maxHealth;
-		this.destroyScore = destroyScore;
-	}
+	public final String damageSound = Config.blockSound.get("damage");
+	public final String destroySound = Config.blockSound.get("damage");
 
 	BlockType(String image, int maxHealth, int destroyScore, int damageScore) {
 		this.image = image;
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
+	}
+
+	BlockType(String image, int maxHealth, int destroyScore) {
+		this.image = image;
+		this.maxHealth = maxHealth;
+		this.destroyScore = destroyScore;
 	}
 
 	BlockType(String image, int maxHealth) {

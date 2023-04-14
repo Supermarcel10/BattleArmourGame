@@ -1,6 +1,8 @@
 package game.objects;
 
 import city.cs.engine.*;
+import game.input.Config;
+import game.main.SoundHandler;
 import game.prefab.BlockType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
@@ -10,12 +12,10 @@ import static game.main.Game.*;
 
 public class Block extends StaticBody {
 	private static final BoxShape shape = new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor);
-	private int destroyScore, damageScore;
+	private final int damageScore, destroyScore;
 	private static BodyImage image;
 
-	// TODO: Consider putting in ENUM
-	protected static SoundClip damageSound;
-	protected static SoundClip destroySound;
+	protected static String damageSound, destroySound;
 
 	protected boolean damageable;
 	protected int maxHealth;
@@ -28,6 +28,9 @@ public class Block extends StaticBody {
 		damageScore = type.damageScore;
 		health = maxHealth = type.maxHealth;
 		damageable = type.damageable;
+
+		damageSound = type.damageSound;
+		destroySound = type.destroySound;
 
 		createBody(pos);
 	}
@@ -51,7 +54,9 @@ public class Block extends StaticBody {
 		if (health <= 0) {
 			destroy();
 			score += destroyScore;
-		}
+			soundHandler.play(damageSound);
+		} else soundHandler.play(destroySound);;
+
 		// TODO: Add damage animation.
 	}
 }
