@@ -201,7 +201,6 @@ public class WindowHandler {
 
 		lblGameOver.setBounds(gameOverLabelX, startGameOverLabelY, gameOverLabelWidth, gameOverLabelHeight);
 
-		// Animate the game over label.
 		Timer timer = new Timer(10, e -> {
 			if (complete[0] && lblGameOver.getY() > endGameOverLabelY) {
 				pnlOverlay.repaint();
@@ -219,13 +218,11 @@ public class WindowHandler {
 		lblScore.setVisible(false);
 		lblScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 4f)), gameOverLabelWidth, gameOverLabelHeight);
 
-		// TODO: Implement
-		JLabel lblBlockBrokenScore = createText("Tanks destroyed: " + score, 0.55f, pnlOverlay, 0);
+		JLabel lblBlockBrokenScore = createText("Tanks destroyed: " + kills, 0.55f, pnlOverlay, 0);
 		lblBlockBrokenScore.setVisible(false);
 		lblBlockBrokenScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 3f)), gameOverLabelWidth, gameOverLabelHeight);
 
-		// TODO: Implement
-		JLabel lblKillScore = createText("Blocks destroyed: " + score, 0.55f, pnlOverlay, 0);
+		JLabel lblKillScore = createText("Blocks destroyed: " + brokenBlocks, 0.55f, pnlOverlay, 0);
 		lblKillScore.setVisible(false);
 		lblKillScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 2f)), gameOverLabelWidth, gameOverLabelHeight);
 

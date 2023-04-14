@@ -3,14 +3,13 @@ package game.objects;
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import city.cs.engine.SoundClip;
-import game.main.Game;
 import game.objects.abstractBody.Body;
 import game.prefab.Shot;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 
-import static game.main.Game.enemies;
+import static game.main.Game.*;
 
 
 public class Tank extends Body {
@@ -60,7 +59,9 @@ public class Tank extends Body {
 
 		// TODO: Add explosion effect.
 		if (health == 0) {
-			Game.score += scoreValue;
+			score += scoreValue;
+			kills++;
+
 			destroy();
 			enemies.remove(this);
 

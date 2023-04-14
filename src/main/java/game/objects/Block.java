@@ -52,6 +52,7 @@ public class Block extends StaticBody {
 		if (health <= 0) {
 			destroy();
 			score += destroyScore;
+			brokenBlocks++;
 			soundHandler.play(damageSound);
 		} else soundHandler.play(destroySound);;
 

@@ -34,6 +34,8 @@ public class Game {
 	public static float scaledGridSize;
 
 	public static int score = 0, postUpdateScore = 0;
+	public static int kills = 0;
+	public static int brokenBlocks = 0;
 
 
 	public static void main(String[] args) {
