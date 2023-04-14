@@ -1,9 +1,10 @@
-package game.main;
+package game.window;
 
 import city.cs.engine.DebugViewer;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
 import game.input.Config;
+import game.main.Game;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;

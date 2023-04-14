@@ -6,13 +6,14 @@ import game.objects.Block;
 import game.objects.Enemy;
 import game.prefab.*;
 import game.input.Listener;
+import game.window.WindowHandler;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
 import java.util.HashSet;
 
 import static game.input.Config.resolution;
-import static game.main.WindowHandler.view;
+import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
 

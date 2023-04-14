@@ -2,7 +2,7 @@ package game.input;
 
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
-import game.main.WindowHandler;
+import game.window.WindowHandler;
 import game.objects.Enemy;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.event.*;
 
 import static game.main.Game.*;
-import static game.main.WindowHandler.view;
+import static game.window.WindowHandler.view;
 
 
 public class Listener implements KeyListener, MouseListener, StepListener {
