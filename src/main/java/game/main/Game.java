@@ -24,6 +24,8 @@ public class Game {
 	public static HashSet<Enemy> enemies = new HashSet<>();
 	public static HashSet<Shot> shots = new HashSet<>();
 
+	public static SoundHandler soundHandler = new SoundHandler();
+
 	public static Vec2 basePos;
 
 	public static float scaleFactor = resolution.x / 1920;
