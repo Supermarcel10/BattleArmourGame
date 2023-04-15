@@ -1,6 +1,6 @@
 package game.prefab;
 
-public enum PerkType {
+public enum PickupType {
 	QUAD_SHOT(10),
 	DOUBLE_DAMAGE(8),
 	SHIELD(20),
@@ -13,11 +13,11 @@ public enum PerkType {
 	public final int duration;
 	public int bulletCount;
 
-	PerkType(int duration) {
+	PickupType(int duration) {
 		this.duration = duration;
 	}
 
-	PerkType(int duration, int bulletCount) {
+	PickupType(int duration, int bulletCount) {
 		this.duration = duration;
 		this.bulletCount = bulletCount;
 	}

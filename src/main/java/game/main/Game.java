@@ -4,6 +4,7 @@ import city.cs.engine.*;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
+import game.objects.Pickup;
 import game.prefab.*;
 import game.input.Listener;
 import game.window.WindowHandler;
@@ -132,6 +133,8 @@ public class Game {
 		new Spawn(TankType.BASIC, new Vec2(-2, 6));
 		new Spawn(TankType.HEAVY, new Vec2(2, 6));
 		new Spawn(TankType.FAST, new Vec2(6, 6));
+
+		new Pickup(PickupType.DOUBLE_DAMAGE, new Vec2(0, 0));
 
 		// Play background music.
 		SoundHandler.playBackgroundMusic();

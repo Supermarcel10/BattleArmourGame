@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 
 public class Player extends Tank {
-	public HashMap<PerkType, Integer[]> perks = new HashMap<>();
+	public HashMap<PickupType, Integer[]> perks = new HashMap<>();
 
 	public Player(Vec2 position) {
 		super(position);
