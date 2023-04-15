@@ -30,14 +30,21 @@ public class Player extends Tank {
 			perks.put(pickup.type, new Integer[]{pickup.type.duration});
 		}
 
-		Timer timer = new Timer(pickup.type.duration * 1000, e -> {
-			perks.remove(pickup.type);
-		});
-
-		timer.setRepeats(false);
-		timer.start();
-
 		pickup.destroy();
+
+		new Timer(pickup.type.duration * 1000, e -> {
+			perks.remove(pickup.type);
+
+			switch (pickup.type) {
+				case SPEED_BOOST -> speed -= 0.2f;
+			}
+
+			((Timer) e.getSource()).stop();
+		}).start();
+
+		switch (pickup.type) {
+			case SPEED_BOOST -> speed += 0.2f;
+		}
 	}
 
 	@Override
