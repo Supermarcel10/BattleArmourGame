@@ -21,11 +21,6 @@ public class Pickup extends Body implements CollisionListener {
 		spawn();
 	}
 
-	public void spawn() {
-		this.setPosition(new Vec2(((scaledGridSize * 2) * getPosition().x) * scaleFactor,
-				((scaledGridSize * 2) * getPosition().y) * scaleFactor));
-	}
-
 	@Override
 	public void collide(CollisionEvent e) {
 		if (e.getOtherBody() instanceof Player p) p.pickUp(this);
