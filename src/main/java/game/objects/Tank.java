@@ -5,9 +5,15 @@ import city.cs.engine.Shape;
 import city.cs.engine.SoundClip;
 import game.objects.abstractBody.Body;
 import game.prefab.Shot;
+import game.prefab.ShotType;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static game.main.Game.*;
 
@@ -20,6 +26,7 @@ public class Tank extends Body {
 	private final int shootingDelay = 500;
 	protected float shotSpeed = 150f;
 	protected int shotDamage = 1;
+	protected List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
 	protected static SoundClip damageSound;
@@ -53,7 +60,31 @@ public class Tank extends Body {
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage);
+		// Find the most powerful shot type available.
+		AtomicReference<ShotType> shotType = new AtomicReference<>(ShotType.BASIC);
+
+		if (availableShots != null) {
+			for (HashMap<ShotType, Integer> shot : availableShots) {
+				shot.keySet().forEach(key -> {
+					if (shotType.get().ordinal() < key.ordinal()) shotType.set(key);
+				});
+			}
+
+			// Reduce the amount of the shot type available.
+			availableShots.forEach(shot -> {
+				if (shot.containsKey(shotType.get())) {
+					shot.put(shotType.get(), shot.get(shotType.get()) - 1);
+
+					// If the shot type is out of ammo, remove it.
+					if (shot.get(shotType.get()) <= 0) shot.remove(shotType.get());
+				}
+			});
+		}
+
+		System.out.println(shotType.get());
+
+		// Create the shot.
+		new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
 	}
 
 	public void damage(int damage) {

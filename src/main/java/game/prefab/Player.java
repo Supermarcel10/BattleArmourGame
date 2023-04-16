@@ -40,6 +40,8 @@ public class Player extends Tank {
 				case SPEED_BOOST -> speed -= 0.2f;
 				case FAST_SHOT -> changeShootingDelay(500);
 				case BULLET_PROPULSION -> shotSpeed = 150f;
+				case PENETRATING_BULLETS -> availableShots.removeIf(shot -> shot.containsKey(ShotType.PENETRATING));
+				case EXPLOSIVE_BULLETS -> availableShots.removeIf(shot -> shot.containsKey(ShotType.EXPLOSIVE));
 			}
 
 			((Timer) e.getSource()).stop();
@@ -50,6 +52,12 @@ public class Player extends Tank {
 			case SPEED_BOOST -> speed += 0.2f;
 			case FAST_SHOT -> changeShootingDelay(350);
 			case BULLET_PROPULSION -> shotSpeed = 300f;
+			case PENETRATING_BULLETS -> availableShots.add(new HashMap<>(){{
+				put(ShotType.PENETRATING, pickup.type.bulletCount);
+			}});
+			case EXPLOSIVE_BULLETS -> availableShots.add(new HashMap<>(){{
+				put(ShotType.EXPLOSIVE, pickup.type.bulletCount);
+			}});
 		}
 	}
 

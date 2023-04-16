@@ -39,6 +39,13 @@ public abstract class Body extends DynamicBody implements IBody {
 				((scaledGridSize * 2) * getPosition().y) * scaleFactor));
 	}
 
+	public void explode() {
+		destroy();
+		// TODO: Add explosion animation.
+		// TODO: Add explosion sound.
+		// TODO: Add explosion damage.
+	}
+
 	public Vec2 getGridPos() {
 		return new Vec2((int) (getPosition().x / (scaledGridSize * 2 * scaleFactor)),
 				(int) (getPosition().y / (scaledGridSize * 2 * scaleFactor)));

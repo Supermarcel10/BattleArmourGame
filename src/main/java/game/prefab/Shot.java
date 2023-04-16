@@ -8,19 +8,23 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.List;
 
 import static game.main.Game.shots;
 
 
 public class Shot extends Body implements SensorListener {
+	protected ShotType type;
+	protected List<Tank> penetratedBodies;
 	protected int damage;
 	protected Tank shooter;
 
-	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed, int damage) {
+	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed, int damage, ShotType type) {
 		super(speed, position);
 		this.shooter = shooter;
 		this.speed = speed;
 		this.damage = damage;
+		this.type = type;
 
 		spawn(travelDirection);
 	}
@@ -60,16 +64,29 @@ public class Shot extends Body implements SensorListener {
 	@Override
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b) {
-			b.damage(damage);
-			sensorEvent.getSensor().getBody().destroy();
+			switch (type) {
+				case BASIC, PENETRATING -> b.damage(damage);
+				case EXPLOSIVE -> explode();
+			}
 
-			shots.remove(this);
+			destroyShot();
 		}
 
 		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
 			t.damage(damage);
-			sensorEvent.getSensor().getBody().destroy();
 
+			switch (type) {
+				case BASIC -> destroyShot();
+				case PENETRATING -> {
+					if (!penetratedBodies.contains(t)) {
+						t.damage(damage);
+						penetratedBodies.add((Tank) sensorEvent.getContactBody());
+					}
+				}
+				case EXPLOSIVE -> explode();
+			}
+
+			destroy();
 			shots.remove(this);
 		}
 
@@ -81,6 +98,11 @@ public class Shot extends Body implements SensorListener {
 //
 //			shots.remove(this);
 //		}
+	}
+
+	private void destroyShot() {
+		destroy();
+		shots.remove(this);
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}
