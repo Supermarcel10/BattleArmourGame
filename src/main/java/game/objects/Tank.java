@@ -17,7 +17,7 @@ public class Tank extends Body {
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
 	private boolean canShoot = true;
-	private int shootingDelay = 500;
+	private final int shootingDelay = 500;
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
 	protected static SoundClip damageSound;
@@ -72,6 +72,11 @@ public class Tank extends Body {
 		} else if (damageSound != null) {
 			damageSound.play();
 		}
+	}
+
+	protected void changeShootingDelay(int delay) {
+		shootingTimer.setDelay(delay);
+		shootingTimer.setInitialDelay(delay);
 	}
 
 	public void setMaxHealth(int maxHealth) {
