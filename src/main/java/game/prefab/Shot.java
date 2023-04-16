@@ -74,21 +74,21 @@ public class Shot extends Body implements SensorListener {
 		}
 
 		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
-			t.damage(damage);
-
 			switch (type) {
-				case BASIC -> destroyShot();
+				case BASIC -> {
+					t.damage(damage);
+					destroyShot();
+				}
 				case PENETRATING -> {
 					if (!penetratedBodies.contains(t)) {
 						t.damage(damage);
 						penetratedBodies.add((Tank) sensorEvent.getContactBody());
+
+						if (penetratedBodies.size() >= type.numberOfPenetrations) destroyShot();
 					}
 				}
 				case EXPLOSIVE -> explode();
 			}
-
-			destroy();
-			shots.remove(this);
 		}
 
 
