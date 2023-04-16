@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static game.main.Game.shots;
@@ -15,7 +16,7 @@ import static game.main.Game.shots;
 
 public class Shot extends Body implements SensorListener {
 	protected ShotType type;
-	protected List<Tank> penetratedBodies;
+	protected List<Tank> penetratedBodies = new ArrayList<>();
 	protected int damage;
 	protected Tank shooter;
 
