@@ -96,6 +96,7 @@ public class Tank extends Body {
 			kills++;
 
 			destroy();
+			//noinspection SuspiciousMethodCalls
 			enemies.remove(this);
 
 			// Play the destroy sound if it exists.
