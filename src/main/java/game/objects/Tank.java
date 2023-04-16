@@ -19,6 +19,7 @@ public class Tank extends Body {
 	private boolean canShoot = true;
 	private final int shootingDelay = 500;
 	protected float shotSpeed = 150f;
+	protected int shotDamage = 1;
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
 	protected static SoundClip damageSound;
@@ -52,14 +53,14 @@ public class Tank extends Body {
 			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
 		);
 
-		new Shot(this.getPosition(), moveDirection, this, shotSpeed);
+		new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage);
 	}
 
-	public void damage() {
-		health--;
+	public void damage(int damage) {
+		health -= damage;
 
 		// TODO: Add explosion effect.
-		if (health == 0) {
+		if (health <= 0) {
 			score += scoreValue;
 			kills++;
 

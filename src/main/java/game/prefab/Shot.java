@@ -13,12 +13,14 @@ import static game.main.Game.shots;
 
 
 public class Shot extends Body implements SensorListener {
+	protected int damage;
 	protected Tank shooter;
 
-	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed) {
+	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed, int damage) {
 		super(speed, position);
 		this.shooter = shooter;
 		this.speed = speed;
+		this.damage = damage;
 
 		spawn(travelDirection);
 	}
@@ -58,14 +60,14 @@ public class Shot extends Body implements SensorListener {
 	@Override
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b) {
-			b.damage();
+			b.damage(damage);
 			sensorEvent.getSensor().getBody().destroy();
 
 			shots.remove(this);
 		}
 
 		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
-			t.damage();
+			t.damage(damage);
 			sensorEvent.getSensor().getBody().destroy();
 
 			shots.remove(this);

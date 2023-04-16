@@ -134,8 +134,7 @@ public class Game {
 		new Spawn(TankType.HEAVY, new Vec2(2, 6));
 		new Spawn(TankType.FAST, new Vec2(6, 6));
 
-		new Pickup(PickupType.BULLET_PROPULSION, new Vec2(0, 0));
-
+		new Pickup(PickupType.DOUBLE_DAMAGE, new Vec2(0, 0));
 		// Play background music.
 		SoundHandler.playBackgroundMusic();
 

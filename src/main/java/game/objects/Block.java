@@ -43,11 +43,11 @@ public class Block extends StaticBody {
 		setPosition(position);
 	}
 
-	public void damage() {
+	public void damage(int damage) {
 		if (!damageable) return;
 
-		health--;
-		score += damageScore;
+		score += damage >= health ? damageScore * health : damageScore * damage;
+		health -= damage;
 
 		if (health <= 0) {
 			destroy();
