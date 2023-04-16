@@ -38,6 +38,7 @@ public class Player extends Tank {
 			switch (pickup.type) {
 				case SPEED_BOOST -> speed -= 0.2f;
 				case FAST_SHOT -> changeShootingDelay(500);
+				case BULLET_PROPULSION -> shotSpeed = 150f;
 			}
 
 			((Timer) e.getSource()).stop();
@@ -46,6 +47,7 @@ public class Player extends Tank {
 		switch (pickup.type) {
 			case SPEED_BOOST -> speed += 0.2f;
 			case FAST_SHOT -> changeShootingDelay(350);
+			case BULLET_PROPULSION -> shotSpeed = 300f;
 		}
 	}
 
