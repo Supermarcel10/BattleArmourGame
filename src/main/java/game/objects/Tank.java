@@ -5,6 +5,7 @@ import city.cs.engine.Shape;
 import city.cs.engine.SoundClip;
 import game.objects.abstractBody.Body;
 import game.prefab.Shot;
+import game.prefab.ShotStyle;
 import game.prefab.ShotType;
 import org.jbox2d.common.Vec2;
 
@@ -26,7 +27,7 @@ public class Tank extends Body {
 	private final int shootingDelay = 500;
 	protected float shotSpeed = 150f;
 	protected int shotDamage = 1;
-	protected int quadShotRemaining = 0;
+	protected HashMap<ShotStyle, Integer> shotStyle = new HashMap<>();
 	protected List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
@@ -77,12 +78,17 @@ public class Tank extends Body {
 		}
 
 		// If the tank is in quad shot mode, create 4 shots instead of 1.
-		if (quadShotRemaining > 0) {
+		if (shotStyle.containsKey(ShotStyle.QUAD)) {
+			// Create 4 shots.
 			for (int i = 0; i < 4; i++) {
 				new Shot(this.getPosition(), new Vec2((float) Math.cos(i * Math.PI / 2), (float) Math.sin(i * Math.PI / 2)), this, shotSpeed, shotDamage, shotType.get());
 			}
 
-			quadShotRemaining--;
+			// Reduce the amount of quad shots available.
+			shotStyle.put(ShotStyle.QUAD, shotStyle.get(ShotStyle.QUAD) - 1);
+
+			// If the quad shot is out of ammo, remove it.
+			if (shotStyle.get(ShotStyle.QUAD) <= 0) shotStyle.remove(ShotStyle.QUAD);
 		} else {
 			// Get the tank direction based on the angle of it.
 			Vec2 moveDirection = new Vec2(
