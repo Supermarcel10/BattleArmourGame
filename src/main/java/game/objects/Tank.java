@@ -26,6 +26,7 @@ public class Tank extends Body {
 	private final int shootingDelay = 500;
 	protected float shotSpeed = 150f;
 	protected int shotDamage = 1;
+	protected int quadShotRemaining = 0;
 	protected List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
@@ -54,12 +55,6 @@ public class Tank extends Body {
 		canShoot = false;
 		shootingTimer.restart();
 
-		// Get the tank direction based on the angle of it.
-		Vec2 moveDirection = new Vec2(
-			(float) -Math.round(Math.sin(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
-			(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
-		);
-
 		// Find the most powerful shot type available.
 		AtomicReference<ShotType> shotType = new AtomicReference<>(ShotType.BASIC);
 
@@ -81,10 +76,23 @@ public class Tank extends Body {
 			});
 		}
 
-		System.out.println(shotType.get());
+		// If the tank is in quad shot mode, create 4 shots instead of 1.
+		if (quadShotRemaining > 0) {
+			for (int i = 0; i < 4; i++) {
+				new Shot(this.getPosition(), new Vec2((float) Math.cos(i * Math.PI / 2), (float) Math.sin(i * Math.PI / 2)), this, shotSpeed, shotDamage, shotType.get());
+			}
 
-		// Create the shot.
-		new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
+			quadShotRemaining--;
+		} else {
+			// Get the tank direction based on the angle of it.
+			Vec2 moveDirection = new Vec2(
+				(float) -Math.round(Math.sin(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
+				(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
+			);
+
+			// Create the shot.
+			new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
+		}
 	}
 
 	public void damage(int damage) {

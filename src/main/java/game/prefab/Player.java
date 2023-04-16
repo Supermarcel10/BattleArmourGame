@@ -36,6 +36,7 @@ public class Player extends Tank {
 			perks.remove(pickup.type);
 
 			switch (pickup.type) {
+				case QUAD_SHOT -> quadShotRemaining = 0;
 				case DOUBLE_DAMAGE -> shotDamage /= 2;
 				case SPEED_BOOST -> speed -= 0.2f;
 				case FAST_SHOT -> changeShootingDelay(500);
@@ -48,6 +49,7 @@ public class Player extends Tank {
 		}).start();
 
 		switch (pickup.type) {
+			case QUAD_SHOT -> quadShotRemaining = pickup.type.bulletCount;
 			case DOUBLE_DAMAGE -> shotDamage *= 2;
 			case SPEED_BOOST -> speed += 0.2f;
 			case FAST_SHOT -> changeShootingDelay(350);

@@ -2,7 +2,7 @@ package game.prefab;
 
 public enum PickupType {
 	// TODO: Add on screen display for the pickup.
-	QUAD_SHOT(10),
+	QUAD_SHOT(10, 3),
 	DOUBLE_DAMAGE(8),
 	SHIELD(20),
 	SPEED_BOOST(4),
