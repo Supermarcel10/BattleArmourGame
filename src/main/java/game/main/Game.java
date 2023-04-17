@@ -109,7 +109,6 @@ public class Game {
 				// Always create a standard base layout.
 				if (i == gridSize / 2 && j == 1) {
 					// Create a base.
-					basePos = new Vec2(i, j);
 					blocks[i][j] = new Block(BlockType.BASE, i - (gridSize / 2), j - (gridSize / 2));
 				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
 					//If no block exists, create a brick border.

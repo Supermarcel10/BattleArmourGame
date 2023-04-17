@@ -35,6 +35,7 @@ public class Block extends StaticBody {
 
 	public Block(@NotNull BlockType type, int x, int y) {
 		this(type, new Vec2(x, y));
+		if (type == BlockType.BASE) basePos = new Vec2(x + hGridSize, y + hGridSize);
 	}
 
 	public void createBody(@NotNull Vec2 position) {
