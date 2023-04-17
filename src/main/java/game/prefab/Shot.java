@@ -40,6 +40,8 @@ public class Shot extends Body implements SensorListener {
 		Sensor sensor = new Sensor(this, shape);
 
 		// Apply impulse
+		// TODO: Fix resolution affecting the speed of the shot.
+		// TODO: Fix frame time affecting the speed of the shot.
 		applyImpulse(travelDirection.mul(speed));
 
 		// Change properties
