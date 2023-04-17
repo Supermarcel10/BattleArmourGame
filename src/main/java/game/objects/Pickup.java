@@ -18,7 +18,7 @@ public class Pickup extends Body implements SensorListener {
 		super(0f);
 		this.type = type;
 
-		setPositionJBox(position);
+		setPosition(position);
 
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, shape);
@@ -30,6 +30,10 @@ public class Pickup extends Body implements SensorListener {
 
 		// Add collision listener.
 		sensor.addSensorListener(this);
+	}
+
+	public Pickup(PickupType type, int x, int y) {
+		this(type, new Vec2(x, y));
 	}
 
 	// TODO: Fix this sometimes not registering

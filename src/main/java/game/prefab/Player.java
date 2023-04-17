@@ -4,6 +4,7 @@ import city.cs.engine.*;
 import game.objects.Pickup;
 import game.objects.Tank;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -21,7 +22,11 @@ public class Player extends Tank {
 		scoreValue = TankType.PLAYER.scoreValue;
 	}
 
-	public void pickUp(Pickup pickup) {
+	public Player(int x, int y) {
+		this(new Vec2(x, y));
+	}
+
+	public void pickUp(@NotNull Pickup pickup) {
 		// Add the perk to the perks list.
 		if (pickup.type.bulletCount != 0) {
 			perks.put(pickup.type, new Integer[]{pickup.type.duration, pickup.type.bulletCount});
