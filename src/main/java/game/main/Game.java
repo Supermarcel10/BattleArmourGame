@@ -138,7 +138,7 @@ public class Game {
 		SoundHandler.playBackgroundMusic();
 
 		// Spawn enemies progressively.
-//		new Thread(Game::enemySpawn).start();
+		new Thread(Game::enemySpawn).start();
 	}
 
 	private static void enemySpawn() {
