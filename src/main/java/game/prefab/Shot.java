@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static game.main.Game.shots;
+import static game.objects.Tank.halfSize;
 
 
 public class Shot extends Body implements SensorListener {
+	private static final Shape shape = new CircleShape((halfSize * 0.28f) * scaleFactor);
 	protected ShotType type;
 	protected List<Tank> penetratedBodies = new ArrayList<>();
 	protected int damage;
@@ -33,21 +35,16 @@ public class Shot extends Body implements SensorListener {
 	private void spawn(Vec2 travelDirection) {
 		shots.add(this);
 
-		// Set the body's move direction.
-		setMoveDirection(travelDirection);
-
 		// Create a new ghostly fixture
-		new GhostlyFixture(this, new CircleShape(0.5f * scaleFactor));
-		Sensor sensor = new Sensor(this, new CircleShape(0.5f * scaleFactor));
+		new GhostlyFixture(this, shape);
+		Sensor sensor = new Sensor(this, shape);
 
 		// Apply impulse
 		applyImpulse(travelDirection.mul(speed));
 
 		// Change properties
 		setFillColor(java.awt.Color.RED);
-		setGravityScale(0);
 		setBullet(true);
-		setClipped(true);
 
 		// Add collision listener.
 		sensor.addSensorListener(this);
