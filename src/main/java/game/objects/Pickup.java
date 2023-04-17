@@ -5,6 +5,7 @@ import game.objects.abstractBody.Body;
 import game.prefab.PickupType;
 import game.prefab.Player;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 import static game.objects.Tank.halfSize;
 
@@ -29,8 +30,9 @@ public class Pickup extends Body implements SensorListener {
 		sensor.addSensorListener(this);
 	}
 
+	// TODO: Fix this sometimes not registering
 	@Override
-	public void beginContact(SensorEvent e) {
+	public void beginContact(@NotNull SensorEvent e) {
 		if (e.getContactBody() instanceof Player p) p.pickUp(this);
 	}
 
