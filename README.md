@@ -16,9 +16,9 @@ I will also make custom perks and balance the game in the way I believe it is di
 ## Planned features
 
 - [x] Co-op 2 player gameplay
-- [ ] Pick-up perks
+- [x] Pick-up perks
 - [ ] Score and high-score tracking
-- [ ] Different enemies that procedurally spawn
+- [x] Different enemies that procedurally spawn
 - [ ] Settings to change the controls and resolution
 - [ ] Sounds and music
 
@@ -29,7 +29,9 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Create player controls 
 - [x] Create player shooting
 - [x] Create enemy spawning
-- [ ] Create pick-ups
+- [x] Create pick-ups
+- [ ] Create art for perks
+- [ ] Create new art for blocks
 - [x] Create a "base" to protect
 - [x] Add a score system
 - [x] Add a way to gain score
