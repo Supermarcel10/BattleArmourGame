@@ -9,20 +9,30 @@ import org.jbox2d.common.Vec2;
 import static game.objects.Tank.halfSize;
 
 
-public class Pickup extends Body implements CollisionListener {
-	private static final Shape shape = new CircleShape(halfSize);
+public class Pickup extends Body implements SensorListener {
+	private static final Shape shape = new CircleShape((halfSize / 1.5f) * scaleFactor);
 	public final PickupType type;
 
 	public Pickup(PickupType type, Vec2 position) {
-		super(position, shape);
+		super(0f, position);
 		this.type = type;
-		this.addCollisionListener(this);
 
-		spawn();
+		// Create a new ghostly fixture
+		new GhostlyFixture(this, shape);
+		Sensor sensor = new Sensor(this, shape);
+
+		this.setFillColor(java.awt.Color.RED);
+
+		setBullet(true);
+
+		// Add collision listener.
+		sensor.addSensorListener(this);
 	}
 
 	@Override
-	public void collide(CollisionEvent e) {
-		if (e.getOtherBody() instanceof Player p) p.pickUp(this);
+	public void beginContact(SensorEvent e) {
+		if (e.getContactBody() instanceof Player p) p.pickUp(this);
 	}
+
+	@Override public void endContact(SensorEvent sensorEvent) {}
 }
