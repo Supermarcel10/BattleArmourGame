@@ -20,7 +20,7 @@ import static game.main.Game.*;
 
 
 public class Tank extends Body {
-	protected static float halfSize = scaledGridSize * scaleFactor * .8f;
+	public static float halfSize = scaledGridSize * scaleFactor * .8f;
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
 	// TODO: Add a shield image to the tank.
