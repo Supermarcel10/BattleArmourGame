@@ -24,15 +24,12 @@ public class Shot extends Body implements SensorListener {
 
 	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed, int damage, ShotType type) {
 		super(speed);
-
 		setPositionJBox(position);
 
 		this.shooter = shooter;
 		this.speed = speed;
 		this.damage = damage;
 		this.type = type;
-
-		System.out.println(getPosition());
 
 		shots.add(this);
 
