@@ -1,9 +1,12 @@
 package game.main;
 
-import city.cs.engine.SoundClip;
 import game.input.Config;
+
 import java.io.FileInputStream;
+
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -14,8 +17,8 @@ public class SoundHandler implements Runnable {
 
 	public static void playBackgroundMusic() {
 		try {
-			SoundClip backgroundMusic = new SoundClip(Config.music.get("game"));
-			backgroundMusic.loop();
+			FileInputStream fis = new FileInputStream(Config.music.get("game"));
+			Player backgroundMusic = new Player(fis);
 			backgroundMusic.play();
 		} catch (Exception ignored) {}
 	}
@@ -25,7 +28,11 @@ public class SoundHandler implements Runnable {
 	}
 
 	public void play(String fileName) {
-		queue.offer(fileName);
+		boolean added = queue.offer(fileName);
+
+		if (!added) {
+			System.err.println("Failed to add " + fileName + " to sound queue!");
+		}
 
 		if (thread == null || !thread.isAlive()) {
 			thread = new Thread(this);
@@ -33,19 +40,21 @@ public class SoundHandler implements Runnable {
 		}
 	}
 
-	public void stop() {
-		queue.clear();
-	}
-
 	public void run() {
 		try {
-			while (true) {
+			while (!Thread.currentThread().isInterrupted()) {
 				String fileName = queue.take();
 
 				FileInputStream fis = new FileInputStream(fileName);
 				Player player = new Player(fis);
-				player.play();
+				new Thread(() -> {
+					try {
+						player.play();
+					} catch (JavaLayerException ignored) {}
+				}).start();
 			}
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
