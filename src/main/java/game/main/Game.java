@@ -4,7 +4,6 @@ import city.cs.engine.*;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
-import game.objects.Pickup;
 import game.prefab.*;
 import game.input.Listener;
 import game.window.WindowHandler;
@@ -14,6 +13,7 @@ import java.awt.*;
 import java.util.HashSet;
 
 import static game.input.Config.resolution;
+import static game.main.LoadLevel.loadLevel;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
@@ -74,6 +74,12 @@ public class Game {
 		// Start world simulation
 		world.start();
 
+		// Play background music.
+		SoundHandler.playBackgroundMusic();
+
+		// Spawn enemies progressively.
+//		new Thread(Game::enemySpawn).start();
+
 		// Create a thread to print the FPS.
 		Thread thread = new Thread(() -> {
 			while (true) {
@@ -92,6 +98,12 @@ public class Game {
 	public static void loadGame() {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
+
+//		try {
+//			loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		// Iterate over the world grid
 		for (int i = 0; i < gridSize; i++) {
@@ -132,12 +144,6 @@ public class Game {
 		new Spawn(TankType.BASIC, new Vec2(-2, 6));
 		new Spawn(TankType.HEAVY, new Vec2(2, 6));
 		new Spawn(TankType.FAST, new Vec2(6, 6));
-
-		// Play background music.
-		SoundHandler.playBackgroundMusic();
-
-		// Spawn enemies progressively.
-//		new Thread(Game::enemySpawn).start();
 	}
 
 	private static void enemySpawn() {
