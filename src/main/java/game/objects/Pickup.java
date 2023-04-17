@@ -17,6 +17,8 @@ public class Pickup extends Body implements SensorListener {
 		super(0f, position);
 		this.type = type;
 
+		setPosition(getJBoxPos());
+
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, shape);
 		Sensor sensor = new Sensor(this, shape);
