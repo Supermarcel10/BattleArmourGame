@@ -51,6 +51,11 @@ public abstract class Body extends DynamicBody implements IBody {
 				(int) (getPosition().y / (scaledGridSize * 2 * scaleFactor)));
 	}
 
+	public Vec2 getJBoxPos() {
+		return new Vec2(((scaledGridSize * 2) * getPosition().x) * scaleFactor,
+				((scaledGridSize * 2) * getPosition().y) * scaleFactor);
+	}
+
 	public void setMoveDirection(Vec2 direction) {
 		moveDirection = direction;
 	}
