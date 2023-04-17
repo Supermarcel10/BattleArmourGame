@@ -12,8 +12,7 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static game.main.Game.enemies;
-import static game.main.Game.spawners;
+import static game.main.Game.*;
 
 
 public class Spawn extends Body {
@@ -24,7 +23,7 @@ public class Spawn extends Body {
 		setPosition(getJBoxPos());
 
 		// Create a new ghostly fixture
-		new GhostlyFixture(this, new CircleShape(2f));
+		new GhostlyFixture(this, new CircleShape(1.75f * scaleFactor));
 
 		// Change properties
 		setFillColor(java.awt.Color.WHITE);
