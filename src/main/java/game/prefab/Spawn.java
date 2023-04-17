@@ -19,9 +19,6 @@ public class Spawn extends Body {
 	public Spawn(@NotNull TankType type, Vec2 pos) {
 		super(pos);
 
-		// Normalise the position to the grid.
-		setPosition(getJBoxPos());
-
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, new CircleShape(1.75f * scaleFactor));
 
@@ -40,7 +37,6 @@ public class Spawn extends Body {
 			// Spawn enemy after 1 second.
 			new Timer(1000, e -> {
 				Enemy enemy = type.createEnemy(pos);
-				enemy.spawn();
 				enemies.add(enemy);
 
 				removeSpawner();

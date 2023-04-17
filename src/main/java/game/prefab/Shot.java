@@ -23,16 +23,17 @@ public class Shot extends Body implements SensorListener {
 	protected Tank shooter;
 
 	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed, int damage, ShotType type) {
-		super(speed, position);
+		super(speed);
+
+		setPositionJBox(position);
+
 		this.shooter = shooter;
 		this.speed = speed;
 		this.damage = damage;
 		this.type = type;
 
-		spawn(travelDirection);
-	}
+		System.out.println(getPosition());
 
-	private void spawn(Vec2 travelDirection) {
 		shots.add(this);
 
 		// Create a new ghostly fixture
@@ -59,6 +60,11 @@ public class Shot extends Body implements SensorListener {
 			// Stop after first execution to allow for GC.
 			((Timer) e.getSource()).stop();
 		}).start();
+	}
+
+	private void destroyShot() {
+		destroy();
+		shots.remove(this);
 	}
 
 	@Override
@@ -90,7 +96,6 @@ public class Shot extends Body implements SensorListener {
 			}
 		}
 
-
 		// TODO: BUG: Fix this, where the shot cannot find other shots.
 //		if (sensorEvent.getContactBody() instanceof Shot s && s != this) {
 //			s.destroy();
@@ -98,11 +103,6 @@ public class Shot extends Body implements SensorListener {
 //
 //			shots.remove(this);
 //		}
-	}
-
-	private void destroyShot() {
-		destroy();
-		shots.remove(this);
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}

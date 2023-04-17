@@ -3,18 +3,24 @@ package game.objects.abstractBody;
 import city.cs.engine.*;
 import game.main.Game;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 
 public abstract class Body extends DynamicBody implements IBody {
-	public float speed = 8f;
+	public float speed;
 	protected static World world = Game.world;
 	protected static float scaleFactor = Game.scaleFactor;
 	protected static float scaledGridSize = Game.scaledGridSize;
-	protected Vec2 moveDirection = new Vec2(0, 0);
+	public Vec2 moveDirection = new Vec2(0, 0);
 
 	public Body(Vec2 position) {
 		super(world);
 		setPosition(position);
+	}
+
+	public Body(float speed){
+		super(world);
+		this.speed = speed;
 	}
 
 	public Body(float speed, Vec2 position) {
@@ -34,11 +40,6 @@ public abstract class Body extends DynamicBody implements IBody {
 		setPosition(position);
 	}
 
-	public void spawn() {
-		this.setPosition(new Vec2(((scaledGridSize * 2) * getPosition().x) * scaleFactor,
-				((scaledGridSize * 2) * getPosition().y) * scaleFactor));
-	}
-
 	public void explode() {
 		destroy();
 		// TODO: Add explosion animation.
@@ -46,22 +47,25 @@ public abstract class Body extends DynamicBody implements IBody {
 		// TODO: Add explosion damage.
 	}
 
-	public Vec2 getGridPos() {
-		return new Vec2((int) (getPosition().x / (scaledGridSize * 2 * scaleFactor)),
-				(int) (getPosition().y / (scaledGridSize * 2 * scaleFactor)));
+	/**
+	 * Sets the position of the body using grid positioning Vector2.
+	 * @param position Grid Positioning Vector2
+	 */
+	public void setPosition(@NotNull Vec2 position) {
+		super.setPosition(new Vec2(((scaledGridSize * 2) * position.x) * scaleFactor,
+				((scaledGridSize * 2) * position.y) * scaleFactor));
 	}
 
-	public Vec2 getJBoxPos() {
-		return new Vec2(((scaledGridSize * 2) * getPosition().x) * scaleFactor,
-				((scaledGridSize * 2) * getPosition().y) * scaleFactor);
+	public void setPositionJBox(@NotNull Vec2 position) {
+		super.setPosition(position);
 	}
 
-	public void setMoveDirection(Vec2 direction) {
-		moveDirection = direction;
+	public Vec2 getPosition() {
+		return new Vec2(super.getPosition());
 	}
 
-	public Vec2 getMoveDirection() {
-		return moveDirection;
+	public Vec2 getPositionJBox() {
+		return super.getPosition();
 	}
 
 	public void update() {}

@@ -9,6 +9,7 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.*;
+import java.util.Objects;
 
 import static game.main.Game.*;
 import static game.window.WindowHandler.view;
@@ -29,20 +30,20 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 		if (player[0] != null) {
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_A -> player[0].setMoveDirection(new Vec2(-1, 0));
-				case KeyEvent.VK_D -> player[0].setMoveDirection(new Vec2(1, 0));
-				case KeyEvent.VK_W -> player[0].setMoveDirection(new Vec2(0, 1));
-				case KeyEvent.VK_S -> player[0].setMoveDirection(new Vec2(0, -1));
+				case KeyEvent.VK_A -> player[0].moveDirection = new Vec2(-1, 0);
+				case KeyEvent.VK_D -> player[0].moveDirection = new Vec2(1, 0);
+				case KeyEvent.VK_W -> player[0].moveDirection = new Vec2(0, 1);
+				case KeyEvent.VK_S -> player[0].moveDirection = new Vec2(0, -1);
 				case KeyEvent.VK_SPACE -> player[0].shoot();
 			}
 		}
 
 		if (player[1] != null) {
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT -> player[1].setMoveDirection(new Vec2(-1, 0));
-				case KeyEvent.VK_RIGHT -> player[1].setMoveDirection(new Vec2(1, 0));
-				case KeyEvent.VK_UP -> player[1].setMoveDirection(new Vec2(0, 1));
-				case KeyEvent.VK_DOWN -> player[1].setMoveDirection(new Vec2(0, -1));
+				case KeyEvent.VK_LEFT -> player[1].moveDirection = new Vec2(-1, 0);
+				case KeyEvent.VK_RIGHT -> player[1].moveDirection = new Vec2(1, 0);
+				case KeyEvent.VK_UP -> player[1].moveDirection = new Vec2(0, 1);
+				case KeyEvent.VK_DOWN -> player[1].moveDirection = new Vec2(0, -1);
 				case KeyEvent.VK_ENTER -> player[1].shoot();
 			}
 		}
@@ -52,23 +53,23 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	public void keyReleased(@NotNull KeyEvent e) {
 		if (player[0] != null) {
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_A, KeyEvent.VK_D -> player[0].setMoveDirection(new Vec2(0, player[0].getMoveDirection().y));
-				case KeyEvent.VK_W, KeyEvent.VK_S -> player[0].setMoveDirection(new Vec2(player[0].getMoveDirection().x, 0));
+				case KeyEvent.VK_A, KeyEvent.VK_D -> player[0].moveDirection = new Vec2(0, player[0].moveDirection.y);
+				case KeyEvent.VK_W, KeyEvent.VK_S -> player[0].moveDirection = new Vec2(player[0].moveDirection.x, 0);
 			}
 		}
 
 		if (player[1] != null) {
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> player[1].setMoveDirection(new Vec2(0, player[1].getMoveDirection().y));
-				case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> player[1].setMoveDirection(new Vec2(player[0].getMoveDirection().x, 0));
+				case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> player[1].moveDirection = new Vec2(0, player[1].moveDirection.y);
+				case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> player[1].moveDirection = new Vec2(player[0].moveDirection.x, 0);
 			}
 		}
 	}
 
 	@Override
 	public void preStep(StepEvent stepEvent) {
-		if (player[0] != null) player[0].update();
-		if (player[1] != null) player[1].update();
+		if (player[0] != null && !Objects.equals(player[0].moveDirection, new Vec2(0, 0))) player[0].update();
+		if (player[1] != null && !Objects.equals(player[1].moveDirection, new Vec2(0, 0))) player[1].update();
 
 		for (Enemy enemy : enemies) enemy.update();
 

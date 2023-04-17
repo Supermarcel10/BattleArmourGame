@@ -19,8 +19,6 @@ public class Player extends Tank {
 		setMaxHealth(TankType.PLAYER.health);
 		this.addImage(new BodyImage(TankType.PLAYER.image, 3 * scaleFactor));
 		scoreValue = TankType.PLAYER.scoreValue;
-
-		spawn();
 	}
 
 	public void pickUp(Pickup pickup) {
@@ -67,7 +65,7 @@ public class Player extends Tank {
 
 		// TODO: Consider smoothing out movement.
 		// If no collisions occur, move the player.
-		setPosition(newPosition);
+		setPositionJBox(newPosition);
 
 		// Angle the player towards the moving direction.
 		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
