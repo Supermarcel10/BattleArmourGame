@@ -53,7 +53,7 @@ public class Player extends Tank {
 
 		for (Body b : this.getBodiesInContact()) {
 			for (Fixture f : b.getFixtureList()) {
-				if (f.getBody() instanceof Tank || f.getBody() instanceof Shot || f.getBody() instanceof Pickup) {
+				if (f.getBody() instanceof Shot || f.getBody() instanceof Pickup) {
 					 break;
 				}
 

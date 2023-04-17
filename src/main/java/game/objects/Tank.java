@@ -4,6 +4,7 @@ import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import city.cs.engine.SoundClip;
 import game.objects.abstractBody.Body;
+import game.prefab.PickupType;
 import game.prefab.Shot;
 import game.prefab.ShotStyle;
 import game.prefab.ShotType;
@@ -14,6 +15,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static game.main.Game.*;
@@ -25,6 +27,9 @@ public class Tank extends Body {
 
 	// TODO: Add a shield image to the tank.
 	public boolean shielded = false;
+
+	private static final PickupType[] pickupTypes = PickupType.values();
+	private static final float pickupChance = 0.1f;
 
 	private boolean canShoot = true;
 	private final int shootingDelay = 500;
@@ -120,6 +125,14 @@ public class Tank extends Body {
 			destroy();
 			//noinspection SuspiciousMethodCalls
 			enemies.remove(this);
+
+			// Give a chance to spawn a pickup.
+			if (Math.random() < pickupChance && this instanceof Enemy) {
+				Random random = new Random();
+				System.out.println(this.getPosition());
+
+				new Pickup(pickupTypes[random.nextInt(pickupTypes.length)], this.getPosition());
+			}
 
 			// Play the destroy sound if it exists.
 			if (destroySound != null) {
