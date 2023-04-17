@@ -37,7 +37,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Add a way to gain score
 - [ ] Add a "start" screen
 - [ ] Add a "pause" screen
-- [ ] Add a "game over" screen
+- [x] Add a "game over" screen
 - [ ] Add a high-score system
 - [x] Create more enemies
 - [ ] Make co-op harder
