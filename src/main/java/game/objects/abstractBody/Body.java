@@ -6,7 +6,7 @@ import org.jbox2d.common.Vec2;
 
 
 public abstract class Body extends DynamicBody implements IBody {
-	protected float speed = 8f;
+	public float speed = 8f;
 	protected static World world = Game.world;
 	protected static float scaleFactor = Game.scaleFactor;
 	protected static float scaledGridSize = Game.scaledGridSize;

@@ -24,43 +24,28 @@ public class Player extends Tank {
 	}
 
 	public void pickUp(Pickup pickup) {
+		// Add the perk to the perks list.
 		if (pickup.type.bulletCount != 0) {
 			perks.put(pickup.type, new Integer[]{pickup.type.duration, pickup.type.bulletCount});
 		} else {
 			perks.put(pickup.type, new Integer[]{pickup.type.duration});
 		}
 
+		// Remove the pickup from the world.
 		pickup.destroy();
 
 		new Timer(pickup.type.duration * 1000, e -> {
+			// Remove the perk from the perks list.
 			perks.remove(pickup.type);
 
-			switch (pickup.type) {
-				case QUAD_SHOT -> shotStyle.remove(ShotStyle.QUAD);
-				case DOUBLE_DAMAGE -> shotDamage /= 2;
-				case SPEED_BOOST -> speed -= 0.2f;
-				case FAST_SHOT -> changeShootingDelay(500);
-				case BULLET_PROPULSION -> shotSpeed = 150f;
-				case PENETRATING_BULLETS -> availableShots.removeIf(shot -> shot.containsKey(ShotType.PENETRATING));
-				case EXPLOSIVE_BULLETS -> availableShots.removeIf(shot -> shot.containsKey(ShotType.EXPLOSIVE));
-			}
+			// Remove the perk from the player.
+			pickup.type.removePerk(this);
 
 			((Timer) e.getSource()).stop();
 		}).start();
 
-		switch (pickup.type) {
-			case QUAD_SHOT -> shotStyle.put(ShotStyle.QUAD, pickup.type.bulletCount);
-			case DOUBLE_DAMAGE -> shotDamage *= 2;
-			case SPEED_BOOST -> speed += 0.2f;
-			case FAST_SHOT -> changeShootingDelay(350);
-			case BULLET_PROPULSION -> shotSpeed = 300f;
-			case PENETRATING_BULLETS -> availableShots.add(new HashMap<>(){{
-				put(ShotType.PENETRATING, pickup.type.bulletCount);
-			}});
-			case EXPLOSIVE_BULLETS -> availableShots.add(new HashMap<>(){{
-				put(ShotType.EXPLOSIVE, pickup.type.bulletCount);
-			}});
-		}
+		// Apply the perk to the player.
+		pickup.type.applyPerk(this);
 	}
 
 	@Override

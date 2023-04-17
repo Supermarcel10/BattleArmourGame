@@ -23,12 +23,15 @@ public class Tank extends Body {
 	protected static float halfSize = scaledGridSize * scaleFactor * .8f;
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
+	// TODO: Add a shield image to the tank.
+	public boolean shielded = false;
+
 	private boolean canShoot = true;
 	private final int shootingDelay = 500;
-	protected float shotSpeed = 150f;
-	protected int shotDamage = 1;
-	protected HashMap<ShotStyle, Integer> shotStyle = new HashMap<>();
-	protected List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
+	public float shotSpeed = 150f;
+	public int shotDamage = 1;
+	public HashMap<ShotStyle, Integer> shotStyle = new HashMap<>();
+	public List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
 	protected static SoundClip damageSound;
@@ -102,6 +105,11 @@ public class Tank extends Body {
 	}
 
 	public void damage(int damage) {
+		if (shielded) {
+			shielded = false;
+			return;
+		}
+
 		health -= damage;
 
 		// TODO: Add explosion effect.
@@ -122,7 +130,7 @@ public class Tank extends Body {
 		}
 	}
 
-	protected void changeShootingDelay(int delay) {
+	public void changeShootingDelay(int delay) {
 		shootingTimer.setDelay(delay);
 		shootingTimer.setInitialDelay(delay);
 	}
