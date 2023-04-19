@@ -31,6 +31,8 @@ public class Config {
 	public static HashMap<String, String> image = new HashMap<>() {{
 		put("edge", CD + "img/blocks/edge.png");
 		put("wall", CD + "img/blocks/brick.png");
+		put("water", CD + "img/blocks/water.png");
+		put("leaf", CD + "img/blocks/leaf.png");
 		put("base", CD + "img/blocks/base.png");
 
 		put("player", CD + "img/player/player.gif");
