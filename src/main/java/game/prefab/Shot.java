@@ -66,7 +66,7 @@ public class Shot extends Body implements SensorListener {
 
 	@Override
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
-		if (sensorEvent.getContactBody() instanceof Block b) {
+		if (sensorEvent.getContactBody() instanceof Block b && b.type.isSolid) {
 			switch (type) {
 				case BASIC, PENETRATING -> b.damage(damage);
 				case EXPLOSIVE -> explode();
