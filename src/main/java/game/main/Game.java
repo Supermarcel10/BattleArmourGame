@@ -14,6 +14,7 @@ import java.util.HashSet;
 
 import static game.input.Config.resolution;
 import static game.main.LoadLevel.loadLevel;
+import static game.main.SaveLevel.saveLevel;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
@@ -99,41 +100,17 @@ public class Game {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 
-//		try {
-//			loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-
-		// Iterate over the world grid
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
-				// Create the edges of the world.
-				if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-					blocks[i][j] = new Block(BlockType.EDGE, (int) scaledGridSize * (-7 + i), (int) scaledGridSize * (-7 + j));
-				}
-
-				// Make bricks.
-				if (!(i == 0 || j == 0 || i == gridSize - 1 || j == gridSize - 1) && i % 2 != 1 && j % 3 != 1) {
-					blocks[i][j] = new Block(BlockType.BRICK, i - hGridSize, j - hGridSize);
-				}
-
-				// Always create a standard base layout.
-				if (i == gridSize / 2 && j == 1) {
-					// Create a base.
-					blocks[i][j] = new Block(BlockType.BASE, i - (gridSize / 2), j - (gridSize / 2));
-				} else if ((i >= (hGridSize - 1) && i <= (hGridSize + 1)) && (j == 1 || j == 2)) {
-					//If no block exists, create a brick border.
-	                if (i == 0 || i == gridSize - 1 || j == 0 || j == gridSize - 1) {
-						blocks[i][j] = new Block(BlockType.EDGE, i, j);
-					}
-
-					if (blocks[i][j] == null) {
-						blocks[i][j] = new Block(BlockType.BRICK, i - hGridSize, j - hGridSize);
-					}
-				}
+		try {
+			if (!loadLevel("/home/marcel/Projects/IntelliJ/javaproject2023-Supermarcel10/src/main/resources/levels/1.level")) {
+				throw new ExceptionInInitializerError("Failed to initialise level!");
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+//		try {
+//			saveLevel("/home/marcel/Projects/IntelliJ/javaproject2023-Supermarcel10/src/main/resources/levels/1.level");
+//		} catch (Exception ignored) {}
 
 		// Make a character (with an overlaid image).
 		new Spawn(TankType.PLAYER, new Vec2(-1, 0));

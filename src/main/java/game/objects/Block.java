@@ -13,6 +13,8 @@ public class Block extends StaticBody {
 	private final int damageScore, destroyScore;
 	private static BodyImage image;
 
+	public final BlockType type;
+
 	protected static String damageSound, destroySound;
 
 	protected boolean damageable;
@@ -22,6 +24,9 @@ public class Block extends StaticBody {
 	public Block(@NotNull BlockType type, @NotNull Vec2 pos) {
 		super(world, shape);
 		image = new BodyImage(type.image, scaledGridSize * 2 * scaleFactor);
+
+		this.type = type;
+
 		destroyScore = type.destroyScore;
 		damageScore = type.damageScore;
 		health = maxHealth = type.maxHealth;
