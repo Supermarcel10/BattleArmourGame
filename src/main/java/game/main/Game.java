@@ -112,6 +112,14 @@ public class Game {
 //			saveLevel("/home/marcel/Projects/IntelliJ/javaproject2023-Supermarcel10/src/main/resources/levels/1.level");
 //		} catch (Exception ignored) {}
 
+		// Always make a border around the map.
+		for (int i = 0; i < gridSize; i++) {
+			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, -hGridSize), true);
+			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, hGridSize), true);
+			new Block(BlockType.EDGE, new Vec2(-hGridSize, -hGridSize + i), true);
+			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
+		}
+
 		// Make a character (with an overlaid image).
 		new Spawn(TankType.PLAYER, new Vec2(-1, 0));
 		new Spawn(TankType.PLAYER, new Vec2(1, 0));
