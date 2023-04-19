@@ -9,11 +9,53 @@ public enum BlockType {
 	BASE(Config.image.get("base"), 1, -5000);
 
 	public final String image;
+
 	public int maxHealth = 1;
 	public boolean damageable = true;
+
 	public int destroyScore = 40, damageScore = 10;
-	public final String damageSound = Config.blockSound.get("damage");
 	public final String destroySound = Config.blockSound.get("damage");
+	public final String damageSound = Config.blockSound.get("damage");
+
+	public boolean isSolid = true;
+	public boolean isDrivable = false;
+
+	BlockType(String image, boolean damageable, boolean isSolid, boolean isDrivable) {
+		this.image = image;
+		this.damageable = damageable;
+		this.isSolid = isSolid;
+		this.isDrivable = isDrivable;
+	}
+
+	BlockType(String image, boolean damageable, boolean isSolid) {
+		this.image = image;
+		this.damageable = damageable;
+		this.isSolid = isSolid;
+	}
+
+	BlockType(String image, int maxHealth, int destroyScore, int damageScore, boolean isSolid, boolean isDrivable) {
+		this.image = image;
+		this.maxHealth = maxHealth;
+		this.destroyScore = destroyScore;
+		this.damageScore = damageScore;
+		this.isSolid = isSolid;
+		this.isDrivable = isDrivable;
+	}
+
+	BlockType(String image, int maxHealth, int destroyScore, int damageScore, boolean isSolid) {
+		this.image = image;
+		this.maxHealth = maxHealth;
+		this.destroyScore = destroyScore;
+		this.damageScore = damageScore;
+		this.isSolid = isSolid;
+	}
+
+	BlockType(String image, int maxHealth, int destroyScore, boolean isSolid) {
+		this.image = image;
+		this.maxHealth = maxHealth;
+		this.destroyScore = destroyScore;
+		this.isSolid = isSolid;
+	}
 
 	BlockType(String image, int maxHealth, int destroyScore, int damageScore) {
 		this.image = image;
