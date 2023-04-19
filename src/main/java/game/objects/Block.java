@@ -21,12 +21,28 @@ public class Block extends StaticBody {
 	protected int maxHealth;
 	public int health;
 
-	public Block(@NotNull BlockType type, @NotNull Vec2 pos) throws IllegalStateException {
+	public Block(@NotNull BlockType type, @NotNull Vec2 pos, boolean force) throws IllegalStateException {
 		super(world, shape);
 
-		image = new BodyImage(type.image, scaledGridSize * 2 * scaleFactor);
+		// Check if no more than 1 base exists.
+		if (type == BlockType.BASE && !force) {
+			if (basePos == null) {
+				basePos = new Vec2(pos.x + hGridSize, pos.y + hGridSize);
+			}
+			else throw new IllegalStateException("Base already exists!");
+		}
+
+		if (blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] != null) {
+			if (force) {
+				blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize].destroy();
+				blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = null;
+			} else {
+				throw new IllegalStateException("Block already occupied!");
+			}
+		}
 
 		this.type = type;
+		image = new BodyImage(type.image, scaledGridSize * 2 * scaleFactor);
 
 		destroyScore = type.destroyScore;
 		damageScore = type.damageScore;
@@ -36,18 +52,21 @@ public class Block extends StaticBody {
 		damageSound = type.damageSound;
 		destroySound = type.destroySound;
 
-		if (type == BlockType.BASE) {
-			if (basePos == null) {
-				basePos = new Vec2(pos.x + hGridSize, pos.y + hGridSize);
-			}
-			else throw new IllegalStateException("Base already exists!");
-		}
+		blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = this;
 
 		if (type.isDrivable) {
 			this.getFixtureList().get(0).destroy();
 		}
 
 		createBody(pos);
+	}
+
+	public Block(@NotNull BlockType type, @NotNull Vec2 pos) throws IllegalStateException {
+		this(type, pos, false);
+	}
+
+	public Block(@NotNull BlockType type, int x, int y, boolean force) throws IllegalStateException {
+		this(type, new Vec2(x, y), force);
 	}
 
 	public Block(@NotNull BlockType type, int x, int y) throws IllegalStateException {
