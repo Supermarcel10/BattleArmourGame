@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static game.main.Game.*;
+import static game.objects.Tank.halfSize;
 
 
 public class Spawn extends Body {
@@ -20,7 +21,7 @@ public class Spawn extends Body {
 		super(pos);
 
 		// Create a new ghostly fixture
-		new GhostlyFixture(this, new CircleShape(1.75f * scaleFactor));
+		new GhostlyFixture(this, new CircleShape(halfSize));
 
 		// Change properties
 		setFillColor(java.awt.Color.WHITE);

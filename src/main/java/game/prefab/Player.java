@@ -18,7 +18,7 @@ public class Player extends Tank {
 
 		speed = TankType.PLAYER.speed;
 		setMaxHealth(TankType.PLAYER.health);
-		this.addImage(new BodyImage(TankType.PLAYER.image, 3 * scaleFactor));
+		this.addImage(new BodyImage(TankType.PLAYER.image, halfSize * 2));
 		scoreValue = TankType.PLAYER.scoreValue;
 	}
 

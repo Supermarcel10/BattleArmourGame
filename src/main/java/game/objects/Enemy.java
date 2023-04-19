@@ -12,7 +12,7 @@ public class Enemy extends Tank {
 
 	public Enemy(@NotNull TankType type, Vec2 position) {
 		super(position);
-		this.addImage(new BodyImage(type.image, 3 * scaleFactor));
+		this.addImage(new BodyImage(type.image, halfSize * 2));
 		this.setMaxHealth(type.health);
 		this.speed = type.speed;
 		this.scoreValue = type.scoreValue;
