@@ -22,7 +22,7 @@ public class Shot extends Body implements SensorListener {
 	protected int damage;
 	protected Tank shooter;
 
-	public Shot(Vec2 position, Vec2 travelDirection, Tank shooter, float speed, int damage, ShotType type) {
+	public Shot(Vec2 position, @NotNull Vec2 travelDirection, Tank shooter, float speed, int damage, ShotType type) {
 		super(speed);
 		setPositionJBox(position);
 
