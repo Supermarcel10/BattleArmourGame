@@ -31,7 +31,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Create enemy spawning
 - [x] Create pick-ups
 - [ ] Create art for perks
-- [ ] Create new art for blocks
+- [x] Create new art for blocks
 - [x] Create a "base" to protect
 - [x] Add a score system
 - [x] Add a way to gain score
