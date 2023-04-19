@@ -6,6 +6,8 @@ import game.input.Config;
 public enum BlockType {
 	BRICK(Config.image.get("wall"), 3),
 	EDGE(Config.image.get("edge"), false),
+	WATER(Config.image.get("water"), false, false),
+	LEAF(Config.image.get("leaf"), false, false, true),
 	BASE(Config.image.get("base"), 1, -5000);
 
 	public final String image;
