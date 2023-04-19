@@ -43,6 +43,10 @@ public class Block extends StaticBody {
 			else throw new IllegalStateException("Base already exists!");
 		}
 
+		if (type.isDrivable) {
+			this.getFixtureList().get(0).destroy();
+		}
+
 		createBody(pos);
 	}
 
@@ -50,8 +54,9 @@ public class Block extends StaticBody {
 		this(type, new Vec2(x, y));
 	}
 
-	public void createBody(@NotNull Vec2 position) {
+	private void createBody(@NotNull Vec2 position) {
 		addImage(image);
+		// TODO: Fix this.
 		position = position.mul((scaledGridSize * 2) * scaleFactor);
 		setPosition(position);
 	}
