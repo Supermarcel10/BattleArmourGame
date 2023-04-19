@@ -57,7 +57,10 @@ public class LoadLevel {
 		String[] parsedData = parseData(line);
 		int x = Integer.parseInt(parsedData[1]);
 		int y = Integer.parseInt(parsedData[2]);
-		blocks[x + hGridSize][y + hGridSize] = new Block(BlockType.valueOf(parsedData[0]),  x, y);
+
+		try {
+			blocks[x + hGridSize][y + hGridSize] = new Block(BlockType.valueOf(parsedData[0]),  x, y);
+		} catch (IllegalStateException e) { blocks[x + hGridSize][y + hGridSize] = null; }
 	}
 
 	private static void handlePlayerPlacement(String line) {

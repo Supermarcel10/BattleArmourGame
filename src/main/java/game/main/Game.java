@@ -101,7 +101,7 @@ public class Game {
 		blocks = new Block[gridSize][gridSize];
 
 		try {
-			if (!loadLevel("/home/marcel/Projects/IntelliJ/javaproject2023-Supermarcel10/src/main/resources/levels/1.level")) {
+			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level")) {
 				throw new ExceptionInInitializerError("Failed to initialise level!");
 			}
 		} catch (Exception e) {

@@ -21,8 +21,9 @@ public class Block extends StaticBody {
 	protected int maxHealth;
 	public int health;
 
-	public Block(@NotNull BlockType type, @NotNull Vec2 pos) {
+	public Block(@NotNull BlockType type, @NotNull Vec2 pos) throws IllegalStateException {
 		super(world, shape);
+
 		image = new BodyImage(type.image, scaledGridSize * 2 * scaleFactor);
 
 		this.type = type;
@@ -35,12 +36,18 @@ public class Block extends StaticBody {
 		damageSound = type.damageSound;
 		destroySound = type.destroySound;
 
+		if (type == BlockType.BASE) {
+			if (basePos == null) {
+				basePos = new Vec2(pos.x + hGridSize, pos.y + hGridSize);
+			}
+			else throw new IllegalStateException("Base already exists!");
+		}
+
 		createBody(pos);
 	}
 
-	public Block(@NotNull BlockType type, int x, int y) {
+	public Block(@NotNull BlockType type, int x, int y) throws IllegalStateException {
 		this(type, new Vec2(x, y));
-		if (type == BlockType.BASE) basePos = new Vec2(x + hGridSize, y + hGridSize);
 	}
 
 	public void createBody(@NotNull Vec2 position) {
