@@ -91,7 +91,7 @@ public class Block extends StaticBody {
 			score += destroyScore;
 			brokenBlocks++;
 			soundHandler.play(damageSound);
-		} else soundHandler.play(destroySound);;
+		} else soundHandler.play(destroySound);
 
 		// TODO: Add damage animation.
 	}
