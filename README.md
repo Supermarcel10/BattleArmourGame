@@ -1,6 +1,6 @@
-# Game *"Battle Armour"*
+# <u>Game *"Battle Armour"*</u>
 
-## Concept
+## <u>Concept</u>
 
 This game is heavily inspired on the arcade game [Tank Battalion](https://en.wikipedia.org/wiki/Tank_Battalion), created by Namco, released in 1980.
 The original game was created and originally released in Japan under the name of "タンクバタリアン (Tanku Batarian)". A year later it was released to the US market.
@@ -13,7 +13,7 @@ The idea is that the game runs on Windows, Mac and Linux with no emulation requi
 My version will be implementing something similar to the original game, with a smoother FPS and smoother movement.
 I will also make custom perks and balance the game in the way I believe it is difficult enough to be engaging, but still physically doable.
 
-## Planned features
+## <u>Planned features</u>
 
 - [x] Co-op 2 player gameplay
 - [x] Pick-up perks
@@ -22,7 +22,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [ ] Settings to change the controls and resolution
 - [ ] Sounds and music
 
-## TODOs
+## <u>TODOs</u>
 
 - [ ] Create the general UI layout
 - [x] Create a basic game grid where everything will be spawned
@@ -45,9 +45,38 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Add texture images to the game
 - [ ] Animate the images
 
-## Copyright & Disclosure
+## <u>Copyright & Disclosure</u>
 
-PressStart2P font is used in this project, which is licensed under the [SIL Open Font License](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/font/PressStat2P-OFL.txt).
+### <u>Art & Code</u>
+All art and code is created by me, unless otherwise stated, or imported as an additional module.
 
-At present the game doesn't utilise any sounds, music or external images.
-This information will be updated once the game is slowly completed.
+### <u>Fonts</u>
+
+PressStart2P font is used in this project, which is licensed under the [SIL Open Font License](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/legal/PressStat2P-OFL.txt).
+The font is created by CodeMan38 and can be found [here](https://fonts.google.com/specimen/Press+Start+2P).
+
+### <u>Sounds</u>
+
+All utilised sounds are created by [Dark Fantasy Studio](https://www.youtube.com/c/DarkFantasyStudioNicolasJeudy) and are licensed under the [Dark Fantasy Studio Licence](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/legal/DARK_FANTASY_STUDIO_LICENCE.pdf).
+<ul>
+<li>Tank Shot (Album: Earth Spell)</li>
+<li>Block Break (Album: Earth Spell)</li>
+</ul>
+
+### <u>Music</u>
+
+The below utilised music tracks are created by [Joel Steudler](https://joelstudler.ch) and are licensed under the [Joel Steudler Music Licence](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/legal/Joel_Steudler_Music_License_Agreement_2023.pdf).
+<ul>
+<li>Battle At The Stones</li>
+<li>Fight or Flight</li>
+<li>Heroes Rise</li>
+<li>Honorbound Army</li>
+<li>Rise Above Darkness</li>
+<li>Warband Marauders</li>
+<li>Wasteland Warrior</li>
+</ul>
+
+The below utilised music tracks are created by [Dark Fantasy Studio](https://www.youtube.com/c/DarkFantasyStudioNicolasJeudy) and are licensed under the [Dark Fantasy Studio Licence](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/legal/DARK_FANTASY_STUDIO_LICENCE.pdf).
+<ul>
+<li>Venom</li>
+</ul>
