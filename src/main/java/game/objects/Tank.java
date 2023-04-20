@@ -2,7 +2,7 @@ package game.objects;
 
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
-import city.cs.engine.SoundClip;
+import game.input.Config;
 import game.objects.abstractBody.Body;
 import game.prefab.PickupType;
 import game.prefab.Shot;
@@ -39,8 +39,8 @@ public class Tank extends Body {
 	public List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
-	protected static SoundClip damageSound;
-	protected static SoundClip destroySound;
+	protected static String shootSound = Config.tankSound.get("shoot");
+	protected static String damageSound, destroySound;
 
 	protected int scoreValue;
 	public int health;
@@ -107,6 +107,9 @@ public class Tank extends Body {
 			// Create the shot.
 			new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
 		}
+
+		// Play the shoot sound.
+		soundHandler.play(shootSound);
 	}
 
 	public void damage(int damage) {
@@ -135,12 +138,8 @@ public class Tank extends Body {
 			}
 
 			// Play the destroy sound if it exists.
-			if (destroySound != null) {
-				destroySound.play();
-			}
-		} else if (damageSound != null) {
-			damageSound.play();
-		}
+			soundHandler.play(destroySound);
+		} else soundHandler.play(damageSound);
 	}
 
 	public void changeShootingDelay(int delay) {
