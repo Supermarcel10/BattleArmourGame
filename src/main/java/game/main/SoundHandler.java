@@ -28,6 +28,10 @@ public class SoundHandler implements Runnable {
 	}
 
 	public void play(String fileName) {
+		if (fileName == null) {
+			return;
+		}
+
 		boolean added = queue.offer(fileName);
 
 		if (!added) {
