@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.event.*;
 import java.util.Objects;
 
-import static game.Game.*;
+import static game.MainGame.*;
 import static game.window.WindowHandler.view;
 
 

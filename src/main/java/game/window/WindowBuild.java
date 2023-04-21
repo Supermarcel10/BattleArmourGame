@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-import static game.Game.gridSize;
-import static game.Game.scaleFactor;
+import static game.MainGame.gridSize;
+import static game.MainGame.scaleFactor;
 import static game.window.WindowHandler.*;
 
 

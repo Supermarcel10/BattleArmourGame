@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static game.Game.*;
+import static game.MainGame.*;
 
 
 public class WindowDeath extends WindowHandler {

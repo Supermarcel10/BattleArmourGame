@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-import static game.Game.pickups;
+import static game.MainGame.pickups;
 import static game.objects.tank.Tank.halfSize;
 
 

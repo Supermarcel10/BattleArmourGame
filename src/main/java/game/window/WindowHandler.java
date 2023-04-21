@@ -4,17 +4,17 @@ import city.cs.engine.DebugViewer;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
 import game.IO.Config;
-import game.Game;
+import game.MainGame;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static game.Game.*;
+import static game.MainGame.*;
 
 
 public class WindowHandler extends WindowCommons {
-	private static final World world = Game.world;
+	private static final World world = MainGame.world;
 
 	protected static final JLayeredPane pnlMain = new JLayeredPane();
 	protected static final JLayeredPane pnlOverlay = new JLayeredPane();

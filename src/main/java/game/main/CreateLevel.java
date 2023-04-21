@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.*;
+import static game.MainGame.*;
 import static game.IO.LoadLevel.loadLevel;
 import static game.IO.SaveLevel.saveLevel;
 import static game.window.WindowBuild.*;

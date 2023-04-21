@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static game.Game.*;
+import static game.MainGame.*;
 
 
 public class Tank extends Body {

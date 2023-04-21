@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import static game.Game.scaleFactor;
+import static game.MainGame.scaleFactor;
 import static game.window.WindowHandler.view;
 
 

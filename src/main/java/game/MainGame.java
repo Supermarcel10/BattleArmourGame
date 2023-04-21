@@ -17,8 +17,8 @@ import game.window.WindowHandler;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
+import java.util.List;
 
 import static game.IO.Config.resolution;
 import static game.IO.LoadLevel.loadLevel;
@@ -26,7 +26,7 @@ import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
 
-public class Game {
+public class MainGame {
 	public static World world;
 	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
@@ -38,6 +38,8 @@ public class Game {
 	public static SoundHandler soundHandler = new SoundHandler();
 
 	public static Vec2 basePos;
+	public static Vec2[] playerSpawnPos = new Vec2[2];
+	public static List<Vec2> enemySpawnPos = new ArrayList<>();
 
 	public static float scaleFactor = resolution.x / 1920;
 	public static int gridSize = 15;
@@ -47,6 +49,8 @@ public class Game {
 	public static int score = 0, postUpdateScore = 0;
 	public static int kills = 0;
 	public static int brokenBlocks = 0;
+
+	public static Thread spawnThread = new Thread(MainGame::enemySpawn);
 
 	public static GameState gameState = GameState.NONE;
 
@@ -67,7 +71,7 @@ public class Game {
 		view.setBackground(Color.decode("#fcf8de"));
 
 //		new CreateLevel();
-		loadGame();
+//		loadGame();
 
 		// Add Keyboard & Mouse listeners.
 		Listener listener = new Listener();
@@ -81,21 +85,18 @@ public class Game {
 		// Play background music.
 		SoundHandler.playBackgroundMusic();
 
-		// Spawn enemies progressively.
-//		new Thread(Game::enemySpawn).start();
-
 		// Create a thread to print the FPS.
-		Thread thread = new Thread(() -> {
-			while (true) {
-				System.out.println(world.getSimulationSettings().getAveragedFPS());
-				// Sleep for 1 second.
-				try {
-					sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		Thread thread = new Thread(() -> {
+//			while (true) {
+//				System.out.println(world.getSimulationSettings().getAveragedFPS());
+//				// Sleep for 1 second.
+//				try {
+//					sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 //		thread.start();
 	}
 
@@ -107,12 +108,10 @@ public class Game {
 		blocks = new Block[gridSize][gridSize];
 
 		try {
-			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level")) {
+			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\2.level")) {
 				throw new ExceptionInInitializerError("Failed to initialise level!");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception ignored) {}
 
 		// Always make a border around the map.
 		for (int i = 0; i < gridSize; i++) {
@@ -122,15 +121,12 @@ public class Game {
 			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
 		}
 
-		// Make a character (with an overlaid image).
-		new Spawn(TankType.PLAYER, new Vec2(-1, 0));
-		new Spawn(TankType.PLAYER, new Vec2(1, 0));
+		// Spawn players.
+		new Spawn(TankType.PLAYER, playerSpawnPos[0]);
+		new Spawn(TankType.PLAYER, playerSpawnPos[1]);
 
-		// Make a few enemies for testing.
-		new Spawn(TankType.EXPLODING, new Vec2(-6, 6));
-		new Spawn(TankType.BASIC, new Vec2(-2, 6));
-		new Spawn(TankType.HEAVY, new Vec2(2, 6));
-		new Spawn(TankType.FAST, new Vec2(6, 6));
+		// Spawn enemies progressively.
+		spawnThread.start();
 
 		gameState = GameState.PLAYING;
 	}
@@ -185,10 +181,11 @@ public class Game {
 	}
 
 	private static void enemySpawn() {
-		// TODO: Make sure newly spawned characters don't spawn inside of blocks or other characters.
+		// TODO: Randomise enemy type and make progression harder.
 		while (true) {
 			if (enemies.size() < 3) {
-				new Spawn(TankType.BASIC, new Vec2((int) (Math.random() * 12) - 6, 6));
+				Vec2 pos = enemySpawnPos.get((int) (Math.random() * enemySpawnPos.size()));
+				new Spawn(TankType.BASIC, pos);
 			}
 
 			try {

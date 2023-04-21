@@ -1,7 +1,7 @@
 package game.objects.tank;
 
 import city.cs.engine.*;
-import game.Game;
+import game.MainGame;
 import game.objects.abstractBody.Body;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static game.Game.*;
+import static game.MainGame.*;
 import static game.objects.tank.Tank.halfSize;
 
 
@@ -27,8 +27,8 @@ public class Spawn extends Body {
 
 		if (type == TankType.PLAYER) {
 			Player player = type.createPlayer(pos);
-			int numOfPlayers = (int) Arrays.stream(Game.player).filter(Objects::nonNull).count();
-			Game.player[numOfPlayers] = player;
+			int numOfPlayers = (int) Arrays.stream(MainGame.player).filter(Objects::nonNull).count();
+			MainGame.player[numOfPlayers] = player;
 
 			removeSpawner();
 		} else {

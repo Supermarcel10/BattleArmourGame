@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.shots;
+import static game.MainGame.shots;
 import static game.objects.tank.Tank.halfSize;
 
 

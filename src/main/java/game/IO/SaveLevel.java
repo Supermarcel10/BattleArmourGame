@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static game.Game.*;
+import static game.MainGame.*;
 
 public class SaveLevel {
 	public static void saveLevel(File file) throws IOException {

@@ -1,16 +1,16 @@
 package game.objects.abstractBody;
 
 import city.cs.engine.*;
-import game.Game;
+import game.MainGame;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 
 public abstract class Body extends DynamicBody implements IBody {
 	public float speed;
-	protected static World world = Game.world;
-	protected static float scaleFactor = Game.scaleFactor;
-	protected static float scaledGridSize = Game.scaledGridSize;
+	protected static World world = MainGame.world;
+	protected static float scaleFactor = MainGame.scaleFactor;
+	protected static float scaledGridSize = MainGame.scaledGridSize;
 	public Vec2 moveDirection = new Vec2(0, 0);
 
 	public Body(Vec2 position) {

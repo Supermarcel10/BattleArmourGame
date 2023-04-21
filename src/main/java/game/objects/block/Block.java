@@ -4,7 +4,7 @@ import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
-import static game.Game.*;
+import static game.MainGame.*;
 
 
 public class Block extends StaticBody {
