@@ -38,12 +38,8 @@ public class Block extends StaticBody {
 		}
 
 		if (blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] != null) {
-			if (force) {
-				blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize].destroy();
-				blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = null;
-			} else {
-				throw new IllegalStateException("Block already occupied!");
-			}
+			if (force) removeIfExists(pos);
+			else throw new IllegalStateException("Block already occupied!");
 		}
 
 		this.type = type;
@@ -83,6 +79,13 @@ public class Block extends StaticBody {
 		// TODO: Fix this.
 		position = position.mul((scaledGridSize * 2) * scaleFactor);
 		setPosition(position);
+	}
+
+	public static void removeIfExists(@NotNull Vec2 pos) {
+		if (blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] != null) {
+			blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize].destroy();
+			blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = null;
+		}
 	}
 
 	public void damage(int damage) {
