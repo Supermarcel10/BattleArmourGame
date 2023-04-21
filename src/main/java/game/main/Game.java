@@ -45,13 +45,6 @@ public class Game {
 
 
 	public static void main(String[] args) {
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			// TODO: Add saving to the game.
-			// TODO: Add any database close statements here.
-			// Run garbage collection.
-			System.gc();
-		}));
-
 		world = new World(Config.fps);
 
 		// Create the window and main menu.
