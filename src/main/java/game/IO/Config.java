@@ -29,11 +29,17 @@ public class Config {
 	}};
 
 	public static HashMap<String, String> image = new HashMap<>() {{
+		put("enemy", CD + "img/enemy/enemy.png");
+
+		put("enemySpawn", CD + "img/blocks/enemySpawn.png");
+		put("playerSpawn", CD + "img/blocks/playerSpawn.png");
 		put("edge", CD + "img/blocks/edge.png");
 		put("wall", CD + "img/blocks/brick.png");
 		put("water", CD + "img/blocks/water.png");
 		put("leaf", CD + "img/blocks/leaf.png");
 		put("base", CD + "img/blocks/base.png");
+
+		put("shield", CD + "img/pickup/shield.png");
 
 		put("player", CD + "img/player/player.gif");
 		put("basicEnemy", CD + "img/enemy/basicEnemy.gif");
