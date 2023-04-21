@@ -1,10 +1,7 @@
 package game.IO;
 
 import game.objects.block.Block;
-import game.objects.pickup.Pickup;
 import game.objects.block.BlockType;
-import game.objects.pickup.PickupType;
-import game.objects.tank.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -12,25 +9,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static game.Game.*;
-
 
 public class LoadLevel {
-	public static boolean loadLevel(File file) throws IOException {
+	public static boolean loadLevel(File file, boolean force) throws IOException {
 		if (file == null) return false;
 
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String line;
 
 		while ((line = br.readLine()) != null) {
-			System.out.println(line);
 			switch (line.charAt(0)) {
 				case 'i' -> handleInfoParsing(line);
 				case 'a' -> handleAudioParsing(line);
-				case 'b' -> handleBlockPlacement(line);
-				case 'p' -> handlePlayerPlacement(line);
-				case 'o' -> handleObjectPlacement(line);
-				case 'e' -> handleEnemyPlacement(line);
+				case 'b' -> handleBlockPlacement(line, force);
 				case 'E' -> { // End of level
 					if (line.equals("END")) {
 						br.close();
@@ -45,56 +36,39 @@ public class LoadLevel {
 		return false;
 	}
 
+	public static boolean loadLevel(File file) throws IOException {
+		return loadLevel(file, false);
+	}
+
+	public static boolean loadLevel(String path, boolean force) throws IOException {
+		return loadLevel(new File(path), force);
+	}
+
 	public static boolean loadLevel(String path) throws IOException {
-		return loadLevel(new File(path));
+		return loadLevel(new File(path), false);
 	}
 
 	private static void handleInfoParsing(@NotNull String line) {
-		// TODO: IMPLEMENT
+		// TODO: Implement custom level information
 		System.out.println("Level information: " + line.substring(2));
 	}
 
 	private static void handleAudioParsing(@NotNull String line) {
-		// TODO: IMPLEMENT
+		// TODO: Implement custom audio information
 		System.out.println("Audio information: " + line.substring(2));
 	}
 
-	private static void handleBlockPlacement(String line) {
+	private static void handleBlockPlacement(String line, boolean force) {
 		String[] parsedData = parseData(line);
 		int x = Integer.parseInt(parsedData[1]);
 		int y = Integer.parseInt(parsedData[2]);
 
 		try {
-			new Block(BlockType.valueOf(parsedData[0]), x, y);
+			new Block(BlockType.valueOf(parsedData[0]), x, y, force);
 		} catch (IllegalStateException ignored) {}
-	}
-
-	private static void handlePlayerPlacement(String line) {
-		String[] parsedData = parseData(line);
-		int x = Integer.parseInt(parsedData[1]);
-		int y = Integer.parseInt(parsedData[2]);
-		player[getPlayerNumber(parsedData[0])] = new Player(x, y);
-	}
-
-	private static void handleObjectPlacement(String line) {
-		String[] parsedData = parseData(line);
-		int x = Integer.parseInt(parsedData[1]);
-		int y = Integer.parseInt(parsedData[2]);
-		switch (parsedData[0].split(":")[0]) {
-			case "PICKUP" -> new Pickup(PickupType.valueOf(parsedData[0].split(":")[1]), x, y);
-		}
-	}
-
-	private static void handleEnemyPlacement(@NotNull String line) {
-		// TODO: IMPLEMENT
-		System.out.println("Enemy information: " + line.substring(2));
 	}
 
 	private static String @NotNull [] parseData(@NotNull String line) {
 		return line.substring(2).split(" ");
-	}
-
-	private static int getPlayerNumber(@NotNull String playerData) {
-		return Integer.parseInt(String.valueOf(playerData.charAt(6))) - 1;
 	}
 }
