@@ -1,6 +1,6 @@
 package game.main;
 
-import game.input.Config;
+import game.IO.Config;
 
 import java.io.FileInputStream;
 

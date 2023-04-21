@@ -1,15 +1,15 @@
 package game.window;
 
-import game.input.Config;
-import game.prefab.BlockType;
+import game.IO.Config;
+import game.objects.block.BlockType;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-import static game.main.Game.gridSize;
-import static game.main.Game.scaleFactor;
+import static game.Game.gridSize;
+import static game.Game.scaleFactor;
 import static game.window.WindowHandler.*;
 
 

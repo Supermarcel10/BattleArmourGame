@@ -1,16 +1,15 @@
-package game.objects;
+package game.objects.pickup;
 
 import city.cs.engine.*;
 import game.objects.abstractBody.Body;
-import game.prefab.PickupType;
-import game.prefab.Player;
+import game.objects.tank.Player;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-import static game.main.Game.pickups;
-import static game.objects.Tank.halfSize;
+import static game.Game.pickups;
+import static game.objects.tank.Tank.halfSize;
 
 
 public class Pickup extends Body implements SensorListener {

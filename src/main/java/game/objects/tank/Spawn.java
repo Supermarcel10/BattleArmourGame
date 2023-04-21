@@ -1,8 +1,7 @@
-package game.prefab;
+package game.objects.tank;
 
 import city.cs.engine.*;
-import game.main.Game;
-import game.objects.Enemy;
+import game.Game;
 import game.objects.abstractBody.Body;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
@@ -12,8 +11,8 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static game.main.Game.*;
-import static game.objects.Tank.halfSize;
+import static game.Game.*;
+import static game.objects.tank.Tank.halfSize;
 
 
 public class Spawn extends Body {

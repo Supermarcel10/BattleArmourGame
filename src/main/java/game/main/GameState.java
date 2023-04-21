@@ -1,4 +1,4 @@
-package game.window;
+package game.main;
 
 public enum GameState {
 	NONE,

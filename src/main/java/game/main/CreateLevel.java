@@ -1,8 +1,7 @@
 package game.main;
 
-import game.objects.Block;
-import game.prefab.BlockType;
-import game.window.GameState;
+import game.objects.block.Block;
+import game.objects.block.BlockType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,10 +12,10 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-import static game.main.Game.*;
-import static game.main.LoadLevel.loadLevel;
-import static game.main.SaveLevel.saveLevel;
-import static game.objects.Block.removeIfExists;
+import static game.Game.*;
+import static game.IO.LoadLevel.loadLevel;
+import static game.IO.SaveLevel.saveLevel;
+import static game.objects.block.Block.removeIfExists;
 import static game.window.WindowBuild.*;
 import static game.window.WindowCommons.selectLoadFile;
 import static game.window.WindowHandler.view;

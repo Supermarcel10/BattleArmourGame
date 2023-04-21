@@ -1,17 +1,17 @@
-package game.input;
+package game.IO;
 
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
 import game.window.WindowDeath;
 import game.window.WindowHandler;
-import game.objects.Enemy;
+import game.objects.tank.Enemy;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.*;
 import java.util.Objects;
 
-import static game.main.Game.*;
+import static game.Game.*;
 import static game.window.WindowHandler.view;
 
 

@@ -1,8 +1,7 @@
-package game.input;
+package game.IO;
 
 import org.jbox2d.common.Vec2;
 
-import java.io.File;
 import java.util.HashMap;
 
 

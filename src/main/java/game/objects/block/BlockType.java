@@ -1,6 +1,6 @@
-package game.prefab;
+package game.objects.block;
 
-import game.input.Config;
+import game.IO.Config;
 
 
 public enum BlockType {

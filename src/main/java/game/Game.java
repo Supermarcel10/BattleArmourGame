@@ -1,13 +1,18 @@
-package game.main;
+package game;
 
 import city.cs.engine.*;
-import game.input.Config;
-import game.objects.Block;
-import game.objects.Enemy;
-import game.objects.Pickup;
-import game.prefab.*;
-import game.input.Listener;
-import game.window.GameState;
+import game.IO.Config;
+import game.main.GameState;
+import game.main.SoundHandler;
+import game.objects.block.Block;
+import game.objects.shot.Shot;
+import game.objects.tank.Enemy;
+import game.objects.pickup.Pickup;
+import game.objects.block.BlockType;
+import game.objects.tank.Player;
+import game.objects.tank.Spawn;
+import game.objects.tank.TankType;
+import game.IO.Listener;
 import game.window.WindowHandler;
 import org.jbox2d.common.Vec2;
 
@@ -15,8 +20,8 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static game.input.Config.resolution;
-import static game.main.LoadLevel.loadLevel;
+import static game.IO.Config.resolution;
+import static game.IO.LoadLevel.loadLevel;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 

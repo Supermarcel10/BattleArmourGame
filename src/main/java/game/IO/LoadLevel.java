@@ -1,10 +1,10 @@
-package game.main;
+package game.IO;
 
-import game.objects.Block;
-import game.objects.Pickup;
-import game.prefab.BlockType;
-import game.prefab.PickupType;
-import game.prefab.Player;
+import game.objects.block.Block;
+import game.objects.pickup.Pickup;
+import game.objects.block.BlockType;
+import game.objects.pickup.PickupType;
+import game.objects.tank.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static game.main.Game.*;
+import static game.Game.*;
 
 
 public class LoadLevel {

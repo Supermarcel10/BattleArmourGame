@@ -1,8 +1,9 @@
-package game.prefab;
+package game.objects.tank;
 
 import city.cs.engine.*;
-import game.objects.Pickup;
-import game.objects.Tank;
+import game.objects.pickup.Pickup;
+import game.objects.pickup.PickupType;
+import game.objects.shot.Shot;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 

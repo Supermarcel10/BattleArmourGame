@@ -1,13 +1,14 @@
-package game.objects;
+package game.objects.tank;
 
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
-import game.input.Config;
+import game.IO.Config;
+import game.objects.pickup.Pickup;
 import game.objects.abstractBody.Body;
-import game.prefab.PickupType;
-import game.prefab.Shot;
-import game.prefab.ShotStyle;
-import game.prefab.ShotType;
+import game.objects.pickup.PickupType;
+import game.objects.shot.Shot;
+import game.objects.shot.ShotStyle;
+import game.objects.shot.ShotType;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static game.main.Game.*;
+import static game.Game.*;
 
 
 public class Tank extends Body {

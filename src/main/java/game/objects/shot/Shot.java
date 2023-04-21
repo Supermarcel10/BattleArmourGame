@@ -1,8 +1,8 @@
-package game.prefab;
+package game.objects.shot;
 
 import city.cs.engine.*;
-import game.objects.Block;
-import game.objects.Tank;
+import game.objects.block.Block;
+import game.objects.tank.Tank;
 import game.objects.abstractBody.Body;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
@@ -11,8 +11,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.main.Game.shots;
-import static game.objects.Tank.halfSize;
+import static game.Game.shots;
+import static game.objects.tank.Tank.halfSize;
 
 
 public class Shot extends Body implements SensorListener {

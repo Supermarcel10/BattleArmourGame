@@ -1,4 +1,4 @@
-package game.prefab;
+package game.objects.shot;
 
 public enum ShotStyle {
 	NORMAL,

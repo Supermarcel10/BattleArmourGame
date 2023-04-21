@@ -1,13 +1,14 @@
 package game.window;
 
-import game.input.Config;
+import game.IO.Config;
+import game.main.GameState;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static game.main.Game.*;
+import static game.Game.*;
 
 
 public class WindowDeath extends WindowHandler {

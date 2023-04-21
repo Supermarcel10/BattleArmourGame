@@ -3,14 +3,14 @@ package game.window;
 import city.cs.engine.DebugViewer;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
-import game.input.Config;
-import game.main.Game;
+import game.IO.Config;
+import game.Game;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static game.main.Game.*;
+import static game.Game.*;
 
 
 public class WindowHandler extends WindowCommons {

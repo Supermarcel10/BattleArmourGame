@@ -1,7 +1,6 @@
-package game.prefab;
+package game.objects.tank;
 
-import game.input.Config;
-import game.objects.Enemy;
+import game.IO.Config;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 

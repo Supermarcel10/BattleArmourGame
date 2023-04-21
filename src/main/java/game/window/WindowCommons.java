@@ -1,6 +1,6 @@
 package game.window;
 
-import game.input.Config;
+import game.IO.Config;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import static game.main.Game.scaleFactor;
+import static game.Game.scaleFactor;
 
 
 public class WindowCommons {

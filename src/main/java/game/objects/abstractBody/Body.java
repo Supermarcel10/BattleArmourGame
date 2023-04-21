@@ -1,7 +1,7 @@
 package game.objects.abstractBody;
 
 import city.cs.engine.*;
-import game.main.Game;
+import game.Game;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 

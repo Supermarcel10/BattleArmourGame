@@ -41,7 +41,7 @@
                     <!--                    <argLine>-Djava.library.path=${project.basedir}/lib/lwjgl-3.3.1/native</argLine>-->
                     <archive>
                         <manifest>
-                            <mainClass>game.main.Game</mainClass>
+                            <mainClass>game.Game</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,8 +1,6 @@
-package game.objects;
+package game.objects.tank;
 
 import city.cs.engine.BodyImage;
-import game.prefab.Player;
-import game.prefab.TankType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 

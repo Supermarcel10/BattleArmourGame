@@ -1,4 +1,8 @@
-package game.prefab;
+package game.objects.pickup;
+
+import game.objects.shot.ShotStyle;
+import game.objects.tank.Player;
+import game.objects.shot.ShotType;
 
 import java.util.HashMap;
 

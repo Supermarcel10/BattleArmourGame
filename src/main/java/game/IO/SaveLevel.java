@@ -1,11 +1,11 @@
-package game.main;
+package game.IO;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static game.main.Game.*;
+import static game.Game.*;
 
 public class SaveLevel {
 	public static void saveLevel(File file) throws IOException {

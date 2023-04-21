@@ -1,11 +1,10 @@
-package game.objects;
+package game.objects.block;
 
 import city.cs.engine.*;
-import game.prefab.BlockType;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
-import static game.main.Game.*;
+import static game.Game.*;
 
 
 public class Block extends StaticBody {
