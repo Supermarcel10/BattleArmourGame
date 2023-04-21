@@ -5,8 +5,8 @@ public enum GameState {
 	PAUSED,
 	PLAYING,
 	DEAD,
-	LEVEL_EDITOR,
-	MAIN_MENU,
+	EDITOR,
+	MENU,
 	OPTIONS,
 	LOADING,
 	EXITING
