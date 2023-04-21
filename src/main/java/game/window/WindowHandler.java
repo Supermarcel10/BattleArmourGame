@@ -29,6 +29,7 @@ public class WindowHandler extends WindowCommons {
 	protected static JLabel lblScore;
 
 	protected static JLabel lblPlacementBlock;
+	protected static JLabel lblExitBuildMode;
 
 	public static void createWindow(World world) {
 		updateWindow();
@@ -120,13 +121,9 @@ public class WindowHandler extends WindowCommons {
 	public static void createGameOverlay() {
 		if (lblScore == null) {
 			lblScore = createText("SCORE: " + score, 1, pnlOverlay, 1);
-
-			int lblScoreWidth = (int) Config.resolution.x;
-			int lblScoreHeight = (int) Config.resolution.y / gridSize;
-			int lblScoreX = (pnlMain.getPreferredSize().width - lblScoreWidth) / 2;
+			int lblScoreX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
 			int lblScoreY = (int) (2 * scaleFactor);
-
-			lblScore.setBounds(lblScoreX, lblScoreY, lblScoreWidth, lblScoreHeight);
+			lblScore.setBounds(lblScoreX, lblScoreY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
 		} else {
 			// Make the scoreLabel visible again.
 			lblScore.setVisible(true);
@@ -141,6 +138,11 @@ public class WindowHandler extends WindowCommons {
 			int lblPlacementBlockX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
 			int lblPlacementBlockY = (int) (2 * scaleFactor);
 			lblPlacementBlock.setBounds(lblPlacementBlockX, lblPlacementBlockY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
+
+			lblExitBuildMode = createText("Press ESC to exit build mode", 0.2f, new Color(200, 30, 30, 255), pnlOverlay, 1);
+			int lblExitBuildModeX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
+			int lblExitBuildModeY = (int) ((Config.resolution.y / 2) - (150 * scaleFactor));
+			lblExitBuildMode.setBounds(lblExitBuildModeX, lblExitBuildModeY, (int) Config.resolution.x, (int) Config.resolution.y);
 		} else {
 			// Make the placementBlockLabel visible again.
 			lblPlacementBlock.setVisible(true);
