@@ -16,10 +16,12 @@ import static game.main.Game.*;
 
 
 public class LoadLevel {
-	public static boolean loadLevel(String fileName) throws IOException {
-		File file = new File(fileName);
+	public static boolean loadLevel(File file) throws IOException {
+		if (file == null) return false;
+
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String line;
+
 		while ((line = br.readLine()) != null) {
 			System.out.println(line);
 			switch (line.charAt(0)) {
