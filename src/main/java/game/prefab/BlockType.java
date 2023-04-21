@@ -4,6 +4,7 @@ import game.input.Config;
 
 
 public enum BlockType {
+	NONE(), // Used for empty blocks.
 	BRICK(Config.image.get("wall"), 3),
 	EDGE(Config.image.get("edge"), false),
 	WATER(Config.image.get("water"), false, false),
@@ -80,5 +81,9 @@ public enum BlockType {
 	BlockType(String image, boolean damageable) {
 		this.image = image;
 		this.damageable = damageable;
+	}
+
+	BlockType() {
+		this.image = null;
 	}
 }
