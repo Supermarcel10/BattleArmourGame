@@ -53,4 +53,8 @@ public class WindowBuild {
 	public static void updateBlockPlacement(BlockType blockType) {
 		lblHeader.setText(String.valueOf(blockType));
 	}
+
+	public static void updateInformation(String text) {
+		lblInformation.setText(text);
+	}
 }
