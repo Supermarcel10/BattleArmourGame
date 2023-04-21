@@ -2,6 +2,7 @@ package game.window;
 
 import game.input.Config;
 import game.prefab.BlockType;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +35,11 @@ public class WindowBuild {
 
 		lblPlacementBlock = null;
 		lblExitBuildMode = null;
+	}
+
+	public static @Nullable File selectSaveLocation() {
+		int result = fileChooser.showSaveDialog(null);
+		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
 	}
 
 	public static void updateBlockPlacement(BlockType blockType) {
