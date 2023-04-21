@@ -40,17 +40,21 @@ public class LoadLevel {
 			}
 		}
 
-		// If END is not found, return false.
+		// If END is not found, return failure to load.
 		br.close();
 		return false;
 	}
 
-	private static void handleInfoParsing(String line) {
+	public static boolean loadLevel(String path) throws IOException {
+		return loadLevel(new File(path));
+	}
+
+	private static void handleInfoParsing(@NotNull String line) {
 		// TODO: IMPLEMENT
 		System.out.println("Level information: " + line.substring(2));
 	}
 
-	private static void handleAudioParsing(String line) {
+	private static void handleAudioParsing(@NotNull String line) {
 		// TODO: IMPLEMENT
 		System.out.println("Audio information: " + line.substring(2));
 	}
@@ -81,7 +85,7 @@ public class LoadLevel {
 		}
 	}
 
-	private static void handleEnemyPlacement(String line) {
+	private static void handleEnemyPlacement(@NotNull String line) {
 		// TODO: IMPLEMENT
 		System.out.println("Enemy information: " + line.substring(2));
 	}
