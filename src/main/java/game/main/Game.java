@@ -6,6 +6,7 @@ import game.objects.Block;
 import game.objects.Enemy;
 import game.prefab.*;
 import game.input.Listener;
+import game.window.GameState;
 import game.window.WindowHandler;
 import org.jbox2d.common.Vec2;
 
@@ -39,6 +40,8 @@ public class Game {
 	public static int score = 0, postUpdateScore = 0;
 	public static int kills = 0;
 	public static int brokenBlocks = 0;
+
+	public static GameState gameState = GameState.NONE;
 
 
 	public static void main(String[] args) {
