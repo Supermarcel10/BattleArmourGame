@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static game.Game.scaleFactor;
+import static game.window.WindowHandler.view;
 
 
 public class WindowCommons {
@@ -62,7 +63,7 @@ public class WindowCommons {
 	}
 
 	public static @Nullable File selectLoadFile() {
-		int result = fileChooser.showOpenDialog(null);
+		int result = fileChooser.showOpenDialog(view);
 		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
 	}
 }
