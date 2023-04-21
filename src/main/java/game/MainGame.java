@@ -132,45 +132,29 @@ public class MainGame {
 	}
 
 	public static void resetGame() {
-		// Reset all blocks
-		for (int i = 0; i < blocks.length; i++) {
-			for (int j = 0; j < blocks[i].length; j++) {
-				if (blocks[i][j] != null) {
-					blocks[i][j].destroy();
-					blocks[i][j] = null;
-				}
-			}
-		}
-
 		// Remove all enemies.
-		Iterator<Enemy> iterEnemy = enemies.iterator();
-		while (iterEnemy.hasNext()) {
-			Enemy enemy = iterEnemy.next();
+		for (Enemy enemy : enemies) {
 			if (enemy != null) {
 				enemy.destroy();
-				iterEnemy.remove();
 			}
 		}
+		enemies.clear();
 
 		// Remove all spawners.
-		Iterator<Spawn> iterSpawners = spawners.iterator();
-		while (iterSpawners.hasNext()) {
-			Spawn spawn = iterSpawners.next();
+		for (Spawn spawn : spawners) {
 			if (spawn != null) {
 				spawn.destroy();
-				iterSpawners.remove();
 			}
 		}
+		spawners.clear();
 
 		// Remove all pickups.
-		Iterator<Pickup> iterPickups = pickups.iterator();
-		while (iterPickups.hasNext()) {
-			Pickup pickup = iterPickups.next();
+		for (Pickup pickup : pickups) {
 			if (pickup != null) {
 				pickup.destroy();
-				iterPickups.remove();
 			}
 		}
+		pickups.clear();
 
 		// Reset all players
 		for (Player player : player) {
