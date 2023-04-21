@@ -7,6 +7,9 @@ import game.prefab.Player;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+
+import static game.main.Game.pickups;
 import static game.objects.Tank.halfSize;
 
 
@@ -20,6 +23,9 @@ public class Pickup extends Body implements SensorListener {
 
 		setPosition(position);
 
+		// Add to pickups list.
+		pickups.add(this);
+
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, shape);
 		Sensor sensor = new Sensor(this, shape);
@@ -30,6 +36,19 @@ public class Pickup extends Body implements SensorListener {
 
 		// Add collision listener.
 		sensor.addSensorListener(this);
+
+		// Add a timer to destroy the pickup after 10 seconds.
+		new Timer(10000, e -> {
+			destroyPickup();
+
+			// Stop after first execution to allow for GC.
+			((Timer) e.getSource()).stop();
+		}).start();
+	}
+
+	private void destroyPickup() {
+		destroy();
+		pickups.remove(this);
 	}
 
 	public Pickup(PickupType type, int x, int y) {
@@ -39,7 +58,10 @@ public class Pickup extends Body implements SensorListener {
 	// TODO: Fix this sometimes not registering
 	@Override
 	public void beginContact(@NotNull SensorEvent e) {
-		if (e.getContactBody() instanceof Player p) p.pickUp(this);
+		if (e.getContactBody() instanceof Player p) {
+			p.pickUp(this);
+			destroyPickup();
+		}
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}
