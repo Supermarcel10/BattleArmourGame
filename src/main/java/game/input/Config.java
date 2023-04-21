@@ -2,6 +2,7 @@ package game.input;
 
 import org.jbox2d.common.Vec2;
 
+import java.io.File;
 import java.util.HashMap;
 
 
@@ -43,17 +44,15 @@ public class Config {
 	}};
 
 	public static HashMap<String, String> tankSound = new HashMap<>() {{
-		put("shot", CD + "sound/tank/shoot.mp3");
+		put("shoot", CD + "sound/tank/shoot.mp3");
 		put("death", CD + "sound/tank/death.mp3");
 	}};
 
 	public static HashMap<String, String> blockSound = new HashMap<>() {{
-		put("damage", CD + "sound/blocks/brick.mp3");
+		put("damage", CD + "sound/blocks/brickBreak.mp3");
 	}};
 
 	public static HashMap<String, String> music = new HashMap<>() {{
-		put("menu", CD + "music/menu.mp3");
-		put("game", CD + "music/game.mp3");
 	}};
 
 	public static HashMap<String, String> font = new HashMap<>() {{
