@@ -12,9 +12,11 @@ import static game.main.Game.gridSize;
 import static game.main.Game.scaleFactor;
 import static game.window.WindowHandler.*;
 
+
 public class WindowBuild {
-	protected static JLabel lblPlacementBlock;
-	protected static JLabel lblExitBuildMode;
+	protected static JLabel lblHeader;
+	protected static JLabel lblInformation;
+
 
 	public static void createBuildOverlay() {
 		// Set the default starting directory to the project directory and file name to NAME.level
@@ -24,23 +26,23 @@ public class WindowBuild {
 		// Create the overlay, hide old labels.
 		if (lblScore != null) lblScore.setVisible(false);
 
-		lblPlacementBlock = createText(String.valueOf(BlockType.BRICK), 1, pnlOverlay, 1);
+		lblHeader = createText(String.valueOf(BlockType.BRICK), 1, pnlOverlay, 1);
 		int lblPlacementBlockX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
 		int lblPlacementBlockY = (int) (2 * scaleFactor);
-		lblPlacementBlock.setBounds(lblPlacementBlockX, lblPlacementBlockY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
+		lblHeader.setBounds(lblPlacementBlockX, lblPlacementBlockY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
 
-		lblExitBuildMode = createText("Press ESC to exit build mode", 0.2f, new Color(200, 30, 30, 255), pnlOverlay, 1);
+		lblInformation = createText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD.", 0.3f, new Color(200, 30, 30, 255), pnlOverlay, 1);
 		int lblExitBuildModeX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
-		int lblExitBuildModeY = (int) ((Config.resolution.y / 2) - (150 * scaleFactor));
-		lblExitBuildMode.setBounds(lblExitBuildModeX, lblExitBuildModeY, (int) Config.resolution.x, (int) Config.resolution.y);
+		int lblExitBuildModeY = (int) ((Config.resolution.y / 2) - (35 * scaleFactor));
+		lblInformation.setBounds(lblExitBuildModeX, lblExitBuildModeY, (int) Config.resolution.x, (int) Config.resolution.y);
 	}
 
 	public static void removeBuildOverlay() {
-		lblPlacementBlock.setVisible(false);
-		lblExitBuildMode.setVisible(false);
+		lblHeader.setVisible(false);
+		lblInformation.setVisible(false);
 
-		lblPlacementBlock = null;
-		lblExitBuildMode = null;
+		lblHeader = null;
+		lblInformation = null;
 	}
 
 	public static @Nullable File selectSaveLocation() {
@@ -49,6 +51,6 @@ public class WindowBuild {
 	}
 
 	public static void updateBlockPlacement(BlockType blockType) {
-		lblPlacementBlock.setText(String.valueOf(blockType));
+		lblHeader.setText(String.valueOf(blockType));
 	}
 }
