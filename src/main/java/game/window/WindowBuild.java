@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 import static game.main.Game.gridSize;
 import static game.main.Game.scaleFactor;
