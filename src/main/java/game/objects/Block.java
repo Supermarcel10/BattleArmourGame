@@ -31,9 +31,7 @@ public class Block extends StaticBody {
 
 		// Check if no more than 1 base exists.
 		if (type == BlockType.BASE && !force) {
-			if (basePos == null) {
-				basePos = new Vec2(pos.x + hGridSize, pos.y + hGridSize);
-			}
+			if (basePos == null) basePos = new Vec2(pos.x + hGridSize, pos.y + hGridSize);
 			else throw new IllegalStateException("Base already exists!");
 		}
 
@@ -55,9 +53,7 @@ public class Block extends StaticBody {
 
 		blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = this;
 
-		if (type.isDrivable) {
-			this.getFixtureList().get(0).destroy();
-		}
+		if (type.isDrivable) this.getFixtureList().get(0).destroy();
 
 		createBody(pos);
 	}
