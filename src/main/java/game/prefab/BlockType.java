@@ -5,11 +5,11 @@ import game.input.Config;
 
 public enum BlockType {
 	NONE(), // Used for empty blocks.
-	BRICK(Config.image.get("wall"), 3),
-	EDGE(Config.image.get("edge"), false),
-	WATER(Config.image.get("water"), false, false),
-	LEAF(Config.image.get("leaf"), false, false, true),
-	BASE(Config.image.get("base"), 1, -5000);
+	BRICK("wall", 3),
+	EDGE("edge", false),
+	WATER("water", false, false),
+	LEAF("leaf", false, false, true),
+	BASE("base", 1, -5000);
 
 	public final String image;
 
@@ -24,20 +24,20 @@ public enum BlockType {
 	public boolean isDrivable = false;
 
 	BlockType(String image, boolean damageable, boolean isSolid, boolean isDrivable) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.damageable = damageable;
 		this.isSolid = isSolid;
 		this.isDrivable = isDrivable;
 	}
 
 	BlockType(String image, boolean damageable, boolean isSolid) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.damageable = damageable;
 		this.isSolid = isSolid;
 	}
 
 	BlockType(String image, int maxHealth, int destroyScore, int damageScore, boolean isSolid, boolean isDrivable) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
@@ -46,7 +46,7 @@ public enum BlockType {
 	}
 
 	BlockType(String image, int maxHealth, int destroyScore, int damageScore, boolean isSolid) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
@@ -54,32 +54,32 @@ public enum BlockType {
 	}
 
 	BlockType(String image, int maxHealth, int destroyScore, boolean isSolid) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.isSolid = isSolid;
 	}
 
 	BlockType(String image, int maxHealth, int destroyScore, int damageScore) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
 	}
 
 	BlockType(String image, int maxHealth, int destroyScore) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 	}
 
 	BlockType(String image, int maxHealth) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.maxHealth = maxHealth;
 	}
 
 	BlockType(String image, boolean damageable) {
-		this.image = image;
+		this.image = Config.image.get(image);
 		this.damageable = damageable;
 	}
 
