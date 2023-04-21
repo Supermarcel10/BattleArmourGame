@@ -17,11 +17,16 @@ public class WindowBuild {
 	protected static JLabel lblHeader;
 	protected static JLabel lblInformation;
 
+	protected static Timer lblTimerInformation = new Timer(5000, e -> lblInformation.setText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD."));
+
 
 	public static void createBuildOverlay() {
 		// Set the default starting directory to the project directory and file name to NAME.level
 		fileChooser.setSelectedFile(new File("NAME.level"));
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\resources\\levels"));
+
+		// Disable timer restarting.
+		lblTimerInformation.setRepeats(false);
 
 		// Create the overlay, hide old labels.
 		if (lblScore != null) lblScore.setVisible(false);
@@ -56,5 +61,6 @@ public class WindowBuild {
 
 	public static void updateInformation(String text) {
 		lblInformation.setText(text);
+		lblTimerInformation.start();
 	}
 }
