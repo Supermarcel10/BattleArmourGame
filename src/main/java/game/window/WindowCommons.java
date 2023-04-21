@@ -26,18 +26,22 @@ public class WindowCommons {
 		return font;
 	}
 
-	protected static JLabel createText(String text, float scale, JComponent panel, int index) {
+	protected static JLabel createText(String text, float scale, Color color, JComponent panel, int index) {
 		if (!(panel instanceof JLayeredPane || panel instanceof JPanel)) return null;
 
 		JLabel label = new JLabel(text, SwingConstants.CENTER);
 
 		label.setFont(loadFont(scale));
-		label.setForeground(Color.WHITE);
+		label.setForeground(color);
 		label.setOpaque(false); // Transparent
 
 		panel.add(label, JLayeredPane.DEFAULT_LAYER, index);
 
 		return label;
+	}
+
+	protected static JLabel createText(String text, float scale, JComponent panel, int index) {
+		return createText(text, scale, Color.WHITE, panel, index);
 	}
 
 	protected static JButton createButton(String text, float scale, JComponent panel, int index) {
