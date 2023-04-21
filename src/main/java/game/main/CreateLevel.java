@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 
 import static game.main.Game.*;
@@ -119,7 +120,11 @@ public class CreateLevel implements MouseListener, KeyListener {
 		else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) exit(); // BACKSPACE to cancel.
 		else if (e.getKeyChar() == KeyEvent.VK_SPACE) cycleBlockType(); // SPACE to cycle block types.
 		else if (Character.toUpperCase(e.getKeyChar()) == KeyEvent.VK_L) { // L to load a level.
-			try { loadLevel(selectLoadFile());
+			try {
+				File file = selectLoadFile();
+				if (file != null) resetGame();
+
+				loadLevel(file);
 			} catch (IOException ignored) {}
 		}
 	}
