@@ -102,7 +102,6 @@ public class MainGame {
 	}
 
 	public static void loadGame() {
-		gameState = GameState.LOADING;
 		WindowHandler.createGameOverlay();
 
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
@@ -123,7 +122,7 @@ public class MainGame {
 		// Spawn enemies progressively.
 		spawnThread.start();
 
-		gameState = GameState.PLAYING;
+		gameState = GameState.GAME;
 	}
 
 	public static void resetGame() {
