@@ -5,14 +5,14 @@ import game.IO.Config;
 import game.main.GameState;
 import game.main.SoundHandler;
 import game.objects.block.Block;
+import game.objects.block.BlockType;
 import game.objects.shot.Shot;
 import game.objects.tank.Enemy;
 import game.objects.pickup.Pickup;
-import game.objects.block.BlockType;
 import game.objects.tank.Player;
 import game.objects.tank.Spawn;
-import game.objects.tank.TankType;
 import game.IO.Listener;
+import game.objects.tank.TankType;
 import game.window.WindowHandler;
 import org.jbox2d.common.Vec2;
 
@@ -22,6 +22,7 @@ import java.util.List;
 
 import static game.IO.Config.resolution;
 import static game.IO.LoadLevel.loadLevel;
+import static game.main.LevelCreator.createLevel;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
@@ -70,7 +71,7 @@ public class MainGame {
 		world.setGravity(0);
 		view.setBackground(Color.decode("#fcf8de"));
 
-//		new CreateLevel();
+		createLevel();
 //		loadGame();
 
 		// Add Keyboard & Mouse listeners.
@@ -79,11 +80,11 @@ public class MainGame {
 		view.addKeyListener(listener);
 		world.addStepListener(listener);
 
-		// Start world simulation
-		world.start();
-
 		// Play background music.
 		SoundHandler.playBackgroundMusic();
+
+		// Start world simulation
+		world.start();
 
 		// Create a thread to print the FPS.
 //		Thread thread = new Thread(() -> {
@@ -113,13 +114,7 @@ public class MainGame {
 			}
 		} catch (Exception ignored) {}
 
-		// Always make a border around the map.
-		for (int i = 0; i < gridSize; i++) {
-			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, -hGridSize), true);
-			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, hGridSize), true);
-			new Block(BlockType.EDGE, new Vec2(-hGridSize, -hGridSize + i), true);
-			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
-		}
+		makeMapBorder();
 
 		// Spawn players.
 		new Spawn(TankType.PLAYER, playerSpawnPos[0]);
@@ -139,6 +134,24 @@ public class MainGame {
 			}
 		}
 		enemies.clear();
+
+		// Remove all shots.
+		for (Shot shot : shots) {
+			if (shot != null) {
+				shot.destroy();
+			}
+		}
+		shots.clear();
+
+		// Remove all blocks.
+		for (Block[] block : blocks) {
+			for (Block value : block) {
+				if (value != null) {
+					value.destroy();
+				}
+			}
+		}
+		blocks = new Block[gridSize][gridSize];
 
 		// Remove all spawners.
 		for (Spawn spawn : spawners) {
@@ -161,6 +174,15 @@ public class MainGame {
 			if (player != null) {
 				player.destroy();
 			}
+		}
+	}
+
+	public static void makeMapBorder() {
+		for (int i = 0; i < gridSize; i++) {
+			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, -hGridSize), true);
+			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, hGridSize), true);
+			new Block(BlockType.EDGE, new Vec2(-hGridSize, -hGridSize + i), true);
+			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
 		}
 	}
 

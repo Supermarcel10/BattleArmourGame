@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Game" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="game.Game" />
+  <configuration default="false" name="MainGame" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="game.MainGame" />
     <module name="CityGame" />
     <extension name="coverage">
       <pattern>

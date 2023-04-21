@@ -48,6 +48,7 @@ public class WindowBuild {
 
 		lblHeader = null;
 		lblInformation = null;
+		lblTimerInformation = null;
 	}
 
 	public static @Nullable File selectSaveLocation() {
