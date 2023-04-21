@@ -20,11 +20,12 @@ public class Block extends StaticBody {
 	protected int maxHealth;
 	public int health;
 
+
 	public Block(@NotNull BlockType type, @NotNull Vec2 pos, boolean force) throws IllegalStateException {
 		super(world, shape);
 
-		// Check is not none.
-		if (type == BlockType.NONE || type == BlockType.ENEMY_SPAWN || type == BlockType.PLAYER_SPAWN) {
+		// Check if block is illegal.
+		if ((type == BlockType.NONE || type == BlockType.ENEMY_SPAWN || type == BlockType.PLAYER_SPAWN) && !force) {
 			throw new IllegalStateException("Block type cannot be " + type.name() + "!");
 		}
 
