@@ -12,9 +12,9 @@ import org.jbox2d.common.Vec2;
 
 import java.awt.*;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import static game.input.Config.resolution;
-import static game.main.CreateLevel.createLevel;
 import static game.main.LoadLevel.loadLevel;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
@@ -66,8 +66,8 @@ public class Game {
 		world.setGravity(0);
 		view.setBackground(Color.decode("#fcf8de"));
 
+//		new CreateLevel();
 		loadGame();
-		WindowHandler.createGameOverlay();
 
 		// Add Keyboard & Mouse listeners.
 		Listener listener = new Listener();
@@ -100,36 +100,39 @@ public class Game {
 	}
 
 	public static void loadGame() {
+		gameState = GameState.LOADING;
+		WindowHandler.createGameOverlay();
+
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 
-//		try {
-//			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level")) {
-//				throw new ExceptionInInitializerError("Failed to initialise level!");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level")) {
+				throw new ExceptionInInitializerError("Failed to initialise level!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		createLevel();
+		// Always make a border around the map.
+		for (int i = 0; i < gridSize; i++) {
+			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, -hGridSize), true);
+			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, hGridSize), true);
+			new Block(BlockType.EDGE, new Vec2(-hGridSize, -hGridSize + i), true);
+			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
+		}
 
-//		// Always make a border around the map.
-//		for (int i = 0; i < gridSize; i++) {
-//			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, -hGridSize), true);
-//			new Block(BlockType.EDGE, new Vec2(-hGridSize + i, hGridSize), true);
-//			new Block(BlockType.EDGE, new Vec2(-hGridSize, -hGridSize + i), true);
-//			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
-//		}
+//		 Make a character (with an overlaid image).
+		new Spawn(TankType.PLAYER, new Vec2(-1, 0));
+		new Spawn(TankType.PLAYER, new Vec2(1, 0));
 
-		// Make a character (with an overlaid image).
-//		new Spawn(TankType.PLAYER, new Vec2(-1, 0));
-//		new Spawn(TankType.PLAYER, new Vec2(1, 0));
-//
-//		// Make a few enemies for testing.
-//		new Spawn(TankType.EXPLODING, new Vec2(-6, 6));
-//		new Spawn(TankType.BASIC, new Vec2(-2, 6));
-//		new Spawn(TankType.HEAVY, new Vec2(2, 6));
-//		new Spawn(TankType.FAST, new Vec2(6, 6));
+		// Make a few enemies for testing.
+		new Spawn(TankType.EXPLODING, new Vec2(-6, 6));
+		new Spawn(TankType.BASIC, new Vec2(-2, 6));
+		new Spawn(TankType.HEAVY, new Vec2(2, 6));
+		new Spawn(TankType.FAST, new Vec2(6, 6));
+
+		gameState = GameState.PLAYING;
 	}
 
 	public static void resetGame() {
@@ -144,10 +147,12 @@ public class Game {
 		}
 
 		// Remove all enemies.
-		for (Enemy enemy : enemies) {
+		Iterator<Enemy> iterator = enemies.iterator();
+		while (iterator.hasNext()) {
+			Enemy enemy = iterator.next();
 			if (enemy != null) {
 				enemy.destroy();
-				enemies.remove(enemy);
+				iterator.remove();
 			}
 		}
 
