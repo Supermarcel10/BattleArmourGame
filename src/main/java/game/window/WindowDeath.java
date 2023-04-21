@@ -104,7 +104,9 @@ public class WindowDeath extends WindowHandler {
 		t2.start();
 
 		btnMainMenu.addActionListener(e -> {
-			WindowMenu.changeMenuState(true);
+			gameState = GameState.MENU;
+			resetGame();
+
 			pnlOverlay.setVisible(false);
 		});
 

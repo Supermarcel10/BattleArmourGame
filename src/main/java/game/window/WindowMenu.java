@@ -25,17 +25,5 @@ public class WindowMenu extends WindowHandler {
 		}
 
 		root.add(pnlMenu);
-
-		// TODO: Change once implemented.
-//		changeMenuState(false);
-	}
-
-	protected static void changeMenuState(boolean state) {
-		pnlMenu.setVisible(state);
-		for (JButton button : btnsMenu) {
-			button.setVisible(state);
-		}
-
-		inMenu = state;
 	}
 }
