@@ -8,13 +8,7 @@ import java.io.IOException;
 import static game.main.Game.*;
 
 public class SaveLevel {
-	public static void saveLevel(String fileLocation) throws IOException {
-		File file = new File(fileLocation);
-
-//		// Create the file if it doesn't exist.
-//		if (!file.exists()) //noinspection ResultOfMethodCallIgnored
-//			file.createNewFile();
-
+	public static void saveLevel(File file) throws IOException {
 		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
 		// Save all blocks
