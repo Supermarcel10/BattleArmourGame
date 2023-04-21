@@ -4,6 +4,7 @@ import city.cs.engine.*;
 import game.input.Config;
 import game.objects.Block;
 import game.objects.Enemy;
+import game.objects.Pickup;
 import game.prefab.*;
 import game.input.Listener;
 import game.window.GameState;
@@ -26,6 +27,7 @@ public class Game {
 	public static Block[][] blocks;
 	public static HashSet<Spawn> spawners = new HashSet<>();
 	public static HashSet<Enemy> enemies = new HashSet<>();
+	public static HashSet<Pickup> pickups = new HashSet<>();
 	public static HashSet<Shot> shots = new HashSet<>();
 
 	public static SoundHandler soundHandler = new SoundHandler();
@@ -115,7 +117,7 @@ public class Game {
 			new Block(BlockType.EDGE, new Vec2(hGridSize, -hGridSize + i), true);
 		}
 
-//		 Make a character (with an overlaid image).
+		// Make a character (with an overlaid image).
 		new Spawn(TankType.PLAYER, new Vec2(-1, 0));
 		new Spawn(TankType.PLAYER, new Vec2(1, 0));
 
@@ -140,16 +142,34 @@ public class Game {
 		}
 
 		// Remove all enemies.
-		Iterator<Enemy> iterator = enemies.iterator();
-		while (iterator.hasNext()) {
-			Enemy enemy = iterator.next();
+		Iterator<Enemy> iterEnemy = enemies.iterator();
+		while (iterEnemy.hasNext()) {
+			Enemy enemy = iterEnemy.next();
 			if (enemy != null) {
 				enemy.destroy();
-				iterator.remove();
+				iterEnemy.remove();
 			}
 		}
 
-		// TODO: Remove all pickups.
+		// Remove all spawners.
+		Iterator<Spawn> iterSpawners = spawners.iterator();
+		while (iterSpawners.hasNext()) {
+			Spawn spawn = iterSpawners.next();
+			if (spawn != null) {
+				spawn.destroy();
+				iterSpawners.remove();
+			}
+		}
+
+		// Remove all pickups.
+		Iterator<Pickup> iterPickups = pickups.iterator();
+		while (iterPickups.hasNext()) {
+			Pickup pickup = iterPickups.next();
+			if (pickup != null) {
+				pickup.destroy();
+				iterPickups.remove();
+			}
+		}
 
 		// Reset all players
 		for (Player player : player) {
@@ -168,9 +188,7 @@ public class Game {
 
 			try {
 				sleep(5000 + (int) (Math.random() * 5000));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			} catch (InterruptedException ignored) {}
 		}
 	}
 }
