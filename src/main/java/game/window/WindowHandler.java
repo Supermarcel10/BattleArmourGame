@@ -5,6 +5,7 @@ import city.cs.engine.UserView;
 import city.cs.engine.World;
 import game.input.Config;
 import game.main.Game;
+import game.prefab.BlockType;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -26,6 +27,8 @@ public class WindowHandler extends WindowCommons {
 	public static boolean inMenu = true;
 
 	protected static JLabel lblScore;
+
+	protected static JLabel lblPlacementBlock;
 
 	public static void createWindow(World world) {
 		updateWindow();
@@ -130,8 +133,25 @@ public class WindowHandler extends WindowCommons {
 		}
 	}
 
+	public static void createBuildOverlay() {
+		if (lblScore != null) lblScore.setVisible(false);
+
+		if (lblPlacementBlock == null) {
+			lblPlacementBlock = createText(String.valueOf(BlockType.BRICK), 1, pnlOverlay, 1);
+			int lblPlacementBlockX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
+			int lblPlacementBlockY = (int) (2 * scaleFactor);
+			lblPlacementBlock.setBounds(lblPlacementBlockX, lblPlacementBlockY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
+		} else {
+			// Make the placementBlockLabel visible again.
+			lblPlacementBlock.setVisible(true);
+		}
+	}
+
 	public static void updateScore() {
 		lblScore.setText("SCORE: " + score);
 	}
 
+	public static void updateBlockPlacement(BlockType blockType) {
+		lblPlacementBlock.setText(String.valueOf(blockType));
+	}
 }
