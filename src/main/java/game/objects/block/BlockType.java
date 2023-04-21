@@ -5,6 +5,8 @@ import game.IO.Config;
 
 public enum BlockType {
 	NONE(), // Used for empty blocks.
+	ENEMY_SPAWN("enemySpawn"), // Used for declaring enemy spawn points.
+	PLAYER_SPAWN("playerSpawn"), // Used for declaring player spawn points.
 	BRICK("wall", 3),
 	EDGE("edge", false),
 	WATER("water", false, false),
@@ -81,6 +83,10 @@ public enum BlockType {
 	BlockType(String image, boolean damageable) {
 		this.image = Config.image.get(image);
 		this.damageable = damageable;
+	}
+
+	BlockType(String image) {
+		this.image = Config.image.get(image);
 	}
 
 	BlockType() {

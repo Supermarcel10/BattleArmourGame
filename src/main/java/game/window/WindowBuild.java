@@ -50,8 +50,8 @@ public class WindowBuild {
 		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
 	}
 
-	public static void updateBlockPlacement(BlockType blockType) {
-		lblHeader.setText(String.valueOf(blockType));
+	public static void updateBlockPlacement(String blockType) {
+		lblHeader.setText(blockType);
 	}
 
 	public static void updateInformation(String text) {

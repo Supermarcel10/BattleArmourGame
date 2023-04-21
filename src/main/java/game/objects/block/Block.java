@@ -24,8 +24,8 @@ public class Block extends StaticBody {
 		super(world, shape);
 
 		// Check is not none.
-		if (type == BlockType.NONE) {
-			throw new IllegalStateException("Block type cannot be NONE!");
+		if (type == BlockType.NONE || type == BlockType.ENEMY_SPAWN || type == BlockType.PLAYER_SPAWN) {
+			throw new IllegalStateException("Block type cannot be " + type.name() + "!");
 		}
 
 		// Check if no more than 1 base exists.

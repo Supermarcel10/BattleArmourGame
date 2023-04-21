@@ -105,7 +105,7 @@ public class CreateLevel implements MouseListener, KeyListener {
 	private void cycleBlockType() {
 		// Cycle through the block types.
 		currentBlockType = BlockType.values()[(currentBlockType.ordinal() + 1) % BlockType.values().length];
-		updateBlockPlacement(currentBlockType);
+		updateBlockPlacement(currentBlockType.toString().replace("_", " "));
 	}
 
 	@Override
