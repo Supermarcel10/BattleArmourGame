@@ -132,6 +132,35 @@ public class Game {
 //		new Spawn(TankType.FAST, new Vec2(6, 6));
 	}
 
+	public static void resetGame() {
+		// Reset all blocks
+		for (int i = 0; i < blocks.length; i++) {
+			for (int j = 0; j < blocks[i].length; j++) {
+				if (blocks[i][j] != null) {
+					blocks[i][j].destroy();
+					blocks[i][j] = null;
+				}
+			}
+		}
+
+		// Remove all enemies.
+		for (Enemy enemy : enemies) {
+			if (enemy != null) {
+				enemy.destroy();
+				enemies.remove(enemy);
+			}
+		}
+
+		// TODO: Remove all pickups.
+
+		// Reset all players
+		for (Player player : player) {
+			if (player != null) {
+				player.destroy();
+			}
+		}
+	}
+
 	private static void enemySpawn() {
 		// TODO: Make sure newly spawned characters don't spawn inside of blocks or other characters.
 		while (true) {
