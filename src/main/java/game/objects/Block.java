@@ -24,6 +24,11 @@ public class Block extends StaticBody {
 	public Block(@NotNull BlockType type, @NotNull Vec2 pos, boolean force) throws IllegalStateException {
 		super(world, shape);
 
+		// Check is not none.
+		if (type == BlockType.NONE) {
+			throw new IllegalStateException("Block type cannot be NONE!");
+		}
+
 		// Check if no more than 1 base exists.
 		if (type == BlockType.BASE && !force) {
 			if (basePos == null) {
