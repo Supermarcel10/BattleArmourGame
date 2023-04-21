@@ -123,7 +123,7 @@ public class CreateLevel implements MouseListener, KeyListener {
 			try {
 				File file = selectLoadFile();
 				if (file != null) resetGame();
-
+				// TODO: Fix issue where a grey block is placed at 0, 0.
 				loadLevel(file);
 			} catch (IOException ignored) {}
 		}
