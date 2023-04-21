@@ -1,6 +1,7 @@
 package game.window;
 
 import game.input.Config;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,8 @@ import static game.main.Game.scaleFactor;
 
 
 public class WindowCommons {
+	public static final JFileChooser fileChooser = new JFileChooser();
+
 	protected static Font loadFont(float size) {
 		Font font;
 
@@ -56,5 +59,10 @@ public class WindowCommons {
 		panel.add(button, JLayeredPane.DEFAULT_LAYER, index);
 
 		return button;
+	}
+
+	public static @Nullable File selectLoadFile() {
+		int result = fileChooser.showOpenDialog(null);
+		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
 	}
 }
