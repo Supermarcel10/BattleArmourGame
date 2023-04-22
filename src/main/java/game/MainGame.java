@@ -62,16 +62,11 @@ public class MainGame {
 		// Create the window and main menu.
 		WindowHandler.createWindow(world);
 
-		while (WindowHandler.inMenu) {
-			// TODO: Make menu handling.
-			WindowHandler.inMenu = false;
-		}
-
 		// Disable the gravity and change background color.
 		world.setGravity(0);
 		view.setBackground(Color.decode("#fcf8de"));
 
-		createLevel();
+//		createLevel();
 //		loadGame();
 
 		// Add Keyboard & Mouse listeners.

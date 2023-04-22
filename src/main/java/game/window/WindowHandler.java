@@ -21,10 +21,6 @@ public class WindowHandler extends WindowCommons {
 	public static final JFrame root = new JFrame(Config.title);
 	public static UserView view = new UserView(world, 0, 0);
 
-	protected static JButton[] btnsMenu;
-	protected static JPanel pnlMenu;
-	public static boolean inMenu = true;
-
 	protected static JLabel lblScore;
 
 	public static void createWindow(World world) {
@@ -33,9 +29,11 @@ public class WindowHandler extends WindowCommons {
 		pnlMain.setPreferredSize(view.getPreferredSize());
 		pnlMain.setOpaque(false); // Set the background color to be transparent
 
+		WindowMenu.createMenu();
+
 		// Add the view to the layered pane at the bottom layer with an explicit position and size.
-		pnlMain.add(view, JLayeredPane.FRAME_CONTENT_LAYER);
-		view.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
+//		pnlMain.add(view, JLayeredPane.FRAME_CONTENT_LAYER);
+//		view.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
 
 		// Add the layered pane to the frame.
 		root.setContentPane(pnlMain);
@@ -58,8 +56,8 @@ public class WindowHandler extends WindowCommons {
 			view.setGridResolution(3.75f);
 			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
 		}
-
-		WindowMenu.createMenu();
+//
+//		WindowMenu.createMenu();
 	}
 
 	public static void updateWindow() {
