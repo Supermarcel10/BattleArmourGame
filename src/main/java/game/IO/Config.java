@@ -58,6 +58,13 @@ public class Config {
 	}};
 
 	public static HashMap<String, String> music = new HashMap<>() {{
+		put("game1", CD + "music/Battle_At_The_Stones.mp3");
+		put("game2", CD + "music/Heroes_Rise.mp3");
+		put("game3", CD + "music/Honorbound_Army.mp3");
+		put("game4", CD + "music/Rise_Above_Darkness.mp3");
+		put("game5", CD + "music/Venom.mp3");
+		put("game6", CD + "music/Warband_Marauders.mp3");
+		put("game7", CD + "music/Wasteland_Warrior.mp3");
 	}};
 
 	public static HashMap<String, String> font = new HashMap<>() {{

@@ -21,6 +21,15 @@ public class Spawn extends Body {
 
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, new CircleShape(halfSize));
+		// FIXME:
+		//  Exception in thread "Thread-0" java.lang.NullPointerException: Cannot invoke "org.jbox2d.dynamics.Fixture.setUserData(Object)" because "this.b2fixture" is null
+		//	at city.cs.engine.Fixture.<init>(Fixture.java:51)
+		//	at city.cs.engine.GhostlyFixture.<init>(GhostlyFixture.java:42)
+		//	at city.cs.engine.GhostlyFixture.<init>(GhostlyFixture.java:32)
+		//	at game.objects.tank.Spawn.<init>(Spawn.java:23)
+		//	at game.MainGame.enemySpawn(MainGame.java:194)
+		//	at java.base/java.lang.Thread.run(Thread.java:1589)
+
 
 		// Change properties
 		setFillColor(java.awt.Color.WHITE);
