@@ -17,7 +17,9 @@ public class WindowBuild {
 	protected static JLabel lblHeader;
 	protected static JLabel lblInformation;
 
-	protected static Timer lblTimerInformation = new Timer(5000, e -> lblInformation.setText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD."));
+	protected static Timer lblTimerInformation = new Timer(5000, e -> {
+		if (lblInformation != null) lblInformation.setText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD.");
+	});
 
 
 	public static void createBuildOverlay() {
@@ -45,10 +47,6 @@ public class WindowBuild {
 	public static void removeBuildOverlay() {
 		lblHeader.setVisible(false);
 		lblInformation.setVisible(false);
-
-		lblHeader = null;
-		lblInformation = null;
-		lblTimerInformation = null;
 	}
 
 	public static @Nullable File selectSaveLocation() {
