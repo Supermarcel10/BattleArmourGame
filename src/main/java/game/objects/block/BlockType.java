@@ -1,17 +1,18 @@
 package game.objects.block;
 
 import game.IO.AM;
+import org.jetbrains.annotations.NotNull;
 
 
 public enum BlockType {
 	NONE(), // Used for empty blocks.
-	ENEMY_SPAWN("enemySpawn"), // Used for declaring enemy spawn points.
-	PLAYER_SPAWN("playerSpawn"), // Used for declaring player spawn points.
-	BRICK("brick", 3),
-	EDGE("edge", false),
-	WATER("water", false, false),
-	LEAF("leaf", false, false, true),
-	BASE("base", 1, -5000);
+	ENEMY_SPAWN(), // Used for declaring enemy spawn points.
+	PLAYER_SPAWN(), // Used for declaring player spawn points.
+	BRICK( 3),
+	EDGE(false),
+	WATER(false, false),
+	LEAF(false, false, true),
+	BASE(1, -5000);
 
 	public final String image;
 
@@ -25,21 +26,21 @@ public enum BlockType {
 	public boolean isSolid = true;
 	public boolean isDrivable = false;
 
-	BlockType(String image, boolean damageable, boolean isSolid, boolean isDrivable) {
-		this.image = AM.image.get(image);
+	BlockType(boolean damageable, boolean isSolid, boolean isDrivable) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.damageable = damageable;
 		this.isSolid = isSolid;
 		this.isDrivable = isDrivable;
 	}
 
-	BlockType(String image, boolean damageable, boolean isSolid) {
-		this.image = AM.image.get(image);
+	BlockType(boolean damageable, boolean isSolid) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.damageable = damageable;
 		this.isSolid = isSolid;
 	}
 
-	BlockType(String image, int maxHealth, int destroyScore, int damageScore, boolean isSolid, boolean isDrivable) {
-		this.image = AM.image.get(image);
+	BlockType(int maxHealth, int destroyScore, int damageScore, boolean isSolid, boolean isDrivable) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
@@ -47,49 +48,58 @@ public enum BlockType {
 		this.isDrivable = isDrivable;
 	}
 
-	BlockType(String image, int maxHealth, int destroyScore, int damageScore, boolean isSolid) {
-		this.image = AM.image.get(image);
+	BlockType(int maxHealth, int destroyScore, int damageScore, boolean isSolid) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
 		this.isSolid = isSolid;
 	}
 
-	BlockType(String image, int maxHealth, int destroyScore, boolean isSolid) {
-		this.image = AM.image.get(image);
+	BlockType(int maxHealth, int destroyScore, boolean isSolid) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.isSolid = isSolid;
 	}
 
-	BlockType(String image, int maxHealth, int destroyScore, int damageScore) {
-		this.image = AM.image.get(image);
+	BlockType(int maxHealth, int destroyScore, int damageScore) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 		this.damageScore = damageScore;
 	}
 
-	BlockType(String image, int maxHealth, int destroyScore) {
-		this.image = AM.image.get(image);
+	BlockType(int maxHealth, int destroyScore) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.maxHealth = maxHealth;
 		this.destroyScore = destroyScore;
 	}
 
-	BlockType(String image, int maxHealth) {
-		this.image = AM.image.get(image);
+	BlockType(int maxHealth) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.maxHealth = maxHealth;
 	}
 
-	BlockType(String image, boolean damageable) {
-		this.image = AM.image.get(image);
+	BlockType(boolean damageable) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.damageable = damageable;
-	}
-
-	BlockType(String image) {
-		this.image = AM.image.get(image);
 	}
 
 	BlockType() {
-		this.image = null;
+		this.image = AM.image.get(toCamelCase(this.toString()));
+	}
+
+	private static @NotNull String toCamelCase(@NotNull String s) {
+		String[] parts = s.split("_");
+		StringBuilder out = new StringBuilder();
+		out.append(parts[0].toLowerCase());
+
+		for (int i = 1; i < parts.length; i++) {
+			out.append(parts[i].substring(0, 1).toUpperCase());
+			out.append(parts[i].substring(1).toLowerCase());
+		}
+
+		return out.toString();
 	}
 }
