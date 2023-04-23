@@ -6,7 +6,7 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 
-public abstract class Body extends DynamicBody implements IBody {
+public abstract class Body extends DynamicBody {
 	public float speed;
 	protected static World world = MainGame.world;
 	protected static float scaleFactor = MainGame.scaleFactor;
