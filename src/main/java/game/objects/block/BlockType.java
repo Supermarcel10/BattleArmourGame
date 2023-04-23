@@ -7,7 +7,7 @@ public enum BlockType {
 	NONE(), // Used for empty blocks.
 	ENEMY_SPAWN("enemySpawn"), // Used for declaring enemy spawn points.
 	PLAYER_SPAWN("playerSpawn"), // Used for declaring player spawn points.
-	BRICK("wall", 3),
+	BRICK("brick", 3),
 	EDGE("edge", false),
 	WATER("water", false, false),
 	LEAF("leaf", false, false, true),
