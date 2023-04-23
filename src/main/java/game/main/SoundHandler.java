@@ -18,7 +18,10 @@ public class SoundHandler implements Runnable {
 	}
 
 	public void playBackgroundMusic() {
-		play(Config.music.get("game1"));
+		// Get a random background music and play it.
+		int random = (int) (Math.random() * Config.music.size());
+		// TODO: Make songs rotate.
+		play(Config.music.get(Config.music.keySet().toArray()[random]));
 	}
 
 	public void play(String fileName) {
