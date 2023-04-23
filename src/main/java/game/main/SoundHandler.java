@@ -1,9 +1,7 @@
 package game.main;
 
 import game.IO.Config;
-
 import java.io.FileInputStream;
-
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -15,16 +13,12 @@ public class SoundHandler implements Runnable {
 	private final BlockingQueue<String> queue;
 	private Thread thread;
 
-	public static void playBackgroundMusic() {
-		try {
-			FileInputStream fis = new FileInputStream(Config.music.get("game"));
-			Player backgroundMusic = new Player(fis);
-			backgroundMusic.play();
-		} catch (Exception ignored) {}
-	}
-
 	public SoundHandler() {
 		queue = new LinkedBlockingQueue<>();
+	}
+
+	public void playBackgroundMusic() {
+		play(Config.music.get("game1"));
 	}
 
 	public void play(String fileName) {

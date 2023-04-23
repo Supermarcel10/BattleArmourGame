@@ -22,7 +22,6 @@ import java.util.List;
 
 import static game.IO.Config.resolution;
 import static game.IO.LoadLevel.loadLevel;
-import static game.main.LevelCreator.createLevel;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
@@ -52,7 +51,6 @@ public class MainGame {
 	public static int brokenBlocks = 0;
 
 	public static Thread spawnThread = new Thread(MainGame::enemySpawn);
-
 	public static GameState gameState = GameState.NONE;
 
 
@@ -76,7 +74,8 @@ public class MainGame {
 		world.addStepListener(listener);
 
 		// Play background music.
-		SoundHandler.playBackgroundMusic();
+		SoundHandler soundHandler = new SoundHandler();
+		soundHandler.playBackgroundMusic();
 
 		// Start world simulation
 		world.start();
@@ -103,10 +102,12 @@ public class MainGame {
 		blocks = new Block[gridSize][gridSize];
 
 		try {
-			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\2.level")) {
+			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level")) {
 				throw new ExceptionInInitializerError("Failed to initialise level!");
 			}
-		} catch (Exception ignored) {}
+		} catch (Exception ignored) {
+			System.out.println("Failed to load level!");
+		}
 
 		makeMapBorder();
 
@@ -185,11 +186,18 @@ public class MainGame {
 		while (true) {
 			if (enemies.size() < 3) {
 				Vec2 pos = enemySpawnPos.get((int) (Math.random() * enemySpawnPos.size()));
-				new Spawn(TankType.BASIC, pos);
+
+				// TODO: Check what the issue might be here
+				try {
+					new Spawn(TankType.BASIC, pos);
+				} catch (Exception ignored) {
+					new Spawn(TankType.BASIC, pos);
+					System.out.println("Failed to spawn enemy!");
+				}
 			}
 
 			try {
-				sleep(5000 + (int) (Math.random() * 5000));
+				sleep(1000 + (int) (Math.random() * 5000));
 			} catch (InterruptedException ignored) {}
 		}
 	}
