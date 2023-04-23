@@ -36,6 +36,7 @@ public class Config {
 	public static HashMap<String, String> blockSound = new HashMap<>();
 	public static HashMap<String, String> music = new HashMap<>();
 	public static HashMap<String, String> font = new HashMap<>();
+	public static HashMap<String, String> level = new HashMap<>();
 
 	static {
 		addAllToHashMap(image, new File(CD + "img/")); // image
@@ -43,6 +44,7 @@ public class Config {
 		addAllToHashMap(blockSound, new File(CD + "sound/blocks/")); // blockSound
 		addAllToHashMap(music, new File(CD + "music/")); // music
 		addAllToHashMap(font, new File(CD + "font/")); // font
+		addAllToHashMap(level, new File(CD + "levels/")); // level
 	}
 
 	private static void addAllToHashMap(HashMap hashMap, @NotNull File file) {
