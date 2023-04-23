@@ -23,7 +23,7 @@ public class WindowCommons {
 			Font ttf = Font.createFont(Font.TRUETYPE_FONT, new File(Config.font.get("default")));
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(ttf);
 			font = ttf.deriveFont(Font.PLAIN, Math.round(scaleFactor * (64 * size) - 4));
-		} catch (IOException | FontFormatException e) {
+		} catch (IOException | NullPointerException | FontFormatException e) {
 			font = new Font("Algerian", Font.BOLD, Math.round(scaleFactor * (64 * size) - 4));
 		}
 
