@@ -32,8 +32,8 @@ public class WindowHandler extends WindowCommons {
 		WindowMenu.createMenu();
 
 		// Add the view to the layered pane at the bottom layer with an explicit position and size.
-//		pnlMain.add(view, JLayeredPane.FRAME_CONTENT_LAYER);
-//		view.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
+		pnlMain.add(view, JLayeredPane.FRAME_CONTENT_LAYER);
+		view.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
 
 		// Add the layered pane to the frame.
 		root.setContentPane(pnlMain);
