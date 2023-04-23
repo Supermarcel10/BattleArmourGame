@@ -54,8 +54,11 @@ public class WindowCommons {
 		JButton button = new JButton(text);
 
 		button.setFont(loadFont(scale));
-		button.setBackground(Color.WHITE);
 		button.setForeground(Color.BLACK);
+		button.setBackground(Color.WHITE);
+		button.setBorder(BorderFactory.createEmptyBorder());
+		button.setFocusPainted(false);
+		button.setOpaque(false);
 
 		panel.add(button, JLayeredPane.DEFAULT_LAYER, index);
 
