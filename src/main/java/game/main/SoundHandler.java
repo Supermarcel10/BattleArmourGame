@@ -1,7 +1,8 @@
 package game.main;
 
-import game.IO.Config;
 import java.io.FileInputStream;
+
+import game.IO.AM;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -19,9 +20,9 @@ public class SoundHandler implements Runnable {
 
 	public void playBackgroundMusic() {
 		// Get a random background music and play it.
-		int random = (int) (Math.random() * Config.music.size());
+		int random = (int) (Math.random() * AM.music.size());
 		// TODO: Make songs rotate.
-		play(Config.music.get(Config.music.keySet().toArray()[random]));
+		play(AM.music.get(AM.music.keySet().toArray()[random]));
 	}
 
 	public void play(String fileName) {

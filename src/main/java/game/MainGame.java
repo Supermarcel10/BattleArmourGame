@@ -2,6 +2,7 @@ package game;
 
 import city.cs.engine.*;
 import game.IO.Config;
+import game.IO.AM;
 import game.main.GameState;
 import game.main.SoundHandler;
 import game.objects.block.Block;
@@ -99,7 +100,7 @@ public class MainGame {
 		blocks = new Block[gridSize][gridSize];
 
 		try {
-			if (!loadLevel(Config.level.get("1"))) throw new ExceptionInInitializerError("Failed to initialise level!");
+			if (!loadLevel(AM.level.get("1"))) throw new ExceptionInInitializerError("Failed to initialise level!");
 		} catch (Exception ignored) { System.out.println("Failed to load level!"); }
 
 		// Spawn players.

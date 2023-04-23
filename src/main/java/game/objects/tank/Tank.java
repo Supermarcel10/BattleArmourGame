@@ -2,7 +2,7 @@ package game.objects.tank;
 
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
-import game.IO.Config;
+import game.IO.AM;
 import game.objects.pickup.Pickup;
 import game.objects.abstractBody.Body;
 import game.objects.pickup.PickupType;
@@ -40,7 +40,7 @@ public class Tank extends Body {
 	public List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
 	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
-	protected static String shootSound = Config.tankSound.get("shoot");
+	protected static String shootSound = AM.tankSound.get("shoot");
 	protected static String damageSound, destroySound;
 
 	protected int scoreValue;

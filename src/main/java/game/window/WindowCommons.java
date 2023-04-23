@@ -1,6 +1,6 @@
 package game.window;
 
-import game.IO.Config;
+import game.IO.AM;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -20,7 +20,7 @@ public class WindowCommons {
 
 		try {
 			// Open & register the font with the GraphicsEnvironment
-			Font ttf = Font.createFont(Font.TRUETYPE_FONT, new File(Config.font.get("PressStart2P")));
+			Font ttf = Font.createFont(Font.TRUETYPE_FONT, new File(AM.font.get("PressStart2P")));
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(ttf);
 			font = ttf.deriveFont(Font.PLAIN, Math.round(scaleFactor * (64 * size) - 4));
 		} catch (IOException | NullPointerException | FontFormatException e) {

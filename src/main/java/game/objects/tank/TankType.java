@@ -1,16 +1,16 @@
 package game.objects.tank;
 
-import game.IO.Config;
+import game.IO.AM;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 
 public enum TankType {
-	PLAYER(1, 0.4f, -5000, Config.image.get("player")),
-	BASIC(1, 0.4f, 100, Config.image.get("basicEnemy")),
-	HEAVY(3, 0.3f, 300, Config.image.get("heavyEnemy")),
-	FAST(1, 0.6f, 250, Config.image.get("fastEnemy")),
-	EXPLODING(1, 0.5f, 250, Config.image.get("explodingEnemy"));
+	PLAYER(1, 0.4f, -5000, AM.image.get("player")),
+	BASIC(1, 0.4f, 100, AM.image.get("basicEnemy")),
+	HEAVY(3, 0.3f, 300, AM.image.get("heavyEnemy")),
+	FAST(1, 0.6f, 250, AM.image.get("fastEnemy")),
+	EXPLODING(1, 0.5f, 250, AM.image.get("explodingEnemy"));
 
 	public final int health;
 	public final float speed;
