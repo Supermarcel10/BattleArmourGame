@@ -100,10 +100,6 @@ public class WindowHandler extends WindowCommons {
 
 	}
 
-	public static void createLoadMenu() {
-
-	}
-
 	public static void createNewGameMenu() {
 
 	}
