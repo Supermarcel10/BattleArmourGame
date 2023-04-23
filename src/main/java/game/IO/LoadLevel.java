@@ -10,8 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static game.MainGame.enemySpawnPos;
-import static game.MainGame.playerSpawnPos;
+import static game.MainGame.*;
 
 
 public class LoadLevel {
@@ -34,6 +33,9 @@ public class LoadLevel {
 				}
 			}
 		}
+
+		// Always make the map border after loading the level.
+		makeMapBorder();
 
 		// If END is not found, return failure to load.
 		br.close();

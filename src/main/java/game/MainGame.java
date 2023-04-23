@@ -58,14 +58,11 @@ public class MainGame {
 		world = new World(Config.fps);
 
 		// Create the window and main menu.
-		WindowHandler.createWindow(world);
+		WindowHandler.createWindow();
 
 		// Disable the gravity and change background color.
 		world.setGravity(0);
 		view.setBackground(Color.decode("#fcf8de"));
-
-//		createLevel();
-//		loadGame();
 
 		// Add Keyboard & Mouse listeners.
 		Listener listener = new Listener();
@@ -76,9 +73,6 @@ public class MainGame {
 		// Play background music.
 		SoundHandler soundHandler = new SoundHandler();
 		soundHandler.playBackgroundMusic();
-
-		// Start world simulation
-		world.start();
 
 		// Create a thread to print the FPS.
 //		Thread thread = new Thread(() -> {
@@ -96,39 +90,39 @@ public class MainGame {
 	}
 
 	public static void loadGame() {
+		// Start world simulation
+		world.start();
+
 		WindowHandler.createGameOverlay();
 
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 
 		try {
-			if (!loadLevel("C:\\Users\\Marcel\\IdeaProjects\\javaproject2023-Supermarcel10\\src\\main\\resources\\levels\\1.level")) {
-				throw new ExceptionInInitializerError("Failed to initialise level!");
-			}
-		} catch (Exception ignored) {
-			System.out.println("Failed to load level!");
-		}
-
-		makeMapBorder();
+			if (!loadLevel(Config.level.get("1"))) throw new ExceptionInInitializerError("Failed to initialise level!");
+		} catch (Exception ignored) { System.out.println("Failed to load level!"); }
 
 		// Spawn players.
 		new Spawn(TankType.PLAYER, playerSpawnPos[0]);
 		new Spawn(TankType.PLAYER, playerSpawnPos[1]);
 
 		// Spawn enemies progressively.
+		if (spawnThread.getState() == Thread.State.TERMINATED) spawnThread = new Thread(MainGame::enemySpawn);
 		spawnThread.start();
 
 		gameState = GameState.GAME;
 	}
 
 	public static void resetGame() {
-		// Remove all enemies.
-		for (Enemy enemy : enemies) {
-			if (enemy != null) {
-				enemy.destroy();
+		if (spawnThread.isAlive()) spawnThread.interrupt();
+
+		// Remove all spawners.
+		for (Spawn spawn : spawners) {
+			if (spawn != null) {
+				spawn.destroy();
 			}
 		}
-		enemies.clear();
+		spawners.clear();
 
 		// Remove all shots.
 		for (Shot shot : shots) {
@@ -148,14 +142,6 @@ public class MainGame {
 		}
 		blocks = new Block[gridSize][gridSize];
 
-		// Remove all spawners.
-		for (Spawn spawn : spawners) {
-			if (spawn != null) {
-				spawn.destroy();
-			}
-		}
-		spawners.clear();
-
 		// Remove all pickups.
 		for (Pickup pickup : pickups) {
 			if (pickup != null) {
@@ -170,6 +156,26 @@ public class MainGame {
 				player.destroy();
 			}
 		}
+		player = new Player[2];
+
+		// TODO: Fix issue where enemies from spawners still exist after reset.
+		// Remove all enemies.
+		for (Enemy enemy : enemies) {
+			if (enemy != null) {
+				enemy.destroy();
+			}
+		}
+		enemies.clear();
+
+		// Reset all variables.
+		basePos = null;
+		score = 0; postUpdateScore = 0;
+		kills = 0;
+		brokenBlocks = 0;
+
+		// Reset all lists.
+		enemySpawnPos = new ArrayList<>();
+		playerSpawnPos = new Vec2[2];
 	}
 
 	public static void makeMapBorder() {
@@ -198,7 +204,9 @@ public class MainGame {
 
 			try {
 				sleep(1000 + (int) (Math.random() * 5000));
-			} catch (InterruptedException ignored) {}
+			} catch (InterruptedException ignored) {
+				break;
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@ package game.main;
 
 import game.objects.block.Block;
 import game.objects.block.BlockType;
+import game.window.WindowMenu;
 import org.jbox2d.common.Vec2;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class LevelCreator {
 
 	public static void createLevel() {
 		gameState = GameState.EDITOR;
+
+		// Start world simulation
+		world.start();
 
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
@@ -84,7 +88,8 @@ public class LevelCreator {
 			return;
 		}
 
-		// If successful, exit the level editor.
+		// If successful, stop world simulation & exit the level editor.
+		world.stop();
 		gameState = GameState.MENU;
 		exit();
 	}
@@ -113,6 +118,6 @@ public class LevelCreator {
 
 		// Reset the game and go back to the menu.
 		resetGame();
-		gameState = GameState.MENU;
+		WindowMenu.showMenu();
 	}
 }

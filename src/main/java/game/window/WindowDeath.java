@@ -1,7 +1,6 @@
 package game.window;
 
 import game.IO.Config;
-import game.main.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +16,9 @@ public class WindowDeath extends WindowHandler {
 
 		pnlOverlay.setBackground(new Color(0.9f, 0, 0, 0));
 		pnlOverlay.setOpaque(true);
+
+		// Stop the world simulation.
+		world.stop();
 
 		final boolean[] complete = new boolean[]{false, false};
 
@@ -105,7 +107,7 @@ public class WindowDeath extends WindowHandler {
 		t2.start();
 
 		btnMainMenu.addActionListener(e -> {
-			gameState = GameState.MENU;
+			WindowMenu.showMenu();
 			resetGame();
 
 			pnlOverlay.setVisible(false);
