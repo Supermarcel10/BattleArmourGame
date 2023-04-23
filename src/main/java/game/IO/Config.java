@@ -41,7 +41,7 @@ public class Config {
 		addAllToHashMap(image, new File(CD + "img/")); // image
 		addAllToHashMap(tankSound, new File(CD + "sound/tank/")); // tankSound
 		addAllToHashMap(blockSound, new File(CD + "sound/blocks/")); // blockSound
-		addAllToHashMap(music, new File(CD + "sound/music/")); // music
+		addAllToHashMap(music, new File(CD + "music/")); // music
 		addAllToHashMap(font, new File(CD + "font/")); // font
 	}
 
