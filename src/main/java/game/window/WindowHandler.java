@@ -119,6 +119,6 @@ public class WindowHandler extends WindowCommons {
 	}
 
 	public static void updateScore() {
-		lblScore.setText("SCORE: " + score);
+		if (lblScore != null) lblScore.setText("SCORE: " + score);
 	}
 }
