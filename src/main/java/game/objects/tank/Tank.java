@@ -131,11 +131,8 @@ public class Tank extends Body {
 			enemies.remove(this);
 
 			// Give a chance to spawn a pickup.
-			int randomInt = new Random().nextInt(100);
-			System.out.println(randomInt);
-			if (randomInt < pickupChance && this instanceof Enemy) {
+			if (new Random().nextInt(100) < pickupChance && this instanceof Enemy) {
 				Random random = new Random();
-				System.out.println(this.getPosition());
 
 				new Pickup(pickupTypes[random.nextInt(pickupTypes.length)], this.getPosition());
 			}
