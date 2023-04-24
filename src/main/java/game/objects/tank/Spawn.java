@@ -45,9 +45,9 @@ public class Spawn extends Body {
 
 			// Spawn enemy after 1 second.
 			new Timer(1000, e -> {
-				Enemy enemy = type.createEnemy(pos);
-				enemies.add(enemy);
+				if (!spawners.contains(this)) return;
 
+				enemies.add(type.createEnemy(pos));
 				removeSpawner();
 
 				// Stop after first execution to allow for GC.

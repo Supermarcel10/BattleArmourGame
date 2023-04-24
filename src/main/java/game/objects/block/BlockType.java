@@ -88,6 +88,7 @@ public enum BlockType {
 
 	BlockType() {
 		this.image = AM.image.get(toCamelCase(this.toString()));
+		this.damageable = false;
 	}
 
 	private static @NotNull String toCamelCase(@NotNull String s) {

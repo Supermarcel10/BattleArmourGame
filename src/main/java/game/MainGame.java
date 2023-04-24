@@ -159,7 +159,6 @@ public class MainGame {
 		}
 		player = new Player[2];
 
-		// TODO: Fix issue where enemies from spawners still exist after reset.
 		// Remove all enemies.
 		for (Enemy enemy : enemies) {
 			if (enemy != null) {
@@ -197,9 +196,8 @@ public class MainGame {
 				// TODO: Check what the issue might be here
 				try {
 					new Spawn(TankType.BASIC, pos);
-				} catch (Exception ignored) {
+				} catch (NullPointerException ignored) {
 					new Spawn(TankType.BASIC, pos);
-					System.out.println("Failed to spawn enemy!");
 				}
 			}
 
