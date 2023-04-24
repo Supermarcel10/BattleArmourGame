@@ -4,37 +4,52 @@ import java.io.FileInputStream;
 
 import game.IO.AM;
 import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
 
+import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class SoundHandler implements Runnable {
+	private final static float volume = 0f;
+
 	private final BlockingQueue<String> queue;
 	private Thread thread;
+
+	private int currentSongIndex = 0;
+	private Thread bgmThread;
 
 	public SoundHandler() {
 		queue = new LinkedBlockingQueue<>();
 	}
 
 	public void playBackgroundMusic() {
-		// Get a random background music and play it.
-		int random = (int) (Math.random() * AM.music.size());
-		// TODO: Make songs rotate.
-		play(AM.music.get(AM.music.keySet().toArray()[random]));
+		String[] musicArray = AM.music.values().toArray(new String[0]);
+
+		if (bgmThread == null || !bgmThread.isAlive()) {
+			bgmThread = new Thread(() -> {
+				try {
+					while (!Thread.currentThread().isInterrupted()) {
+						CustomPlayer player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex]));
+						player.setVolume(volume);
+						player.play();
+
+						currentSongIndex = (currentSongIndex + 1) % musicArray.length;
+					}
+				} catch (Exception ignored) {
+				}
+			});
+			bgmThread.start();
+		}
 	}
 
 	public void play(String fileName) {
-		if (fileName == null) {
-			return;
-		}
+		if (fileName == null) return;
 
 		boolean added = queue.offer(fileName);
-
-		if (!added) {
-			System.err.println("Failed to add " + fileName + " to sound queue!");
-		}
+		if (!added) return;
 
 		if (thread == null || !thread.isAlive()) {
 			thread = new Thread(this);
@@ -45,10 +60,9 @@ public class SoundHandler implements Runnable {
 	public void run() {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
-				String fileName = queue.take();
+				CustomPlayer player = new CustomPlayer(new FileInputStream(queue.take()));
+				player.setVolume(0.5f);
 
-				FileInputStream fis = new FileInputStream(fileName);
-				Player player = new Player(fis);
 				new Thread(() -> {
 					try {
 						player.play();
@@ -57,8 +71,51 @@ public class SoundHandler implements Runnable {
 			}
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
+		} catch (Exception ignored) {}
+	}
+}
+
+
+class CustomPlayer extends Player {
+	private final CustomJavaSoundAudioDevice audioDevice;
+
+	public CustomPlayer(InputStream stream) throws JavaLayerException {
+		this(stream, new CustomJavaSoundAudioDevice());
+	}
+
+	public CustomPlayer(InputStream stream, CustomJavaSoundAudioDevice device) throws JavaLayerException {
+		super(stream, device);
+		audioDevice = device;
+	}
+
+	public void setVolume(float gain) {
+		audioDevice.setVolume(gain);
+	}
+
+	public float getVolume() {
+		return audioDevice.getVolume();
+	}
+}
+
+
+class CustomJavaSoundAudioDevice extends JavaSoundAudioDevice {
+	private float volume = 1.0f;
+
+	public void setVolume(float volume) {
+		this.volume = volume;
+	}
+
+	public float getVolume() {
+		return volume;
+	}
+
+	@Override
+	protected void writeImpl(short[] samples, int offs, int len) throws JavaLayerException {
+		if (volume != 1.0f) {
+			for (int i = offs; i < offs + len; i++) {
+				samples[i] = (short) Math.min(Math.max((int) (samples[i] * volume), Short.MIN_VALUE), Short.MAX_VALUE);
+			}
 		}
+		super.writeImpl(samples, offs, len);
 	}
 }
