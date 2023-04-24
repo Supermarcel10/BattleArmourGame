@@ -30,7 +30,7 @@ public class Tank extends Body {
 	public boolean shielded = false;
 
 	private static final PickupType[] pickupTypes = PickupType.values();
-	private static final float pickupChance = 0.1f;
+	private static final int pickupChance = 20;
 
 	private boolean canShoot = true;
 	private final int shootingDelay = 500;
@@ -131,7 +131,9 @@ public class Tank extends Body {
 			enemies.remove(this);
 
 			// Give a chance to spawn a pickup.
-			if (Math.random() < pickupChance && this instanceof Enemy) {
+			int randomInt = new Random().nextInt(100);
+			System.out.println(randomInt);
+			if (randomInt < pickupChance && this instanceof Enemy) {
 				Random random = new Random();
 				System.out.println(this.getPosition());
 
