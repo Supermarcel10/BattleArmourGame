@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 import static game.MainGame.*;
 
-
+// TODO: REWRITE THIS CLASS
 public class WindowDeath extends WindowHandler {
 	public static void createDeathMenu() {
 		// Stop the world simulation.
