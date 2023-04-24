@@ -21,6 +21,7 @@ public class WindowMenu extends WindowHandler {
 	protected static HashMap<JButton, Runnable> btnsMenu = new LinkedHashMap<>() {{
 		put(createButton("EXIT", .8f, pnlMenu, 10), () -> System.exit(0));
 		put(createButton("OPTIONS", .8f, pnlMenu, 10), WindowMenu::options);
+		put(createButton("HIGH SCORE", .8f, pnlMenu, 10), WindowMenu::highScore);
 		put(createButton("CREATE", .8f, pnlMenu, 10), WindowMenu::create);
 		put(createButton("PLAY", .8f, pnlMenu, 10), WindowMenu::play);
 	}};
@@ -73,6 +74,14 @@ public class WindowMenu extends WindowHandler {
 		gameState = GameState.EDITOR;
 		hideMenu();
 		LevelCreator.createLevel();
+	}
+
+	private static void highScore() {
+		return;
+		// TODO: Implement highScore menu.
+//		gameState = GameState.OPTIONS;
+//		removeMenu();
+//		WindowOptions.createOptions();
 	}
 
 	private static void options() {
