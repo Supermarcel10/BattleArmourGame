@@ -90,7 +90,7 @@ public class Tank extends Body {
 		if (shotStyle.containsKey(ShotStyle.QUAD)) {
 			// Create 4 shots.
 			for (int i = 0; i < 4; i++) {
-				new Shot(this.getPosition(), new Vec2((float) Math.cos(i * Math.PI / 2), (float) Math.sin(i * Math.PI / 2)), this, shotSpeed, shotDamage, shotType.get());
+				new Shot(this.getPositionJBox(), new Vec2((float) Math.cos(i * Math.PI / 2), (float) Math.sin(i * Math.PI / 2)), this, shotSpeed, shotDamage, shotType.get());
 			}
 
 			// Reduce the amount of quad shots available.
@@ -106,7 +106,7 @@ public class Tank extends Body {
 			);
 
 			// Create the shot.
-			new Shot(this.getPosition(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
+			new Shot(this.getPositionJBox(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
 		}
 
 		// Play the shoot sound.

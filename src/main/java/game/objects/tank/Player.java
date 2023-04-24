@@ -55,7 +55,7 @@ public class Player extends Tank {
 	@Override
 	public void update() {
 		// Get the updated player object position based on the current movement direction and speed.
-		Vec2 newPosition = getPosition().add(moveDirection.mul(speed * scaleFactor));
+		Vec2 newPosition = getPositionJBox().add(moveDirection.mul(speed * scaleFactor));
 
 		for (Body b : this.getBodiesInContact()) {
 			for (Fixture f : b.getFixtureList()) {
