@@ -13,16 +13,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class SoundHandler implements Runnable {
-	private final static float volume = 0f;
+	private final static float soundVolume= 0f, musicVolume = 0f;
 
-	private final BlockingQueue<String> queue;
+	private final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 	private Thread thread;
 
 	private int currentSongIndex = 0;
 	private Thread bgmThread;
 
 	public SoundHandler() {
-		queue = new LinkedBlockingQueue<>();
+		playBackgroundMusic();
 	}
 
 	public void playBackgroundMusic() {
@@ -33,7 +33,7 @@ public class SoundHandler implements Runnable {
 				try {
 					while (!Thread.currentThread().isInterrupted()) {
 						CustomPlayer player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex]));
-						player.setVolume(volume);
+						player.setVolume(musicVolume);
 						player.play();
 
 						currentSongIndex = (currentSongIndex + 1) % musicArray.length;
@@ -42,6 +42,12 @@ public class SoundHandler implements Runnable {
 				}
 			});
 			bgmThread.start();
+		}
+	}
+
+	public void stopBackgroundMusic() {
+		if (bgmThread != null && bgmThread.isAlive()) {
+			bgmThread.interrupt();
 		}
 	}
 
@@ -61,7 +67,7 @@ public class SoundHandler implements Runnable {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
 				CustomPlayer player = new CustomPlayer(new FileInputStream(queue.take()));
-				player.setVolume(0.5f);
+				player.setVolume(soundVolume);
 
 				new Thread(() -> {
 					try {

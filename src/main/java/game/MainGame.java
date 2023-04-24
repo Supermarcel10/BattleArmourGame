@@ -73,10 +73,6 @@ public class MainGame {
 		view.addKeyListener(listener);
 		world.addStepListener(listener);
 
-		// Play background music.
-		SoundHandler soundHandler = new SoundHandler();
-		soundHandler.playBackgroundMusic();
-
 		// Create a thread to print the FPS.
 //		Thread thread = new Thread(() -> {
 //			while (true) {
