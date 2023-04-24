@@ -6,7 +6,7 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 
-public abstract class Body extends DynamicBody {
+public class Body extends DynamicBody {
 	public float speed;
 	protected static World world = MainGame.world;
 	protected static float scaleFactor = MainGame.scaleFactor;
@@ -61,7 +61,8 @@ public abstract class Body extends DynamicBody {
 	}
 
 	public Vec2 getPosition() {
-		return new Vec2(super.getPosition());
+		return new Vec2(super.getPosition().x / (scaledGridSize * 2 * scaleFactor),
+				super.getPosition().y / (scaledGridSize * 2 * scaleFactor));
 	}
 
 	public Vec2 getPositionJBox() {
