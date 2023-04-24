@@ -16,6 +16,7 @@ import game.IO.Listener;
 import game.objects.tank.TankType;
 import game.window.WindowHandler;
 import org.jbox2d.common.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.*;
@@ -116,6 +117,7 @@ public class MainGame {
 	}
 
 	public static void resetGame() {
+		// TODO: Rewrite this method.
 		if (spawnThread.isAlive()) spawnThread.interrupt();
 
 		// Remove all spawners.
@@ -193,14 +195,15 @@ public class MainGame {
 		// TODO: Randomise enemy type and make progression harder.
 		while (true) {
 			if (enemies.size() < 3) {
-				Vec2 pos = enemySpawnPos.get((int) (Math.random() * enemySpawnPos.size()));
+				Vec2 pos;
 
-				// TODO: Check what the issue might be here
 				try {
+					pos = generateSpawnPos();
 					new Spawn(TankType.BASIC, pos);
 				} catch (NullPointerException ignored) {
-					new Spawn(TankType.BASIC, pos);
-				}
+					// TODO: Check what the issue might be here
+					new Spawn(TankType.BASIC, generateSpawnPos());
+				} catch (StackOverflowError ignored) {}
 			}
 
 			try {
@@ -209,5 +212,28 @@ public class MainGame {
 				break;
 			}
 		}
+	}
+
+	private static Vec2 generateSpawnPos() {
+		Vec2 pos = enemySpawnPos.get((int) (Math.random() * enemySpawnPos.size()));
+
+		for (Spawn spawn : spawners) {
+			if (spawn != null && isWithinDistance(spawn.getPosition(), pos, 1)) return generateSpawnPos();
+		}
+
+		for (Player player : player) {
+			if (player != null && isWithinDistance(player.getPosition(), pos, 2)) return generateSpawnPos();
+		}
+
+		for (Enemy enemy : enemies) {
+			if (enemy != null && isWithinDistance(enemy.getPosition(), pos, 2)) return generateSpawnPos();
+		}
+		return pos;
+	}
+
+	private static boolean isWithinDistance(@NotNull Vec2 vec1, @NotNull Vec2 vec2, float distance) {
+		float dx = Math.abs(vec1.x - vec2.x);
+		float dy = Math.abs(vec1.y - vec2.y);
+		return dx <= distance && dy <= distance;
 	}
 }
