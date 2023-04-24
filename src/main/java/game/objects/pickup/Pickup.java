@@ -20,7 +20,7 @@ public class Pickup extends Body implements SensorListener {
 		super(0f);
 		this.type = type;
 
-		setPosition(position);
+		setPositionJBox(position);
 
 		// Add to pickups list.
 		pickups.add(this);
