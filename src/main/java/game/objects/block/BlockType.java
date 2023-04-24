@@ -20,8 +20,8 @@ public enum BlockType {
 	public boolean damageable = true;
 
 	public int destroyScore = 40, damageScore = 10;
-	public final String destroySound = AM.blockSound.get("damage");
-	public final String damageSound = AM.blockSound.get("damage");
+	public final String destroySound = AM.blockSound.get("brickBreak");
+	public final String damageSound = AM.blockSound.get("brickBreak");
 
 	public boolean isSolid = true;
 	public boolean isDrivable = false;
