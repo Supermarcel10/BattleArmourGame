@@ -23,6 +23,7 @@ import java.util.List;
 
 import static game.IO.Config.resolution;
 import static game.IO.LoadLevel.loadLevel;
+import static game.window.WindowHandler.updateScore;
 import static game.window.WindowHandler.view;
 import static java.lang.Thread.sleep;
 
@@ -172,6 +173,7 @@ public class MainGame {
 		score = 0; postUpdateScore = 0;
 		kills = 0;
 		brokenBlocks = 0;
+		updateScore();
 
 		// Reset all lists.
 		enemySpawnPos = new ArrayList<>();
