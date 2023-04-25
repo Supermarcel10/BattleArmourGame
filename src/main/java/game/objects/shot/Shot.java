@@ -67,7 +67,7 @@ public class Shot extends Body implements SensorListener {
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b && b.type.isSolid) {
 			switch (type) {
-				case BASIC, PENETRATING -> b.damage(damage);
+				case BASIC, PENETRATING -> b.damage(damage, shooter);
 				case EXPLOSIVE -> explode();
 			}
 
@@ -77,12 +77,12 @@ public class Shot extends Body implements SensorListener {
 		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
 			switch (type) {
 				case BASIC -> {
-					t.damage(damage);
+					t.damage(damage, shooter);
 					destroyShot();
 				}
 				case PENETRATING -> {
 					if (!penetratedBodies.contains(t)) {
-						t.damage(damage);
+						t.damage(damage, shooter);
 						penetratedBodies.add((Tank) sensorEvent.getContactBody());
 
 						if (penetratedBodies.size() >= type.numberOfPenetrations) destroyShot();

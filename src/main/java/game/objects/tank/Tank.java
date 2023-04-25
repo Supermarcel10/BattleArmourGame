@@ -32,7 +32,7 @@ public class Tank extends Body {
 	private static final PickupType[] pickupTypes = PickupType.values();
 	private static final int pickupChance = 20;
 
-	private boolean canShoot = true;
+	protected boolean canShoot = true;
 	private final int shootingDelay = 500;
 	public float shotSpeed = 150f;
 	public int shotDamage = 1;
@@ -113,7 +113,7 @@ public class Tank extends Body {
 		soundHandler.play(shootSound);
 	}
 
-	public void damage(int damage) {
+	public void damage(int damage, Tank shooter) {
 		if (shielded) {
 			shielded = false;
 			return;
@@ -123,8 +123,10 @@ public class Tank extends Body {
 
 		// TODO: Add explosion effect.
 		if (health <= 0) {
-			score += scoreValue;
-			kills++;
+			if (shooter instanceof Player) {
+				score += scoreValue;
+				kills++;
+			}
 
 			destroy();
 			//noinspection SuspiciousMethodCalls
