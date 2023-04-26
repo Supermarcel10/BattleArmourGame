@@ -1,6 +1,9 @@
 package game.objects.block;
 
 import city.cs.engine.*;
+import game.objects.tank.Enemy;
+import game.objects.tank.Player;
+import game.objects.tank.Tank;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -84,16 +87,18 @@ public class Block extends StaticBody {
 		}
 	}
 
-	public void damage(int damage) {
+	public void damage(int damage, Tank shooter) {
 		if (!damageable) return;
 
-		score += damage >= health ? damageScore * health : damageScore * damage;
+		if (shooter instanceof Player) score += damage >= health ? damageScore * health : damageScore * damage;
 		health -= damage;
 
 		if (health <= 0) {
 			destroy();
-			score += destroyScore;
-			brokenBlocks++;
+			if (shooter instanceof Player) {
+				score += destroyScore;
+				brokenBlocks++;
+			}
 			soundHandler.play(damageSound);
 		} else soundHandler.play(destroySound);
 
