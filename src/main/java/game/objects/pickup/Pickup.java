@@ -1,7 +1,7 @@
 package game.objects.pickup;
 
 import city.cs.engine.*;
-import game.objects.abstractBody.Body;
+import game.objects.abstractBody.DynamicBody;
 import game.objects.tank.Player;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
@@ -9,10 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
 import static game.MainGame.pickups;
+import static game.MainGame.scaleFactor;
 import static game.objects.tank.Tank.halfSize;
 
 
-public class Pickup extends Body implements SensorListener {
+/**
+ * Pickup class for pickup perks.
+ */
+public class Pickup extends DynamicBody implements SensorListener {
 	private static final Shape shape = new CircleShape((halfSize / 1.5f) * scaleFactor);
 	public final PickupType type;
 
@@ -38,28 +42,31 @@ public class Pickup extends Body implements SensorListener {
 
 		// Add a timer to destroy the pickup after 10 seconds.
 		new Timer(10000, e -> {
-			destroyPickup();
+			destroy();
 
 			// Stop after first execution to allow for GC.
 			((Timer) e.getSource()).stop();
 		}).start();
 	}
 
-	private void destroyPickup() {
-		destroy();
+	/**
+	 * Destroy the {@link Pickup} and remove it from the {@link game.MainGame#pickups} list.
+	 */
+	public void destroy() {
+		super.destroy();
 		pickups.remove(this);
 	}
 
-	public Pickup(PickupType type, int x, int y) {
-		this(type, new Vec2(x, y));
-	}
-
-	// TODO: Fix this sometimes not registering
+	/**
+	 * Pickup collision listener.
+	 * @param e SensorEvent.
+	 */
 	@Override
 	public void beginContact(@NotNull SensorEvent e) {
+		// TODO: Fix this sometimes not registering
 		if (e.getContactBody() instanceof Player p) {
 			p.pickUp(this);
-			destroyPickup();
+			destroy();
 		}
 	}
 

@@ -13,6 +13,9 @@ import static game.MainGame.scaleFactor;
 import static game.window.WindowHandler.*;
 
 
+/**
+ * This class is used to create the build overlay and handle the file chooser.
+ */
 public class WindowBuild {
 	protected static JLabel lblHeader;
 	protected static JLabel lblInformation;
@@ -21,7 +24,9 @@ public class WindowBuild {
 		if (lblInformation != null) lblInformation.setText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD.");
 	});
 
-
+	/**
+	 * Create the build overlay and set the default file name and directory.
+	 */
 	public static void createBuildOverlay() {
 		// Set the default starting directory to the project directory and file name to NAME.level
 		fileChooser.setSelectedFile(new File("NAME.level"));
@@ -44,20 +49,35 @@ public class WindowBuild {
 		lblInformation.setBounds(lblExitBuildModeX, lblExitBuildModeY, (int) Config.resolution.x, (int) Config.resolution.y);
 	}
 
+	/**
+	 * Remove the build overlay.
+	 */
 	public static void removeBuildOverlay() {
 		lblHeader.setVisible(false);
 		lblInformation.setVisible(false);
 	}
 
+	/**
+	 * Create a file chooser and return the selected file.
+	 * @return The selected file.
+	 */
 	public static @Nullable File selectSaveLocation() {
 		int result = fileChooser.showSaveDialog(view);
 		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
 	}
 
+	/**
+	 * Update the header to display the block type.
+	 * @param blockType The block type to display.
+	 */
 	public static void updateBlockPlacement(String blockType) {
 		lblHeader.setText(blockType);
 	}
 
+	/**
+	 * Update the information label.
+	 * @param text The text to display.
+	 */
 	public static void updateInformation(String text) {
 		lblInformation.setText(text);
 		lblTimerInformation.start();

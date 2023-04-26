@@ -12,9 +12,17 @@ import static game.MainGame.scaleFactor;
 import static game.window.WindowHandler.view;
 
 
+/**
+ * A class containing common methods and variables used by the windows.
+ */
 public class WindowCommons {
 	public static final JFileChooser fileChooser = new JFileChooser();
 
+	/**
+	 * Loads the font used in the game.
+	 * @param size The size of the font.
+	 * @return The font.
+	 */
 	protected static Font loadFont(float size) {
 		Font font;
 
@@ -30,6 +38,15 @@ public class WindowCommons {
 		return font;
 	}
 
+	/**
+	 * Creates a text label.
+	 * @param text The text to display.
+	 * @param scale The scale of the text.
+	 * @param color The color of the text.
+	 * @param panel The parent panel to add the label to.
+	 * @param index The index of the label.
+	 * @return The label.
+	 */
 	protected static JLabel createText(String text, float scale, Color color, JComponent panel, int index) {
 		if (!(panel instanceof JLayeredPane || panel instanceof JPanel)) return null;
 
@@ -44,10 +61,26 @@ public class WindowCommons {
 		return label;
 	}
 
+	/**
+	 * Creates a text label.
+	 * @param text The text to display.
+	 * @param scale The scale of the text.
+	 * @param panel The parent panel to add the label to.
+	 * @param index The index of the label.
+	 * @return The label.
+	 */
 	protected static JLabel createText(String text, float scale, JComponent panel, int index) {
 		return createText(text, scale, Color.WHITE, panel, index);
 	}
 
+	/**
+	 * Creates a button.
+	 * @param text The text to display.
+	 * @param scale The scale of the text.
+	 * @param panel The parent panel to add the button to.
+	 * @param index The index of the button.
+	 * @return The button.
+	 */
 	protected static JButton createButton(String text, float scale, JComponent panel, int index) {
 		if (!(panel instanceof JLayeredPane || panel instanceof JPanel)) return null;
 
@@ -65,6 +98,10 @@ public class WindowCommons {
 		return button;
 	}
 
+	/**
+	 * Opens a file chooser to select a file to save to.
+	 * @return The file selected.
+	 */
 	public static @Nullable File selectLoadFile() {
 		int result = fileChooser.showOpenDialog(view);
 		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;

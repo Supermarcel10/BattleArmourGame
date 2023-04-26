@@ -10,7 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.util.HashMap;
 
+import static game.MainGame.scaleFactor;
 
+
+/**
+ * The player class.
+ */
 public class Player extends Tank {
 	public HashMap<PickupType, Integer[]> perks = new HashMap<>();
 
@@ -23,10 +28,10 @@ public class Player extends Tank {
 		scoreValue = TankType.PLAYER.scoreValue;
 	}
 
-	public Player(int x, int y) {
-		this(new Vec2(x, y));
-	}
-
+	/**
+	 * Handle pickup logic.
+	 * @param pickup The pickup object to be picked up.
+	 */
 	public void pickUp(@NotNull Pickup pickup) {
 		// Add the perk to the perks list.
 		if (pickup.type.bulletCount != 0) {
@@ -52,6 +57,9 @@ public class Player extends Tank {
 		pickup.type.applyPerk(this);
 	}
 
+	/**
+	 * Update the player object position and angle based on the current movement direction and speed.
+	 */
 	@Override
 	public void update() {
 		// Get the updated player object position based on the current movement direction and speed.

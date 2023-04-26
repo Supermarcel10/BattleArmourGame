@@ -7,6 +7,9 @@ import game.objects.shot.ShotType;
 import java.util.HashMap;
 
 
+/**
+ * Enum for the different types of pickups.
+ */
 public enum PickupType {
 	// TODO: Add on screen display for the pickup.
 	QUAD_SHOT(10, 3),
@@ -30,6 +33,10 @@ public enum PickupType {
 		this.bulletCount = bulletCount;
 	}
 
+	/**
+	 * Applies the perk to the player.
+	 * @param player The player to apply the perk to.
+	 */
 	public void applyPerk(Player player) {
 		switch (this) {
 			case QUAD_SHOT -> player.shotStyle.put(ShotStyle.QUAD, bulletCount);
@@ -47,6 +54,10 @@ public enum PickupType {
 		}
 	}
 
+	/**
+	 * Removes the perk from the player.
+	 * @param player The player to remove the perk from.
+	 */
 	public void removePerk(Player player) {
 		switch (this) {
 			case QUAD_SHOT -> player.shotStyle.remove(ShotStyle.QUAD);

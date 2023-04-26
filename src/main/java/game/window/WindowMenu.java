@@ -16,6 +16,14 @@ import static game.MainGame.gameState;
 import static game.MainGame.gridSize;
 
 
+/**
+ * This class is responsible for creating the menu and handling the menu buttons.
+ * <p>
+ *     The menu is created by adding buttons to a layered pane.
+ *     The buttons are added to a hash map with a runnable as the value.
+ *     The runnable is executed when the button is pressed.
+ * </p>
+ */
 public class WindowMenu extends WindowHandler {
 	protected static CustomLayeredPane pnlMenu = new CustomLayeredPane(new Color(0, 40, 0, 40));
 	protected static HashMap<JButton, Runnable> btnsMenu = new LinkedHashMap<>() {{
@@ -26,6 +34,9 @@ public class WindowMenu extends WindowHandler {
 		put(createButton("PLAY", .8f, pnlMenu, 10), WindowMenu::play);
 	}};
 
+	/**
+	 * Creates the menu and adds it to the main panel.
+	 */
 	public static void createMenu() {
 		gameState = GameState.MENU;
 
@@ -55,37 +66,57 @@ public class WindowMenu extends WindowHandler {
 		pnlMenu.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
 	}
 
+	/**
+	 * Shows the menu.
+	 */
 	public static void showMenu() {
 		gameState = GameState.MENU;
 		pnlMenu.setVisible(true);
 	}
 
+	/**
+	 * Hides the menu.
+	 */
 	public static void hideMenu() {
 		pnlMenu.setVisible(false);
 	}
 
+	/**
+	 * Removes the menu from the main panel.
+	 * Runs the play window.
+	 */
 	private static void play() {
 		gameState = GameState.GAME;
 		hideMenu();
 		MainGame.loadGame();
 	}
 
+	/**
+	 * Removes the menu from the main panel.
+	 * Runs the level creator window.
+	 */
 	private static void create() {
 		gameState = GameState.EDITOR;
 		hideMenu();
 		LevelCreator.createLevel();
 	}
 
+	/**
+	 * Removes the menu from the main panel.
+	 * Runs the high score window.
+	 */
 	private static void highScore() {
-		return;
 		// TODO: Implement highScore menu.
 //		gameState = GameState.OPTIONS;
 //		removeMenu();
 //		WindowOptions.createOptions();
 	}
 
+	/**
+	 * Removes the menu from the main panel.
+	 * Runs the options window.
+	 */
 	private static void options() {
-		return;
 		// TODO: Implement options menu.
 //		gameState = GameState.OPTIONS;
 //		removeMenu();

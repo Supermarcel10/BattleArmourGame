@@ -4,6 +4,10 @@ import game.IO.AM;
 import org.jetbrains.annotations.NotNull;
 
 
+/**
+ * Enum for block types.
+ * This enum is used to declare the type of block and its properties.
+ */
 public enum BlockType {
 	NONE(), // Used for empty blocks.
 	ENEMY_SPAWN(), // Used for declaring enemy spawn points.
@@ -91,6 +95,11 @@ public enum BlockType {
 		this.damageable = false;
 	}
 
+	/**
+	 * Converts the enum name to camel case.
+	 * @param s The enum name.
+	 * @return The enum name in camel case.
+	 */
 	private static @NotNull String toCamelCase(@NotNull String s) {
 		String[] parts = s.split("_");
 		StringBuilder out = new StringBuilder();

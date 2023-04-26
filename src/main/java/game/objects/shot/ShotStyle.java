@@ -1,5 +1,9 @@
 package game.objects.shot;
 
+
+/**
+ * Enum for the different shooting styles.
+ */
 public enum ShotStyle {
 	NORMAL,
 	QUAD(3);

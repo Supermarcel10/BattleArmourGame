@@ -2,7 +2,7 @@ package game.objects.tank;
 
 import city.cs.engine.*;
 import game.MainGame;
-import game.objects.abstractBody.Body;
+import game.objects.abstractBody.DynamicBody;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +15,14 @@ import static game.MainGame.*;
 import static game.objects.tank.Tank.halfSize;
 
 
-public class Spawn extends Body {
+/**
+ * A {@link Spawn} is a {@link DynamicBody} with a {@link GhostlyFixture} that spawns a {@link Tank} of the specified {@link TankType} at the specified position.
+ * <p>
+ *     {@link Player}s are spawned immediately, while {@link Enemy}s are spawned after a delay.
+ *     After spawning, the {@link Spawn} is destroyed.
+ * </p>
+ */
+public class Spawn extends DynamicBody {
 	public Spawn(@NotNull TankType type, Vec2 pos) {
 		super(pos);
 
@@ -30,7 +37,6 @@ public class Spawn extends Body {
 		//	at game.MainGame.enemySpawn(MainGame.java:194)
 		//	at java.base/java.lang.Thread.run(Thread.java:1589)
 
-
 		// Change properties
 		setFillColor(java.awt.Color.WHITE);
 
@@ -39,7 +45,7 @@ public class Spawn extends Body {
 			int numOfPlayers = (int) Arrays.stream(MainGame.player).filter(Objects::nonNull).count();
 			MainGame.player[numOfPlayers] = player;
 
-			removeSpawner();
+			destroy();
 		} else {
 			spawners.add(this);
 
@@ -48,7 +54,7 @@ public class Spawn extends Body {
 				if (!spawners.contains(this)) return;
 
 				enemies.add(type.createEnemy(pos));
-				removeSpawner();
+				destroy();
 
 				// Stop after first execution to allow for GC.
 				((Timer) e.getSource()).stop();
@@ -56,8 +62,11 @@ public class Spawn extends Body {
 		}
 	}
 
-	private void removeSpawner() {
-		this.destroy();
+	/**
+	 * Destroys the {@link Spawn} and removes it from the {@link MainGame#spawners}.
+	 */
+	public void destroy() {
+		super.destroy();
 		spawners.remove(this);
 	}
 }

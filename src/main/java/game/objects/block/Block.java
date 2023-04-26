@@ -1,7 +1,7 @@
 package game.objects.block;
 
 import city.cs.engine.*;
-import game.objects.tank.Enemy;
+import game.objects.abstractBody.StaticBody;
 import game.objects.tank.Player;
 import game.objects.tank.Tank;
 import org.jbox2d.common.Vec2;
@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import static game.MainGame.*;
 
 
+/**
+ * A block is a static body that can be placed on the map.
+ */
 public class Block extends StaticBody {
 	private static final BoxShape shape = new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor);
 	private final int damageScore, destroyScore;
@@ -22,7 +25,6 @@ public class Block extends StaticBody {
 	protected boolean damageable;
 	protected int maxHealth;
 	public int health;
-
 
 	public Block(@NotNull BlockType type, @NotNull Vec2 pos, boolean force) throws IllegalStateException {
 		super(world, shape);
@@ -58,7 +60,10 @@ public class Block extends StaticBody {
 
 		if (type.isDrivable) this.getFixtureList().get(0).destroy();
 
-		createBody(pos);
+		addImage(image);
+		// TODO: Fix this.
+		pos = pos.mul((scaledGridSize * 2) * scaleFactor);
+		setPositionJBox(pos);
 	}
 
 	public Block(@NotNull BlockType type, @NotNull Vec2 pos) throws IllegalStateException {
@@ -73,13 +78,10 @@ public class Block extends StaticBody {
 		this(type, new Vec2(x, y));
 	}
 
-	private void createBody(@NotNull Vec2 position) {
-		addImage(image);
-		// TODO: Fix this.
-		position = position.mul((scaledGridSize * 2) * scaleFactor);
-		setPosition(position);
-	}
-
+	/**
+	 * Destroys the block in a given grid Vec2 position.
+	 * @param pos The grid Vec2 position of the block to be destroyed.
+	 */
 	public static void removeIfExists(@NotNull Vec2 pos) {
 		if (blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] != null) {
 			blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize].destroy();
@@ -87,6 +89,19 @@ public class Block extends StaticBody {
 		}
 	}
 
+	/**
+	 * Destroys the block.
+	 */
+	public void destroy() {
+		super.destroy();
+		blocks[(int) getPosition().x + hGridSize][(int) getPosition().y + hGridSize] = null;
+	}
+
+	/**
+	 * Damages the block.
+	 * @param damage The amount of damage to be dealt.
+	 * @param shooter The tank that shot the block.
+	 */
 	public void damage(int damage, Tank shooter) {
 		if (!damageable) return;
 

@@ -1,5 +1,9 @@
 package game.objects.shot;
 
+
+/**
+ * Enum for the different types of shots.
+ */
 public enum ShotType {
 	BASIC(),
 	PENETRATING(3),

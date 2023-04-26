@@ -13,6 +13,9 @@ import java.awt.*;
 import static game.MainGame.*;
 
 
+/**
+ * This class handles the window and the user view.
+ */
 public class WindowHandler extends WindowCommons {
 	private static final World world = MainGame.world;
 
@@ -23,6 +26,9 @@ public class WindowHandler extends WindowCommons {
 
 	protected static JLabel lblScore;
 
+	/**
+	 * Creates the initial window.
+	 */
 	public static void createWindow() {
 		updateWindow();
 
@@ -58,6 +64,9 @@ public class WindowHandler extends WindowCommons {
 		WindowMenu.createMenu();
 	}
 
+	/**
+	 * Updates the window.
+	 */
 	public static void updateWindow() {
 		// Get the default screen device
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -94,18 +103,9 @@ public class WindowHandler extends WindowCommons {
 		}
 	}
 
-	public static void createOptionsMenu() {
-
-	}
-
-	public static void createNewGameMenu() {
-
-	}
-
-	public static void createPauseMenu() {
-
-	}
-
+	/**
+	 * Creates the game overlay.
+	 */
 	public static void createGameOverlay() {
 		if (lblScore == null) {
 			lblScore = createText("SCORE: " + score, 1, pnlOverlay, 1);
@@ -118,6 +118,9 @@ public class WindowHandler extends WindowCommons {
 		}
 	}
 
+	/**
+	 * Updates the score label.
+	 */
 	public static void updateScore() {
 		if (lblScore != null) lblScore.setText("SCORE: " + score);
 	}

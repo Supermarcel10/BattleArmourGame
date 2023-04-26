@@ -130,14 +130,11 @@ public class MainGame {
 				shot.destroy();
 			}
 		}
-		shots.clear();
 
 		// Remove all blocks.
 		for (Block[] block : blocks) {
-			for (Block value : block) {
-				if (value != null) {
-					value.destroy();
-				}
+			for (Block b : block) {
+				b.destroy();
 			}
 		}
 		blocks = new Block[gridSize][gridSize];
@@ -148,7 +145,6 @@ public class MainGame {
 				pickup.destroy();
 			}
 		}
-		pickups.clear();
 
 		// Reset all players
 		for (Player player : player) {
@@ -164,7 +160,6 @@ public class MainGame {
 				enemy.destroy();
 			}
 		}
-		enemies.clear();
 
 		// Reset all variables.
 		basePos = null;

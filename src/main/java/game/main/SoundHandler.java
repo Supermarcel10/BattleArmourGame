@@ -12,6 +12,16 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
+/**
+ * A class that handles all sound effects and background music.
+ * <p>
+ *     This class uses a {@link BlockingQueue} to queue up sound effects to be played.
+ *     The queue is processed in a separate thread.
+ *     <br>
+ *     This class also uses a separate thread to play background music.
+ *     The background music is played in a loop.
+ * </p>
+ */
 public class SoundHandler implements Runnable {
 	private final static float soundVolume= 0f, musicVolume = 0f;
 
@@ -21,10 +31,20 @@ public class SoundHandler implements Runnable {
 	private int currentSongIndex = 0;
 	private Thread bgmThread;
 
+	/**
+	 * Creates a new sound handler.
+	 */
 	public SoundHandler() {
 		playBackgroundMusic();
 	}
 
+	/**
+	 * Plays the background music.
+	 * <p>
+	 *     This method plays the background music in a loop.
+	 *     The background music is played in a separate thread.
+	 * </p>
+	 */
 	public void playBackgroundMusic() {
 		String[] musicArray = AM.music.values().toArray(new String[0]);
 
@@ -45,12 +65,19 @@ public class SoundHandler implements Runnable {
 		}
 	}
 
+	/**
+	 * Stops the background music.
+	 */
 	public void stopBackgroundMusic() {
 		if (bgmThread != null && bgmThread.isAlive()) {
 			bgmThread.interrupt();
 		}
 	}
 
+	/**
+	 * Plays a sound effect from the queue.
+	 * @param fileName The file directory of the sound effect.
+	 */
 	public void play(String fileName) {
 		if (fileName == null) return;
 
@@ -63,6 +90,9 @@ public class SoundHandler implements Runnable {
 		}
 	}
 
+	/**
+	 * Plays a sound effect in a new thread.
+	 */
 	public void run() {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
@@ -82,6 +112,13 @@ public class SoundHandler implements Runnable {
 }
 
 
+/**
+ * A custom player that allows for volume control.
+ * <p>
+ *     This class is based on the {@link javazoom.jl.player.Player} class.
+ *     The only difference is that it uses a custom audio device that allows for volume control.
+ * </p>
+ */
 class CustomPlayer extends Player {
 	private final CustomJavaSoundAudioDevice audioDevice;
 
@@ -104,17 +141,39 @@ class CustomPlayer extends Player {
 }
 
 
+/**
+ * A custom audio device that allows for volume control.
+ * <p>
+ *     This class is based on the {@link javazoom.jl.player.JavaSoundAudioDevice} class.
+ *     The only difference is that it allows for volume control.
+ * </p>
+ */
 class CustomJavaSoundAudioDevice extends JavaSoundAudioDevice {
 	private float volume = 1.0f;
 
+	/**
+	 * Sets the volume of the audio device.
+	 * @param volume The volume, between 0 and 1.
+	 */
 	public void setVolume(float volume) {
 		this.volume = volume;
 	}
 
+	/**
+	 * Gets the volume of the audio device.
+	 * @return The volume, between 0 and 1.
+	 */
 	public float getVolume() {
 		return volume;
 	}
 
+	/**
+	 * Writes the audio samples to the audio device.
+	 * @param samples The audio samples.
+	 * @param offs The offset in the array.
+	 * @param len The number of samples to write.
+	 * @throws JavaLayerException If an error occurs.
+	 */
 	@Override
 	protected void writeImpl(short[] samples, int offs, int len) throws JavaLayerException {
 		if (volume != 1.0f) {

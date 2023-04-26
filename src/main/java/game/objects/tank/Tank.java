@@ -4,7 +4,7 @@ import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import game.IO.AM;
 import game.objects.pickup.Pickup;
-import game.objects.abstractBody.Body;
+import game.objects.abstractBody.DynamicBody;
 import game.objects.pickup.PickupType;
 import game.objects.shot.Shot;
 import game.objects.shot.ShotStyle;
@@ -22,7 +22,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import static game.MainGame.*;
 
 
-public class Tank extends Body {
+/**
+ * The base class for all tanks.
+ */
+public class Tank extends DynamicBody {
 	public static float halfSize = scaledGridSize * scaleFactor * .8f;
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
@@ -56,6 +59,9 @@ public class Tank extends Body {
 		shootingTimer.setRepeats(false);
 	}
 
+	/**
+	 * Shoots a shot from the tank.
+	 */
 	public void shoot() {
 		// Limit the tank shooting speed.
 		if (!canShoot) {
@@ -113,6 +119,11 @@ public class Tank extends Body {
 		soundHandler.play(shootSound);
 	}
 
+	/**
+	 * Damages the tank.
+	 * @param damage The amount of damage to deal.
+	 * @param shooter The tank that shot the tank.
+	 */
 	public void damage(int damage, Tank shooter) {
 		if (shielded) {
 			shielded = false;
@@ -144,11 +155,18 @@ public class Tank extends Body {
 		} else soundHandler.play(damageSound);
 	}
 
+	/**
+	 * Changes the shooting delay of the tank.
+	 */
 	public void changeShootingDelay(int delay) {
 		shootingTimer.setDelay(delay);
 		shootingTimer.setInitialDelay(delay);
 	}
 
+	/**
+	 * Sets the max health of the tank.
+	 * @param maxHealth The max health of the tank.
+	 */
 	public void setMaxHealth(int maxHealth) {
 		this.health = maxHealth;
 	}

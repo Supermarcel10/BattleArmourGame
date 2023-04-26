@@ -3,7 +3,7 @@ package game.objects.shot;
 import city.cs.engine.*;
 import game.objects.block.Block;
 import game.objects.tank.Tank;
-import game.objects.abstractBody.Body;
+import game.objects.abstractBody.DynamicBody;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,11 +11,15 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static game.MainGame.scaleFactor;
 import static game.MainGame.shots;
 import static game.objects.tank.Tank.halfSize;
 
 
-public class Shot extends Body implements SensorListener {
+/**
+ * A shot fired by a tank.
+ */
+public class Shot extends DynamicBody implements SensorListener {
 	private static final Shape shape = new CircleShape((halfSize * 0.28f) * scaleFactor);
 	protected ShotType type;
 	protected List<Tank> penetratedBodies = new ArrayList<>();
@@ -51,18 +55,25 @@ public class Shot extends Body implements SensorListener {
 
 		// Destroy the body after 10 seconds.
 		new Timer(10000, e -> {
-			destroyShot();
+			destroy();
 
 			// Stop after first execution to allow for GC.
 			((Timer) e.getSource()).stop();
 		}).start();
 	}
 
-	private void destroyShot() {
-		destroy();
+	/**
+	 * Destroy the {@link Shot} and remove it from the {@link game.MainGame#shots} list.
+	 */
+	public void destroy() {
+		super.destroy();
 		shots.remove(this);
 	}
 
+	/**
+	 * Handle the collision event between Tanks and Blocks as well as other shots.
+	 * @param sensorEvent The sensor event.
+	 */
 	@Override
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b && b.type.isSolid) {
@@ -71,21 +82,21 @@ public class Shot extends Body implements SensorListener {
 				case EXPLOSIVE -> explode();
 			}
 
-			destroyShot();
+			destroy();
 		}
 
 		if (sensorEvent.getContactBody() instanceof Tank t && t != shooter) {
 			switch (type) {
 				case BASIC -> {
 					t.damage(damage, shooter);
-					destroyShot();
+					destroy();
 				}
 				case PENETRATING -> {
 					if (!penetratedBodies.contains(t)) {
 						t.damage(damage, shooter);
 						penetratedBodies.add((Tank) sensorEvent.getContactBody());
 
-						if (penetratedBodies.size() >= type.numberOfPenetrations) destroyShot();
+						if (penetratedBodies.size() >= type.numberOfPenetrations) destroy();
 					}
 				}
 				case EXPLOSIVE -> explode();

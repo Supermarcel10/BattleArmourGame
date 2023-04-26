@@ -5,6 +5,9 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 
+/**
+ * An enum containing all the different types of tanks.
+ */
 public enum TankType {
 	PLAYER(1, 0.4f, -5000, AM.image.get("player")),
 	BASIC(1, 0.4f, 100, AM.image.get("basicEnemy")),
@@ -24,10 +27,20 @@ public enum TankType {
 		this.image = image;
 	}
 
+	/**
+	 * Creates a new enemy of the given type.
+	 * @param pos The grid Vec2 position of the enemy.
+	 * @return The newly created enemy.
+	 */
 	public @NotNull Enemy createEnemy(Vec2 pos) {
 		return new Enemy(this, pos);
 	}
 
+	/**
+	 * Creates a new player.
+	 * @param pos The grid Vec2 position of the player.
+	 * @return The newly created player.
+	 */
 	public @NotNull Player createPlayer(Vec2 pos) {
 		return new Player(pos);
 	}
