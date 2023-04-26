@@ -6,7 +6,14 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Objects;
 
-
+/**
+ * Asset Manager used for managing all assets in game:
+ * - texture images
+ * - sounds
+ * - music
+ * - fonts
+ * - levels
+ */
 public class AM {
 	private static final String CD = System.getProperty("user.dir") + "/src/main/resources/";
 
@@ -26,6 +33,11 @@ public class AM {
 		addAllToHashMap(level, new File(CD + "levels/")); // level
 	}
 
+	/**
+	 * Adds all files in a directory, including subdirectories, to a HashMap.
+	 * @param hashMap HashMap to add files to.
+	 * @param file Directory or file to add to HashMap.
+	 */
 	private static void addAllToHashMap(HashMap hashMap, @NotNull File file) {
 		if (file.isDirectory()) {
 			for (File f : Objects.requireNonNull(file.listFiles())) {

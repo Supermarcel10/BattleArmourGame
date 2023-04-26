@@ -5,6 +5,9 @@ import org.jbox2d.common.Vec2;
 import java.util.HashMap;
 
 
+/**
+ * Config class containing all user settings.
+ */
 public class Config {
 	private static final String CD = System.getProperty("user.dir") + "/src/main/resources/";
 	public static final boolean DEBUG = true;

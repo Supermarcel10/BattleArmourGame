@@ -13,6 +13,16 @@ import static game.IO.SaveLevel.saveLevel;
 import static game.window.WindowBuild.*;
 
 
+/**
+ * The level creator class.
+ * <p>
+ *     This class is used to create levels for the game.
+ *     Files can be loaded into the level editor.
+ *     It is used to place blocks erase blocks, set player spawns and enemy spawns.
+ *     The files can then be saved to a file which can later be used to play.
+ *     The level creator is accessed from the main menu.
+ * </p>
+ */
 public class LevelCreator {
 	public static BlockType currentBlockType = BlockType.BRICK;
 	public static Vec2 basePos;
@@ -20,6 +30,9 @@ public class LevelCreator {
 	public static int changedPlayerPos = 0;
 	public static final List<Vec2> enemyPos = new ArrayList<>();
 
+	/**
+	 * Open the level editor.
+	 */
 	public static void createLevel() {
 		gameState = GameState.EDITOR;
 
@@ -35,6 +48,11 @@ public class LevelCreator {
 		makeMapBorder();
 	}
 
+	/**
+	 * Place a block at the given position.
+	 * If a block already exists, remove it and replace it.
+	 * @param pos The grid Vec2 position.
+	 */
 	public static void placeBlock(Vec2 pos) {
 		removeIfExists(pos);
 
@@ -62,12 +80,17 @@ public class LevelCreator {
 		new Block(currentBlockType, pos, true);
 	}
 
+	/**
+	 * Cycle through the block types.
+	 */
 	public static void cycleBlockType() {
-		// Cycle through the block types.
 		currentBlockType = BlockType.values()[(currentBlockType.ordinal() + 1) % BlockType.values().length];
 		updateBlockPlacement(currentBlockType.toString().replace("_", " "));
 	}
 
+	/**
+	 * Check if the map is valid, let the user select a save location.
+	 */
 	public static void finish() {
 		// Check if the map is valid.
 		if (playerPos[0] == null || playerPos[1] == null) {
@@ -94,6 +117,10 @@ public class LevelCreator {
 		exit();
 	}
 
+	/**
+	 * Remove block if exists at the given position.
+	 * @param pos The grid Vec2 position.
+	 */
 	private static void removeIfExists(Vec2 pos) {
 		if (pos == null) return;
 
@@ -112,6 +139,9 @@ public class LevelCreator {
 		Block.removeIfExists(pos);
 	}
 
+	/**
+	 * Exit the level editor.
+	 */
 	public static void exit() {
 		// Remove the overlay.
 		removeBuildOverlay();
