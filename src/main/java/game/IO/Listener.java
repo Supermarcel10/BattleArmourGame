@@ -154,12 +154,12 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 		for (Enemy enemy : enemies) enemy.update();
 
-//		if ((MainGame.basePos != null && blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y] != null &&
-//				blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y].health <= 0) ||
-//				((player[0] != null && player[0].health <= 0) && (player[1] != null && player[1].health <= 0))) {
-//			WindowDeath.createDeathMenu();
-//			world.stop();
-//		}
+		if ((MainGame.basePos != null && blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y] != null &&
+				blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y].health <= 0) ||
+				((player[0] != null && player[0].health <= 0) && (player[1] != null && player[1].health <= 0))) {
+			WindowDeath.createDeathMenu();
+			world.stop();
+		}
 
 		if (postUpdateScore != score) {
 			WindowHandler.updateScore();

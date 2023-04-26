@@ -26,7 +26,6 @@ import static game.IO.Config.resolution;
 import static game.IO.LoadLevel.loadLevel;
 import static game.window.WindowHandler.updateScore;
 import static game.window.WindowHandler.view;
-import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
 
@@ -111,8 +110,6 @@ public class MainGame {
 		spawnThread.start();
 
 		gameState = GameState.GAME;
-
-		exit(0);
 	}
 
 	public static void resetGame() {
@@ -137,7 +134,9 @@ public class MainGame {
 		// Remove all blocks.
 		for (Block[] block : blocks) {
 			for (Block b : block) {
-				b.destroy();
+				if (b != null) {
+					b.destroy();
+				}
 			}
 		}
 		blocks = new Block[gridSize][gridSize];
@@ -163,6 +162,7 @@ public class MainGame {
 				enemy.destroy();
 			}
 		}
+		enemies.clear();
 
 		// Reset all variables.
 		basePos = null;
@@ -225,7 +225,7 @@ public class MainGame {
 		return pos;
 	}
 
-	public static boolean isWithinDistance(@NotNull Vec2 vec1, @NotNull Vec2 vec2, float distance) {
+	private static boolean isWithinDistance(@NotNull Vec2 vec1, @NotNull Vec2 vec2, float distance) {
 		float dx = Math.abs(vec1.x - vec2.x);
 		float dy = Math.abs(vec1.y - vec2.y);
 		return dx <= distance && dy <= distance;
