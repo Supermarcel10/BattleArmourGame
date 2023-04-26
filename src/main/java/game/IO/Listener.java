@@ -23,11 +23,23 @@ import static game.window.WindowCommons.selectLoadFile;
 import static game.window.WindowHandler.view;
 
 
+/**
+ * The listener class for all input devices and events.
+ */
 public class Listener implements KeyListener, MouseListener, StepListener {
+	/**
+	 * Called when the game view is hovered.
+	 * @param e The event to be processed.
+	 */
 	@Override public void mouseEntered(MouseEvent e) {
 		view.requestFocus();
 	}
 
+	/**
+	 * Called when a mouse interaction occurs via mouse button down.
+	 * Used to handle level creation.
+	 * @param e The event to be processed.
+	 */
 	@Override public void mousePressed(MouseEvent e) {
 		if (gameState == GameState.EDITOR) {
 			// Translate the mouse to start from the center of the screen.
@@ -43,6 +55,10 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 		}
 	}
 
+	/**
+	 * Called when a key is pressed and released.
+	 * @param e The event to be processed.
+	 */
 	@Override public void keyTyped(KeyEvent e) {
 		if (gameState == GameState.EDITOR) {
 			if (e.getKeyChar() == KeyEvent.VK_ESCAPE) LevelCreator.finish(); // ESC to exit.
@@ -75,35 +91,41 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 		}
 	}
 
+	/**
+	 * Called when a key is pressed.
+	 * Used to handle player movement and shooting.
+	 * @param e The event to be processed.
+	 */
 	@Override
 	public void keyPressed(@NotNull KeyEvent e) {
-		if (Config.DEBUG){
-			switch (e.getKeyCode()) {
-				case KeyEvent.VK_1 -> WindowDeath.createDeathMenu();
+		if (gameState == GameState.GAME) {
+			if (player[0] != null) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_A -> player[0].moveDirection = new Vec2(-1, 0);
+					case KeyEvent.VK_D -> player[0].moveDirection = new Vec2(1, 0);
+					case KeyEvent.VK_W -> player[0].moveDirection = new Vec2(0, 1);
+					case KeyEvent.VK_S -> player[0].moveDirection = new Vec2(0, -1);
+					case KeyEvent.VK_SPACE -> player[0].shoot();
+				}
 			}
-		}
 
-		if (player[0] != null) {
-			switch (e.getKeyCode()) {
-				case KeyEvent.VK_A -> player[0].moveDirection = new Vec2(-1, 0);
-				case KeyEvent.VK_D -> player[0].moveDirection = new Vec2(1, 0);
-				case KeyEvent.VK_W -> player[0].moveDirection = new Vec2(0, 1);
-				case KeyEvent.VK_S -> player[0].moveDirection = new Vec2(0, -1);
-				case KeyEvent.VK_SPACE -> player[0].shoot();
-			}
-		}
-
-		if (player[1] != null) {
-			switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT -> player[1].moveDirection = new Vec2(-1, 0);
-				case KeyEvent.VK_RIGHT -> player[1].moveDirection = new Vec2(1, 0);
-				case KeyEvent.VK_UP -> player[1].moveDirection = new Vec2(0, 1);
-				case KeyEvent.VK_DOWN -> player[1].moveDirection = new Vec2(0, -1);
-				case KeyEvent.VK_ENTER -> player[1].shoot();
+			if (player[1] != null) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_LEFT -> player[1].moveDirection = new Vec2(-1, 0);
+					case KeyEvent.VK_RIGHT -> player[1].moveDirection = new Vec2(1, 0);
+					case KeyEvent.VK_UP -> player[1].moveDirection = new Vec2(0, 1);
+					case KeyEvent.VK_DOWN -> player[1].moveDirection = new Vec2(0, -1);
+					case KeyEvent.VK_ENTER -> player[1].shoot();
+				}
 			}
 		}
 	}
 
+	/**
+	 * Called when a key is released.
+	 * Used to stop player movement.
+	 * @param e The event to be processed.
+	 */
 	@Override
 	public void keyReleased(@NotNull KeyEvent e) {
 		if (player[0] != null) {
@@ -121,8 +143,12 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 		}
 	}
 
+	/**
+	 * Called before each frame step.
+	 * Used to update all game objects.
+	 */
 	@Override
-	public void preStep(StepEvent stepEvent) {
+	public void preStep(StepEvent ignored) {
 		if (player[0] != null && !Objects.equals(player[0].moveDirection, new Vec2(0, 0))) player[0].update();
 		if (player[1] != null && !Objects.equals(player[1].moveDirection, new Vec2(0, 0))) player[1].update();
 
