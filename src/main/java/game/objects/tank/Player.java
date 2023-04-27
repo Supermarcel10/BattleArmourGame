@@ -83,8 +83,7 @@ public class Player extends Tank {
 
 		// Angle the player towards the moving direction.
 		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
-			float degrees = (float) (450 - Math.toDegrees(Math.atan2(moveDirection.y, moveDirection.x))) % 360;
-			this.setAngle(degrees * (float) Math.PI / -180);
+			setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
 		}
 	}
 }
