@@ -85,6 +85,33 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 	}
 
 	/**
+	 * Gets the degrees of a Vec2.
+	 * @param vec The Vec2 to get the degrees of.
+	 * @return The degrees of the Vec2.
+	 */
+	public float Vec2ToDegrees(@NotNull Vec2 vec) {
+		return (float) (450 - Math.toDegrees(Math.atan2(vec.y, vec.x))) % 360;
+	}
+
+	/**
+	 * Gets the Vec2 of a radian.
+	 * @param radians The radian to get the Vec2 of.
+	 * @return The Vec2 of the radian.
+	 */
+	public Vec2 radiansToVec2(float radians) {
+		return new Vec2(-Math.round(Math.sin(radians)), Math.round(Math.cos(radians)));
+	}
+
+	/**
+	 * Gets the Vec2 of a degree.
+	 * @param degrees The degree to get the Vec2 of.
+	 * @return The Vec2 of the degree.
+	 */
+	public Vec2 degToVec2(float degrees) {
+		return radiansToVec2(degrees * (float) Math.PI / 180);
+	}
+
+	/**
 	 * Method for overriding updating of the body.
 	 */
 	public void update() {}
