@@ -225,7 +225,7 @@ public class MainGame {
 		return pos;
 	}
 
-	private static boolean isWithinDistance(@NotNull Vec2 vec1, @NotNull Vec2 vec2, float distance) {
+	public static boolean isWithinDistance(@NotNull Vec2 vec1, @NotNull Vec2 vec2, float distance) {
 		float dx = Math.abs(vec1.x - vec2.x);
 		float dy = Math.abs(vec1.y - vec2.y);
 		return dx <= distance && dy <= distance;

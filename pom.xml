@@ -26,7 +26,6 @@
             <name>Apache Snapshots</name>
             <url>https://repository.apache.org/content/repositories/snapshots/</url>
         </repository>
-
     </repositories>
 
     <build>
