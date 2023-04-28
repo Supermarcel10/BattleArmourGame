@@ -20,7 +20,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [ ] Score and high-score tracking
 - [x] Different enemies that procedurally spawn
 - [ ] Settings to change the controls and resolution
-- [ ] Sounds and music
+- [x] Sounds and music
 
 ## <u>TODOs</u>
 
@@ -36,7 +36,6 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Add a score system
 - [x] Add a way to gain score
 - [ ] Add a "start" screen
-- [ ] Add a "pause" screen
 - [x] Add a "game over" screen
 - [ ] Add a high-score system
 - [x] Create more enemies
