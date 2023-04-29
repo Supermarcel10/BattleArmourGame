@@ -49,6 +49,8 @@ public class MainGame {
 	public static final int hGridSize = gridSize / 2;
 	public static float scaledGridSize;
 
+	public static int numOfPlayers = 0;
+
 	public static int score = 0, postUpdateScore = 0;
 	public static int kills = 0;
 	public static int brokenBlocks = 0;
@@ -102,8 +104,12 @@ public class MainGame {
 		} catch (Exception ignored) { System.out.println("Failed to load level!"); }
 
 		// Spawn players.
-		new Spawn(TankType.PLAYER, playerSpawnPos[0]);
-		new Spawn(TankType.PLAYER, playerSpawnPos[1]);
+		for (int i = 0; i < numOfPlayers; i++) {
+			new Spawn(TankType.PLAYER, playerSpawnPos[i]);
+		}
+
+//		new Spawn(TankType.PLAYER, playerSpawnPos[0]);
+//		new Spawn(TankType.PLAYER, playerSpawnPos[1]);
 
 		// Spawn enemies progressively.
 		if (spawnThread.getState() == Thread.State.TERMINATED) spawnThread = new Thread(MainGame::enemySpawn);
@@ -166,6 +172,7 @@ public class MainGame {
 
 		// Reset all variables.
 		basePos = null;
+		numOfPlayers = 0;
 		score = 0; postUpdateScore = 0;
 		kills = 0;
 		brokenBlocks = 0;
