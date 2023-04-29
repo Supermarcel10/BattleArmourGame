@@ -55,8 +55,10 @@ public class Enemy extends Tank {
 				}
 
 				for (Player p : player) {
-					if (p.health <= 0 || Objects.equals(p.moveDirection, new Vec2(0, 0))) continue;
+					// If the player is not in the game, dead or not moving: skip
+					if (p == null || p.health <= 0 || Objects.equals(p.moveDirection, new Vec2(0, 0))) continue;
 
+					// Check if the player is within shooting conditions.
 					if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1 + (distance / 10f))) {
 						shoot();
 					}
