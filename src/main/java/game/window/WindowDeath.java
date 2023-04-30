@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static game.MainGame.*;
-import static game.window.WindowPlay.lblScore;
+
 
 // TODO: REWRITE THIS CLASS
 public class WindowDeath extends WindowHandler {
@@ -17,7 +17,7 @@ public class WindowDeath extends WindowHandler {
 		world.stop();
 		spawnThread.interrupt();
 
-		lblScore.setVisible(false);
+		WindowPlay.hideGameOverlay();
 
 		JLayeredPane pnlDeath = new JLayeredPane();
 

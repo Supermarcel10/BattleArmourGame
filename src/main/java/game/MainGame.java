@@ -2,7 +2,6 @@ package game;
 
 import city.cs.engine.*;
 import game.IO.Config;
-import game.IO.AM;
 import game.main.GameState;
 import game.main.SoundHandler;
 import game.objects.block.Block;
@@ -15,11 +14,13 @@ import game.objects.tank.Spawn;
 import game.IO.Listener;
 import game.objects.tank.TankType;
 import game.window.WindowHandler;
+import game.window.WindowMenu;
 import game.window.WindowPlay;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.util.List;
 
@@ -91,31 +92,32 @@ public class MainGame {
 //		thread.start();
 	}
 
-	public static void loadGame() {
+	public static void loadGame(File level) {
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 
 		try {
-			if (!loadLevel(AM.level.get("1"))) throw new ExceptionInInitializerError("Failed to initialise level!");
+			if (!loadLevel(level)) throw new ExceptionInInitializerError("Failed to initialise level!");
 			WindowPlay.createGameOverlay();
-		} catch (Exception ignored) { System.out.println("Failed to load level!"); }
 
-		// Start world simulation
-		world.start();
+			// Start world simulation
+			world.start();
 
-		// Spawn players.
-		for (int i = 0; i < numOfPlayers; i++) {
-			new Spawn(TankType.PLAYER, playerSpawnPos[i]);
+			// Spawn players.
+			for (int i = 0; i < numOfPlayers; i++) {
+				new Spawn(TankType.PLAYER, playerSpawnPos[i]);
+			}
+
+			// Spawn enemies progressively.
+			if (spawnThread.getState() == Thread.State.TERMINATED) spawnThread = new Thread(MainGame::enemySpawn);
+			spawnThread.start();
+
+			gameState = GameState.GAME;
+		} catch (Exception ignored) {
+			System.out.println("Failed to load level!");
+			WindowPlay.hideGameOverlay();
+			WindowMenu.showMenu();
 		}
-
-//		new Spawn(TankType.PLAYER, playerSpawnPos[0]);
-//		new Spawn(TankType.PLAYER, playerSpawnPos[1]);
-
-		// Spawn enemies progressively.
-		if (spawnThread.getState() == Thread.State.TERMINATED) spawnThread = new Thread(MainGame::enemySpawn);
-		spawnThread.start();
-
-		gameState = GameState.GAME;
 	}
 
 	public static void resetGame() {

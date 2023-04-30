@@ -53,10 +53,8 @@ public class WindowMenu extends WindowHandler {
 		for (JButton button : btnsMenu.keySet()) {
 			button.setBounds(btnMainMenuX, btnY -= btnMainMenuHeight, btnMainMenuWidth, btnMainMenuHeight);
 			button.setUI(new CustomButtonUI(pressedColor));
-		}
 
-		// Add action listener to each button
-		for (JButton button : btnsMenu.keySet()) {
+			// Add action listener to each button
 			button.addActionListener(e -> {
 				btnsMenu.get(button).run();
 			});
@@ -73,6 +71,7 @@ public class WindowMenu extends WindowHandler {
 	public static void showMenu() {
 		gameState = GameState.MENU;
 		pnlMenu.setVisible(true);
+		WindowPlay.pnlPlayerSelection.setVisible(false);
 	}
 
 	/**
@@ -87,9 +86,7 @@ public class WindowMenu extends WindowHandler {
 	 * Runs the play window.
 	 */
 	private static void play() {
-		gameState = GameState.GAME;
-		hideMenu();
-		WindowPlay.selectLevel();
+		WindowPlay.selectNumOfPlayers();
 	}
 
 	/**
