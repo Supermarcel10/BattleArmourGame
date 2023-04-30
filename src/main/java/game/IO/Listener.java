@@ -9,6 +9,7 @@ import game.objects.block.BlockType;
 import game.window.WindowDeath;
 import game.window.WindowHandler;
 import game.objects.tank.Enemy;
+import game.window.WindowPlay;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -163,7 +164,7 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 		}
 
 		if (postUpdateScore != score) {
-			WindowHandler.updateScore();
+			WindowPlay.updateScore();
 			postUpdateScore = score;
 		}
 	}

@@ -24,8 +24,6 @@ public class WindowHandler extends WindowCommons {
 	public static final JFrame root = new JFrame(Config.title);
 	public static UserView view = new UserView(world, 0, 0);
 
-	protected static JLabel lblScore;
-
 	/**
 	 * Creates the initial window.
 	 */
@@ -101,27 +99,5 @@ public class WindowHandler extends WindowCommons {
 			// Center the game window.
 			root.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);
 		}
-	}
-
-	/**
-	 * Creates the game overlay.
-	 */
-	public static void createGameOverlay() {
-		if (lblScore == null) {
-			lblScore = createText("SCORE: " + score, 1, pnlOverlay, 1);
-			int lblScoreX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
-			int lblScoreY = (int) (2 * scaleFactor);
-			lblScore.setBounds(lblScoreX, lblScoreY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
-		} else {
-			// Make the scoreLabel visible again.
-			lblScore.setVisible(true);
-		}
-	}
-
-	/**
-	 * Updates the score label.
-	 */
-	public static void updateScore() {
-		if (lblScore != null) lblScore.setText("SCORE: " + score);
 	}
 }

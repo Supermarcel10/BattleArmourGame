@@ -9,6 +9,7 @@ import game.window.customAssets.CustomLayeredPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -88,7 +89,7 @@ public class WindowMenu extends WindowHandler {
 	private static void play() {
 		gameState = GameState.GAME;
 		hideMenu();
-		MainGame.loadGame();
+		WindowPlay.selectLevel();
 	}
 
 	/**

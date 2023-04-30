@@ -11,6 +11,7 @@ import java.io.File;
 import static game.MainGame.gridSize;
 import static game.MainGame.scaleFactor;
 import static game.window.WindowHandler.*;
+import static game.window.WindowPlay.lblScore;
 
 
 /**

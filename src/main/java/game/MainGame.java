@@ -15,6 +15,7 @@ import game.objects.tank.Spawn;
 import game.IO.Listener;
 import game.objects.tank.TankType;
 import game.window.WindowHandler;
+import game.window.WindowPlay;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,8 +25,8 @@ import java.util.List;
 
 import static game.IO.Config.resolution;
 import static game.IO.LoadLevel.loadLevel;
-import static game.window.WindowHandler.updateScore;
 import static game.window.WindowHandler.view;
+import static game.window.WindowPlay.updateScore;
 import static java.lang.Thread.sleep;
 
 
@@ -91,17 +92,16 @@ public class MainGame {
 	}
 
 	public static void loadGame() {
-		// Start world simulation
-		world.start();
-
-		WindowHandler.createGameOverlay();
-
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 
 		try {
 			if (!loadLevel(AM.level.get("1"))) throw new ExceptionInInitializerError("Failed to initialise level!");
+			WindowPlay.createGameOverlay();
 		} catch (Exception ignored) { System.out.println("Failed to load level!"); }
+
+		// Start world simulation
+		world.start();
 
 		// Spawn players.
 		for (int i = 0; i < numOfPlayers; i++) {
