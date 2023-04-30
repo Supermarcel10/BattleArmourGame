@@ -103,6 +103,10 @@ public class WindowCommons {
 	 * @return The file selected.
 	 */
 	public static @Nullable File selectLoadFile() {
+		// Set the default starting directory to the project directory and file name to NAME.level
+		fileChooser.setSelectedFile(new File("NAME.level"));
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\resources\\levels"));
+
 		int result = fileChooser.showOpenDialog(view);
 		return result == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
 	}
