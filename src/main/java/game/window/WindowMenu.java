@@ -26,7 +26,7 @@ import static game.MainGame.gridSize;
  * </p>
  */
 public class WindowMenu extends WindowHandler {
-	protected static CustomLayeredPane pnlMenu = new CustomLayeredPane(new Color(0, 40, 0, 40));
+	protected static CustomLayeredPane pnlMenu = new CustomLayeredPane(new Color(224, 242, 203));
 	protected static HashMap<JButton, Runnable> btnsMenu = new LinkedHashMap<>() {{
 		put(createButton("EXIT", .8f, pnlMenu, 10), () -> System.exit(0));
 		put(createButton("OPTIONS", .8f, pnlMenu, 10), WindowMenu::options);

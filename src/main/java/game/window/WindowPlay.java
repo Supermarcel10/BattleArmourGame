@@ -22,7 +22,7 @@ import static game.window.WindowMenu.hideMenu;
 
 public class WindowPlay extends WindowCommons {
     protected static JLabel lblScore;
-    protected static CustomLayeredPane pnlPlayerSelection = new CustomLayeredPane(Color.YELLOW);
+    protected static CustomLayeredPane pnlPlayerSelection = new CustomLayeredPane(new Color(162, 227, 232));
     protected static HashMap<JButton, Runnable> btnsMenu = new LinkedHashMap<>() {{
         put(createButton("SINGLEPLAYER", 1f, pnlPlayerSelection, 100), () -> startGame(1));
         put(createButton("MULTIPLAYER", 1f, pnlPlayerSelection, 100), () -> startGame(2));
@@ -69,7 +69,7 @@ public class WindowPlay extends WindowCommons {
         int btnY = (int) (btnHeight * 1.5);
 
         for (JButton button : btnsMenu.keySet()) {
-            button.setUI(new CustomButtonUI(Color.RED)); // TODO: Change the color
+            button.setUI(new CustomButtonUI(new Color(45, 143, 150))); // TODO: Change the color
             button.setBounds(btnX, btnY += btnHeight * 1.5, btnWidth, btnHeight);
 
             // Add action listener to each button
