@@ -1,6 +1,7 @@
 package game.window;
 
 import game.IO.Config;
+import game.window.customAssets.CustomButtonUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,21 +73,29 @@ public class WindowDeath extends WindowHandler {
 		timer.start();
 
 		JLabel lblScore = createText("Your score: " + score, 0.55f, pnlDeath, 0);
+		lblScore.setForeground(Color.LIGHT_GRAY);
 		lblScore.setVisible(false);
 		lblScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 4f)), gameOverLabelWidth, gameOverLabelHeight);
 
 		JLabel lblBlockBrokenScore = createText("Tanks destroyed: " + kills, 0.55f, pnlDeath, 0);
+		lblBlockBrokenScore.setForeground(Color.LIGHT_GRAY);
 		lblBlockBrokenScore.setVisible(false);
 		lblBlockBrokenScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 3f)), gameOverLabelWidth, gameOverLabelHeight);
 
 		JLabel lblKillScore = createText("Blocks destroyed: " + brokenBlocks, 0.55f, pnlDeath, 0);
+		lblKillScore.setForeground(Color.LIGHT_GRAY);
 		lblKillScore.setVisible(false);
 		lblKillScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 2f)), gameOverLabelWidth, gameOverLabelHeight);
 
 		JButton btnMainMenu = createButton("Main Menu", .8f, pnlDeath, 10);
+		btnMainMenu.setForeground(Color.WHITE);
 		btnMainMenu.setVisible(false);
 		JButton btnAddHighScore = createButton("Add High Score", .8f, pnlDeath, 10);
+		btnAddHighScore.setForeground(Color.WHITE);
 		btnAddHighScore.setVisible(false);
+
+		btnMainMenu.setUI(new CustomButtonUI(new Color(135, 17, 0)));
+		btnAddHighScore.setUI(new CustomButtonUI(new Color(135, 17, 0)));
 
 		int btnMainMenuWidth = (int) Config.resolution.x / 2;
 		int btnMainMenuHeight = (int) ((Config.resolution.y / gridSize) * 1.25f);
