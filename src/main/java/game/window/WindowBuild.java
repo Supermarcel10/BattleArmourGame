@@ -31,7 +31,7 @@ public class WindowBuild {
 	public static void createBuildOverlay() {
 		// Set the default starting directory to the project directory and file name to NAME.level
 		fileChooser.setSelectedFile(new File("NAME.level"));
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\resources\\levels"));
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/main/resources/levels"));
 
 		// Disable timer restarting.
 		lblTimerInformation.setRepeats(false);
