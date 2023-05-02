@@ -7,9 +7,15 @@ import static game.MainGame.*;
 import static game.window.WindowHandler.view;
 
 
+/**
+ * Handles the database connection and high scores.
+ */
 public class DatabaseHandler {
     public static Connection connection;
 
+    /**
+     * Connects to the database.
+     */
     private static void connectToDB() {
         if (connection != null) return;
 
@@ -24,6 +30,9 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Disconnects from the database.
+     */
     public static void disconnectFromDB() {
         try {
             connection.close();
@@ -32,6 +41,9 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Creates the high scores table if it does not exist.
+     */
     private static void createTable() {
         try {
             Statement statement = connection.createStatement();
@@ -52,6 +64,12 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Adds a high score to the database.
+     * If the player already has a high score, the score will be updated if it is higher than the existing score.
+     * @param name The name of the player.
+     * @return true if the score was added, false if the score was not added.
+     */
     public static boolean addHighScore(String name) {
         connectToDB();
         createTable();
