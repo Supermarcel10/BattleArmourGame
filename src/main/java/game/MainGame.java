@@ -124,21 +124,6 @@ public class MainGame {
 		// TODO: Rewrite this method.
 		if (spawnThread.isAlive()) spawnThread.interrupt();
 
-		// Remove all spawners.
-		for (Spawn spawn : spawners) {
-			if (spawn != null) {
-				spawn.destroy();
-			}
-		}
-		spawners.clear();
-
-		// Remove all shots.
-		for (Shot shot : shots) {
-			if (shot != null) {
-				shot.destroy();
-			}
-		}
-
 		// Remove all blocks.
 		for (Block[] block : blocks) {
 			for (Block b : block) {
