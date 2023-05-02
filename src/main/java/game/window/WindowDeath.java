@@ -133,10 +133,10 @@ public class WindowDeath extends WindowHandler {
 		});
 
 		btnAddHighScore.addActionListener(e -> {
-			String name = JOptionPane.showInputDialog("Enter your name: ");
+			String name = JOptionPane.showInputDialog(view, "Enter your name: ");
 
 			if (name == null || name.equals("")) {
-				JOptionPane.showMessageDialog(null, "Invalid name entered", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(view, "Invalid name entered", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
