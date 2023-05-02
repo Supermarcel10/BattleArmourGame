@@ -6,7 +6,7 @@ import static game.MainGame.*;
 
 
 public class DatabaseHandler {
-    private static Connection connection;
+    public static Connection connection;
 
     private static void connectToDB() {
         if (connection != null) return;
@@ -22,7 +22,7 @@ public class DatabaseHandler {
         }
     }
 
-    private static void disconnectFromDB() {
+    public static void disconnectFromDB() {
         try {
             connection.close();
         } catch (SQLException e) {
