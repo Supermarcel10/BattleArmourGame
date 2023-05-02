@@ -1,8 +1,10 @@
 package game.IO;
 
+import javax.swing.*;
 import java.sql.*;
 
 import static game.MainGame.*;
+import static game.window.WindowHandler.view;
 
 
 public class DatabaseHandler {
@@ -36,7 +38,8 @@ public class DatabaseHandler {
 
             statement.execute("""
                 CREATE TABLE IF NOT EXISTS high_scores (
-                    name VARCHAR(255) PRIMARY KEY,
+                    name VARCHAR(255),
+                    level VARCHAR(255),
                     score INT,
                     killed INT,
                     blocks_broken INT
@@ -49,36 +52,67 @@ public class DatabaseHandler {
         }
     }
 
-    public static void addHighScore(String name) {
+    public static boolean addHighScore(String name) {
         connectToDB();
         createTable();
 
+        name = name.toUpperCase();
+
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("""
-            INSERT INTO high_scores (name, score, killed, blocks_broken) VALUES (?, ?, ?, ?);
+            PreparedStatement selectStatement = connection.prepareStatement("""
+            SELECT score FROM high_scores WHERE name = ? AND level = ?
             """);
 
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, score);
-            preparedStatement.setInt(3, kills);
-            preparedStatement.setInt(4, brokenBlocks);
+            selectStatement.setString(1, name);
+            selectStatement.setString(2, currentLevel.getName());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement("""
-                UPDATE high_scores SET score = ?, killed= ?, blocks_broken = ? WHERE name = ?;
+            ResultSet resultSet = selectStatement.executeQuery();
+            boolean rowExists = resultSet.next();
+
+            int existingScore = 0;
+            if (rowExists) {
+                existingScore = resultSet.getInt("score");
+            }
+
+            resultSet.close();
+            selectStatement.close();
+
+            if (rowExists && score > existingScore) {
+                // Score exists and is lower than current score
+                PreparedStatement updateStatement = connection.prepareStatement("""
+                UPDATE high_scores SET score = ?, killed = ?, blocks_broken = ? WHERE name = ? AND level = ?
                 """);
 
-                preparedStatement.setInt(1, score);
-                preparedStatement.setInt(2, kills);
-                preparedStatement.setInt(3, brokenBlocks);
-                preparedStatement.setString(4, name);
+                updateStatement.setInt(1, score);
+                updateStatement.setInt(2, kills);
+                updateStatement.setInt(3, brokenBlocks);
+                updateStatement.setString(4, name);
+                updateStatement.setString(5, currentLevel.getName());
+                updateStatement.executeUpdate();
+                updateStatement.close();
+            } else if (!rowExists) {
+                // Score does not exist
+                PreparedStatement insertStatement = connection.prepareStatement("""
+                INSERT INTO high_scores (name, level, score, killed, blocks_broken) VALUES (?, ?, ?, ?, ?)
+                """);
 
-                preparedStatement.executeUpdate();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                insertStatement.setString(1, name);
+                insertStatement.setString(2, currentLevel.getName());
+                insertStatement.setInt(3, score);
+                insertStatement.setInt(4, kills);
+                insertStatement.setInt(5, brokenBlocks);
+                insertStatement.executeUpdate();
+                insertStatement.close();
+            } else {
+                // Score exists but is higher than current score
+                JOptionPane.showMessageDialog(view,
+                        "Current score is lower than high score!\nScore has not been saved.",
+                        "Score not saved", JOptionPane.INFORMATION_MESSAGE);
             }
+
+            return true;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }

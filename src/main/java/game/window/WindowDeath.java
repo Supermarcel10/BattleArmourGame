@@ -140,7 +140,10 @@ public class WindowDeath extends WindowHandler {
 				return;
 			}
 
-			DatabaseHandler.addHighScore(name);
+			if (!DatabaseHandler.addHighScore(name)) {
+				JOptionPane.showMessageDialog(view, "Failed to add high score", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			resetGame();
 			pnlDeath.setVisible(false);

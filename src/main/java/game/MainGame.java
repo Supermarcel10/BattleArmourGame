@@ -54,6 +54,7 @@ public class MainGame {
 
 	public static int numOfPlayers = 0;
 
+	public static File currentLevel;
 	public static int score = 0, postUpdateScore = 0;
 	public static int kills = 0;
 	public static int brokenBlocks = 0;
@@ -99,6 +100,8 @@ public class MainGame {
 	}
 
 	public static void loadGame(File level) {
+		currentLevel = level;
+
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 
