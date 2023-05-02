@@ -1,6 +1,7 @@
 package game.window;
 
 import game.IO.Config;
+import game.IO.DatabaseHandler;
 import game.window.customAssets.CustomButtonUI;
 
 import javax.swing.*;
@@ -132,7 +133,18 @@ public class WindowDeath extends WindowHandler {
 		});
 
 		btnAddHighScore.addActionListener(e -> {
+			String name = JOptionPane.showInputDialog("Enter your name: ");
 
+			if (name == null || name.equals("")) {
+				JOptionPane.showMessageDialog(null, "Invalid name entered", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			DatabaseHandler.addHighScore(name);
+
+			resetGame();
+			pnlDeath.setVisible(false);
+			WindowMenu.showMenu();
 		});
 	}
 }
