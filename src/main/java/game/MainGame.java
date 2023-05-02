@@ -2,6 +2,7 @@ package game;
 
 import city.cs.engine.*;
 import game.IO.Config;
+import game.IO.DatabaseHandler;
 import game.main.GameState;
 import game.main.SoundHandler;
 import game.objects.block.Block;
@@ -62,6 +63,11 @@ public class MainGame {
 
 
 	public static void main(String[] args) {
+		// Add a new exit hook to close the database connection if the connection exists.
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			if (DatabaseHandler.connection != null) DatabaseHandler.disconnectFromDB();
+		}));
+
 		world = new World(Config.fps);
 
 		// Create the window and main menu.
