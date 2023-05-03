@@ -55,10 +55,7 @@ public class WindowPlay extends WindowCommons {
     }
 
     public static void selectNumOfPlayers() {
-        if (!pnlPlayerSelection.isVisible()) {
-            pnlPlayerSelection.setVisible(true);
-            return;
-        }
+        if (setVisible(pnlPlayerSelection)) return;
 
         int btnWidth = (int) Config.resolution.x / 2;
         int btnHeight = (int) ((Config.resolution.y / gridSize) * 1.5f);

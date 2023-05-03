@@ -1,6 +1,7 @@
 package game.window;
 
 import game.IO.AM;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -98,6 +99,20 @@ public class WindowCommons {
 		return button;
 	}
 
+	/**
+	 * Sets the visibility of a component to true if the component is not already visible.
+	 * @param component The component to set the visibility of.
+	 * @return Whether the component state was changed
+	 */
+	protected static boolean setVisible(@NotNull JComponent component) {
+		if (!component.isVisible()) {
+			component.setVisible(true);
+			return true;
+		}
+
+		return false;
+	}
+	
 	/**
 	 * Opens a file chooser to select a file to save to.
 	 * @return The file selected.
