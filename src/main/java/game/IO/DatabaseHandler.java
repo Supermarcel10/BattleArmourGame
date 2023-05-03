@@ -1,7 +1,16 @@
 package game.IO;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.HexFormat;
 
 import static game.MainGame.*;
 import static game.window.WindowHandler.view;
@@ -77,12 +86,14 @@ public class DatabaseHandler {
         name = name.toUpperCase();
 
         try {
+            String levelHash = getSHA256Hash(String.valueOf(currentLevel));
+
             PreparedStatement selectStatement = connection.prepareStatement("""
             SELECT score FROM high_scores WHERE name = ? AND level = ?
             """);
 
             selectStatement.setString(1, name);
-            selectStatement.setString(2, currentLevel.getName());
+            selectStatement.setString(2, levelHash);
 
             ResultSet resultSet = selectStatement.executeQuery();
             boolean rowExists = resultSet.next();
@@ -105,7 +116,7 @@ public class DatabaseHandler {
                 updateStatement.setInt(2, kills);
                 updateStatement.setInt(3, brokenBlocks);
                 updateStatement.setString(4, name);
-                updateStatement.setString(5, currentLevel.getName());
+                updateStatement.setString(5, levelHash);
                 updateStatement.executeUpdate();
                 updateStatement.close();
             } else if (!rowExists) {
@@ -115,7 +126,7 @@ public class DatabaseHandler {
                 """);
 
                 insertStatement.setString(1, name);
-                insertStatement.setString(2, currentLevel.getName());
+                insertStatement.setString(2, levelHash);
                 insertStatement.setInt(3, score);
                 insertStatement.setInt(4, kills);
                 insertStatement.setInt(5, brokenBlocks);
@@ -129,8 +140,46 @@ public class DatabaseHandler {
             }
 
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException | IOException ignored) {
             return false;
         }
+    }
+
+    /**
+     * Gets the SHA-512 hash of a file.
+     * @param fileName The name of the file.
+     * @return The SHA-512 hash of the file.
+     * @throws NoSuchAlgorithmException If the SHA-512 algorithm is not found.
+     * @throws IOException If the file does not exist.
+     */
+    public static @NotNull String getSHA256Hash(String fileName) throws NoSuchAlgorithmException, IOException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+        try (InputStream is = new FileInputStream(fileName)) {
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = is.read(buffer)) > 0) {
+                digest.update(buffer, 0, read);
+            }
+            byte[] hash = digest.digest();
+            return bytesToHex(hash);
+        }
+    }
+
+    /**
+     * Converts a byte array to a hexadecimal string.
+     * @param bytes The byte array to convert.
+     * @return The hexadecimal string.
+     */
+    @Contract(value = "_ -> new", pure = true)
+    public static @NotNull String bytesToHex(byte @NotNull [] bytes) {
+        final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
+        char[] hexChars = new char[bytes.length * 2];
+        for (int i = 0; i < bytes.length; i++) {
+            int v = bytes[i] & 0xFF;
+            hexChars[i * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[i * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 }
