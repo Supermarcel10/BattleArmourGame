@@ -71,6 +71,10 @@ public class MainGame {
 
 		world = new World(Config.fps);
 
+		// Connect to DB & create table if not exists.
+		DatabaseHandler.connectToDB();
+		DatabaseHandler.createTable();
+
 		// Create the window and main menu.
 		WindowHandler.createWindow();
 
