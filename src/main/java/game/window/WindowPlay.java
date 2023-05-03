@@ -17,7 +17,6 @@ import java.util.LinkedHashMap;
 import static game.MainGame.*;
 import static game.MainGame.score;
 import static game.window.WindowHandler.*;
-import static game.window.WindowMenu.hideMenu;
 
 
 public class WindowPlay extends WindowCommons {
@@ -56,8 +55,6 @@ public class WindowPlay extends WindowCommons {
     }
 
     public static void selectNumOfPlayers() {
-        hideMenu();
-
         if (!pnlPlayerSelection.isVisible()) {
             pnlPlayerSelection.setVisible(true);
             return;
@@ -69,7 +66,7 @@ public class WindowPlay extends WindowCommons {
         int btnY = (int) (btnHeight * 1.5);
 
         for (JButton button : btnsMenu.keySet()) {
-            button.setUI(new CustomButtonUI(new Color(45, 143, 150))); // TODO: Change the color
+            button.setUI(new CustomButtonUI(new Color(45, 143, 150)));
             button.setBounds(btnX, btnY += btnHeight * 1.5, btnWidth, btnHeight);
 
             // Add action listener to each button

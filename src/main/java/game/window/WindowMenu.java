@@ -86,6 +86,7 @@ public class WindowMenu extends WindowHandler {
 	 * Runs the play window.
 	 */
 	private static void play() {
+		hideMenu();
 		WindowPlay.selectNumOfPlayers();
 	}
 
