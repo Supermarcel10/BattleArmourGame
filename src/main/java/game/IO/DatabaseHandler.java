@@ -25,7 +25,7 @@ public class DatabaseHandler {
     /**
      * Connects to the database.
      */
-    private static void connectToDB() {
+    public static void connectToDB() {
         if (connection != null) return;
 
         try {
@@ -53,7 +53,7 @@ public class DatabaseHandler {
     /**
      * Creates the high scores table if it does not exist.
      */
-    private static void createTable() {
+    public static void createTable() {
         try {
             Statement statement = connection.createStatement();
 
@@ -80,9 +80,6 @@ public class DatabaseHandler {
      * @return true if the score was added, false if the score was not added.
      */
     public static boolean addHighScore(String name) {
-        connectToDB();
-        createTable();
-
         name = name.toUpperCase();
 
         try {

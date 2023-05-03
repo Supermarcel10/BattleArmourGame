@@ -55,9 +55,7 @@ public class WindowMenu extends WindowHandler {
 			button.setUI(new CustomButtonUI(pressedColor));
 
 			// Add action listener to each button
-			button.addActionListener(e -> {
-				btnsMenu.get(button).run();
-			});
+			button.addActionListener(e -> btnsMenu.get(button).run());
 		}
 
 		// Add the menu to the main panel.
@@ -105,10 +103,9 @@ public class WindowMenu extends WindowHandler {
 	 * Runs the high score window.
 	 */
 	private static void highScore() {
-		// TODO: Implement highScore menu.
-//		gameState = GameState.OPTIONS;
-//		removeMenu();
-//		WindowOptions.createOptions();
+		gameState = GameState.HIGHSCORE;
+		hideMenu();
+		WindowHighScore.createHighScoreOverlay();
 	}
 
 	/**
