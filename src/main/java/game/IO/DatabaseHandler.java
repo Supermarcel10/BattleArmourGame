@@ -2,15 +2,16 @@ package game.IO;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.HexFormat;
 
 import static game.MainGame.*;
 import static game.window.WindowHandler.view;
@@ -139,6 +140,26 @@ public class DatabaseHandler {
             return true;
         } catch (SQLException | NoSuchAlgorithmException | IOException ignored) {
             return false;
+        }
+    }
+
+    /**
+     * Gets the high scores for a level.
+     * @param levelFile The level file.
+     * @return The high scores for the level.
+     */
+    public static @Nullable ResultSet getHighScores(File levelFile) {
+        try {
+            String levelHash = getSHA256Hash(String.valueOf(levelFile));
+
+            PreparedStatement selectStatement = connection.prepareStatement("""
+            SELECT name, score FROM high_scores WHERE level = ? ORDER BY score DESC LIMIT 100
+            """);
+
+            selectStatement.setString(1, levelHash);
+            return selectStatement.executeQuery();
+        } catch (SQLException | NoSuchAlgorithmException | IOException ignored) {
+            return null;
         }
     }
 
