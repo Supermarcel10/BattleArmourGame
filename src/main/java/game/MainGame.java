@@ -134,8 +134,6 @@ public class MainGame {
 			WindowPlay.hideGameOverlay();
 			WindowMenu.showMenu();
 		}
-
-		outputDebug();
 	}
 
 	public static void outputDebug() {
@@ -199,6 +197,13 @@ public class MainGame {
 			}
 		}
 		player = new Player[2];
+
+		// Remove all shots.
+		Iterator<Shot> iterator = shots.iterator();
+		while (iterator.hasNext()) {
+			Shot s = iterator.next();
+			s.destroy();
+		}
 
 		// Remove all enemies.
 		for (Enemy enemy : enemies) {
