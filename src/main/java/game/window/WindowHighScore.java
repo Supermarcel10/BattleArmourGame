@@ -74,7 +74,7 @@ public class WindowHighScore extends WindowCommons {
             // Get the high scores from the database.
             ResultSet rs = DatabaseHandler.getHighScores(selectedLevel);
 
-            int lblWidth = pnlMain.getPreferredSize().width / 2;
+            int lblWidth = (pnlMain.getPreferredSize().width - 100) / 2;
             int lblHeight = (int) ((Config.resolution.y / gridSize) * 1.1f);
 
             int i = 0;
