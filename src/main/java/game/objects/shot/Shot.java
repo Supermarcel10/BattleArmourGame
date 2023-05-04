@@ -9,17 +9,17 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import static game.MainGame.scaleFactor;
-import static game.MainGame.shots;
+import static game.MainGame.*;
 import static game.objects.tank.Tank.halfSize;
 
 
 /**
  * A shot fired by a tank.
  */
-public class Shot extends DynamicBody implements SensorListener {
+public class Shot extends DynamicBody implements SensorListener, StepListener {
 	private static final Shape shape = new CircleShape((halfSize * 0.28f) * scaleFactor);
 	protected ShotType type;
 	protected List<Tank> penetratedBodies = new ArrayList<>();
@@ -52,6 +52,7 @@ public class Shot extends DynamicBody implements SensorListener {
 
 		// Add collision listener.
 		sensor.addSensorListener(this);
+		world.addStepListener(this);
 
 		// Destroy the body after 10 seconds.
 		new Timer(10000, e -> {
@@ -67,7 +68,23 @@ public class Shot extends DynamicBody implements SensorListener {
 	 */
 	public void destroy() {
 		super.destroy();
+		world.removeStepListener(this);
 		shots.remove(this);
+	}
+
+	private void checkShotCollided() {
+		Iterator<Shot> iterator = shots.iterator();
+		while (iterator.hasNext()) {
+			Shot shot = iterator.next();
+			if (shot == this) continue;
+
+			if (isWithinDistance(this.getPosition(), shot.getPosition(), ((halfSize * 0.28f) * scaleFactor) / 2f)) {
+				iterator.remove();
+				shot.destroy();
+				this.destroy();
+				break;
+			}
+		}
 	}
 
 	/**
@@ -102,15 +119,13 @@ public class Shot extends DynamicBody implements SensorListener {
 				case EXPLOSIVE -> explode();
 			}
 		}
+	}
 
-		// TODO: BUG: Fix this, where the shot cannot find other shots.
-//		if (sensorEvent.getContactBody() instanceof Shot s && s != this) {
-//			s.destroy();
-//			sensorEvent.getSensor().getBody().destroy();
-//
-//			shots.remove(this);
-//		}
+	@Override
+	public void preStep(StepEvent stepEvent) {
+			checkShotCollided();
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}
+	@Override public void postStep(StepEvent stepEvent) {}
 }
