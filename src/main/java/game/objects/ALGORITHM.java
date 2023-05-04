@@ -6,11 +6,11 @@ import java.util.*;
 public class ALGORITHM {
     public static void main(String[] args) {
         int[][] maze = {
-                {0, 0, 0, 0},
-                {1, 1, 1, 1},
-                {0, 0, 0, 0},
-                {0, 0, 1, 0},
-                {0, 0, 0, 0}
+                {0, 1, 3, 1},
+                {-1, 3, -1, 5},
+                {5, 4, 2, 2},
+                {1, 3, 1, 1},
+                {1, -1, 1, 2}
         };
 
         Point start = new Point(0, 0);
@@ -26,6 +26,12 @@ public class ALGORITHM {
 
         System.out.println("Maze:");
         System.out.println(Arrays.deepToString(maze).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+
+        if (!path.isEmpty()) {
+            System.out.println("Travel cost: " + path.get(path.size() - 1).getG());
+        } else {
+            System.out.println("No path found.");
+        }
 
         System.out.println("Elapsed time: " + elapsedTimeMs + " ms // " + elapsedTime + " ns");
         System.out.println("Path: " + path);
@@ -51,11 +57,11 @@ public class ALGORITHM {
                 int newCol = current.col + direction[1];
 
                 if (newRow >= 0 && newRow < maze.length && newCol >= 0 && newCol < maze[0].length) {
-                    if (maze[newRow][newCol] == 1) continue;
+                    if (maze[newRow][newCol] == -1) continue;
 
                     Point neighbor = new Point(newRow, newCol);
                     neighbor.setParent(current);
-                    neighbor.setG(current.getG() + 1);
+                    neighbor.setG(current.getG() + maze[newRow][newCol]);
                     neighbor.setH(heuristic(neighbor, end));
                     neighbor.setF(neighbor.getG() + neighbor.getH());
 
