@@ -48,7 +48,6 @@ b EDGE -2 7
 b EDGE -1 -7
 b BRICK -1 -6
 b BRICK -1 -5
-b BRICK -1 -4
 b BRICK -1 -2
 b BRICK -1 -1
 b BRICK -1 1
@@ -59,13 +58,12 @@ b ENEMY_SPAWN -1 6
 b EDGE -1 7
 b EDGE 0 -7
 b BASE 0 -6
-b BRICK 0 -5
+b EDGE 0 -5
 b ENEMY_SPAWN 0 6
 b EDGE 0 7
 b EDGE 1 -7
 b BRICK 1 -6
 b BRICK 1 -5
-b BRICK 1 -4
 b BRICK 1 -2
 b BRICK 1 -1
 b BRICK 1 1
