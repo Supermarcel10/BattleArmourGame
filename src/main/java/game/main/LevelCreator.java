@@ -11,6 +11,7 @@ import java.util.List;
 import static game.MainGame.*;
 import static game.IO.SaveLevel.saveLevel;
 import static game.window.WindowBuild.*;
+import static game.window.WindowBuild.updateBlockPlacement;
 
 
 /**
@@ -45,6 +46,7 @@ public class LevelCreator {
 
 		// Create the overlay.
 		createBuildOverlay();
+		updateBlockPlacement(currentBlockType.toString().replace("_", " "));
 
 		makeMapBorder();
 	}
