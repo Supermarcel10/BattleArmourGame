@@ -25,7 +25,7 @@ public class WindowPlay extends WindowCommons {
     protected static HashMap<JButton, Runnable> btnsMenu = new LinkedHashMap<>() {{
         put(createButton("SINGLEPLAYER", 1f, pnlPlayerSelection, 100), () -> startGame(1));
         put(createButton("MULTIPLAYER", 1f, pnlPlayerSelection, 100), () -> startGame(2));
-        put(createButton("BACK", 1f, pnlPlayerSelection, 100), WindowMenu::showMenu);
+        put(createButton("BACK", 1f, pnlPlayerSelection, 100), WindowPlay::backToMenu);
     }};
 
     /**
@@ -55,6 +55,8 @@ public class WindowPlay extends WindowCommons {
     }
 
     public static void selectNumOfPlayers() {
+        System.out.println("Select number of players");
+        System.out.println(pnlPlayerSelection.isVisible());
         if (setVisible(pnlPlayerSelection)) return;
 
         int btnWidth = (int) Config.resolution.x / 2;
@@ -79,12 +81,18 @@ public class WindowPlay extends WindowCommons {
 
         File level = selectLevel();
         if (level == null) {
+            backToMenu();
             return;
         }
         MainGame.loadGame(level);
 
         pnlPlayerSelection.setVisible(false);
         gameState = GameState.GAME;
+    }
+
+    private static void backToMenu() {
+        pnlPlayerSelection.setVisible(false);
+        WindowMenu.showMenu();
     }
 
     public static void hideGameOverlay() {

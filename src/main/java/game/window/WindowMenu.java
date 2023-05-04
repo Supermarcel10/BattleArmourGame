@@ -1,7 +1,6 @@
 package game.window;
 
 import game.IO.Config;
-import game.MainGame;
 import game.main.GameState;
 import game.main.LevelCreator;
 import game.window.customAssets.CustomButtonUI;
@@ -9,7 +8,6 @@ import game.window.customAssets.CustomLayeredPane;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -69,7 +67,6 @@ public class WindowMenu extends WindowHandler {
 	public static void showMenu() {
 		gameState = GameState.MENU;
 		pnlMenu.setVisible(true);
-		WindowPlay.pnlPlayerSelection.setVisible(false);
 	}
 
 	/**
