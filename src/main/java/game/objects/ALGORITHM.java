@@ -3,40 +3,61 @@ package game.objects;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class ALGORITHM {
-    public static void main(String[] args) {
-        int[][] maze = {
-                {0, 1, 3, 1},
-                {-1, 3, -1, 5},
-                {5, 4, 2, 2},
-                {1, 3, 1, 1},
-                {1, -1, 1, 2}
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        // Define mazes
+        int[][] maze1 = {
+                {0, 0, 0, 0},
+                {0, -1, 0, -1},
+                {0, 0, 0, 0},
+                {0, 0, -1, 0},
+                {0, 0, 0, 0}
         };
 
-        Point start = new Point(0, 0);
-        Point end = new Point(4, 3);
+        Point start1 = new Point(0, 0);
+        Point end1 = new Point(4, 3);
 
-        long startTime = System.nanoTime();
+        int[][] maze2 = {
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, -1, -1, 0, 0, 0, 0, 0, -1, 0},
+                {0, 0, 0, -1, 0, 0, 0, 0, 0, -1},
+                {0, 0, -1, 0, 0, 0, 0, -1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, -1, 0}
+        };
 
-        List<Point> path = aStar(maze, start, end);
+        Point start2 = new Point(0, 0);
+        Point end2 = new Point(4, 9);
 
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        long elapsedTimeMs = elapsedTime / 1000000;
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
 
-        System.out.println("Maze:");
-        System.out.println(Arrays.deepToString(maze).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+        // Submit tasks for solving mazes
+        Future<List<Point>> future1 = executorService.submit(() -> aStar(maze1, start1, end1));
+        Future<List<Point>> future2 = executorService.submit(() -> aStar(maze2, start2, end2));
 
-        if (!path.isEmpty()) {
-            System.out.println("Travel cost: " + path.get(path.size() - 1).getG());
+        // Retrieve and print results
+        List<Point> path1 = future1.get();
+        System.out.println("Maze 1 Path: " + path1);
+        if (!path1.isEmpty()) {
+            System.out.println("Maze 1 Travel cost: " + path1.get(path1.size() - 1).getG());
         } else {
-            System.out.println("No path found.");
+            System.out.println("No path found for Maze 1.");
         }
 
-        System.out.println("Elapsed time: " + elapsedTimeMs + " ms // " + elapsedTime + " ns");
-        System.out.println("Path: " + path);
+        List<Point> path2 = future2.get();
+        System.out.println("Maze 2 Path: " + path2);
+        if (!path2.isEmpty()) {
+            System.out.println("Maze 2 Travel cost: " + path2.get(path2.size() - 1).getG());
+        } else {
+            System.out.println("No path found for Maze 2.");
+        }
+
+        executorService.shutdown();
     }
 
     public static List<Point> aStar(int[][] maze, Point start, Point end) {
