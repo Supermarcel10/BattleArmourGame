@@ -21,7 +21,7 @@ public class ALGORITHM {
         };
 
         Point start1 = new Point(0, 0);
-        Point end1 = new Point(4, 3);
+        Point end1 = new Point(3, 4);
 
         int[][] maze2 = {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -32,7 +32,7 @@ public class ALGORITHM {
         };
 
         Point start2 = new Point(0, 0);
-        Point end2 = new Point(4, 9);
+        Point end2 = new Point(9, 4);
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
 
@@ -76,15 +76,15 @@ public class ALGORITHM {
 
             int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
             for (int[] direction : directions) {
-                int newRow = current.row + direction[0];
-                int newCol = current.col + direction[1];
+                int newY = current.y + direction[0];
+                int newX = current.x + direction[1];
 
-                if (newRow >= 0 && newRow < maze.length && newCol >= 0 && newCol < maze[0].length) {
-                    if (maze[newRow][newCol] == -1) continue;
+                if (newY >= 0 && newY < maze.length && newX >= 0 && newX < maze[0].length) {
+                    if (maze[newY][newX] == -1) continue;
 
-                    Point neighbor = new Point(newRow, newCol);
+                    Point neighbor = new Point(newX, newY);
                     neighbor.setParent(current);
-                    neighbor.setG(current.getG() + maze[newRow][newCol]);
+                    neighbor.setG(current.getG() + maze[newY][newX]);
                     neighbor.setH(heuristic(neighbor, end));
                     neighbor.setF(neighbor.getG() + neighbor.getH());
 
@@ -101,7 +101,7 @@ public class ALGORITHM {
     }
 
     private static int heuristic(@NotNull Point a, @NotNull Point b) {
-        return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
+        return Math.abs(a.y - b.y) + Math.abs(a.x - b.x);
     }
 
     private static @NotNull List<Point> reconstructPath(Point current) {
@@ -114,16 +114,16 @@ public class ALGORITHM {
     }
 
     static class Point {
-        int row;
-        int col;
+        int x;
+        int y;
         int f; // Total cost
         int g; // Cost from start
         int h; // Estimated distance to end
         Point parent;
 
-        public Point(int row, int col) {
-            this.row = row;
-            this.col = col;
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
         public int getF() {
@@ -163,17 +163,17 @@ public class ALGORITHM {
             if (this == obj) return true;
             if (obj == null || getClass() != obj.getClass()) return false;
             Point point = (Point) obj;
-            return row == point.row && col == point.col;
+            return y == point.y && x == point.x;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(row, col);
+            return Objects.hash(y, x);
         }
 
         @Override
         public String toString() {
-            return "(" + row + ", " + col + ")";
+            return "(" + y + ", " + x + ")";
         }
     }
 
