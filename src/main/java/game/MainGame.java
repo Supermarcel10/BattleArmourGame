@@ -36,6 +36,7 @@ public class MainGame {
 	public static World world;
 	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
+	public static int[][] blockCosts;
 	public static HashSet<Spawn> spawners = new HashSet<>();
 	public static HashSet<Enemy> enemies = new HashSet<>();
 	public static HashSet<Pickup> pickups = new HashSet<>();
@@ -108,6 +109,8 @@ public class MainGame {
 
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
+		blockCosts = new int[gridSize][gridSize];
+		Arrays.stream(blockCosts).forEach(a -> Arrays.fill(a, 1));
 
 		try {
 			if (!loadLevel(level)) throw new ExceptionInInitializerError("Failed to initialise level!");
