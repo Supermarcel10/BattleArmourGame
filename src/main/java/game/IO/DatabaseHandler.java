@@ -153,7 +153,7 @@ public class DatabaseHandler {
             String levelHash = getSHA256Hash(String.valueOf(levelFile));
 
             PreparedStatement selectStatement = connection.prepareStatement("""
-            SELECT name, score FROM high_scores WHERE level = ? ORDER BY score DESC LIMIT 100
+            SELECT name, score FROM high_scores WHERE level = ? ORDER BY score DESC LIMIT 10
             """);
 
             selectStatement.setString(1, levelHash);

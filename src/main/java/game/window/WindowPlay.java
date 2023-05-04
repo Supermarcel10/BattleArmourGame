@@ -67,9 +67,7 @@ public class WindowPlay extends WindowCommons {
             button.setBounds(btnX, btnY += btnHeight * 1.5, btnWidth, btnHeight);
 
             // Add action listener to each button
-            button.addActionListener(e -> {
-                btnsMenu.get(button).run();
-            });
+            button.addActionListener(e -> btnsMenu.get(button).run());
         }
 
         pnlMain.add(pnlPlayerSelection, CustomLayeredPane.DEFAULT_LAYER);
