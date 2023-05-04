@@ -1,5 +1,7 @@
 package game.objects;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 
@@ -38,7 +40,7 @@ public class ALGORITHM {
     }
 
     public static List<Point> aStar(int[][] maze, Point start, Point end) {
-        PriorityQueue<Point> openSet = new PriorityQueue<>(Comparator.comparingInt(Point::getF));
+        FastOpenSet openSet = new FastOpenSet();
         Set<Point> closedSet = new HashSet<>();
 
         openSet.add(start);
@@ -68,8 +70,8 @@ public class ALGORITHM {
                     if (closedSet.contains(neighbor)) continue;
                     if (!openSet.contains(neighbor)) {
                         openSet.add(neighbor);
-                    } else if (openSet.stream().anyMatch(p -> p.equals(neighbor) && p.getG() < neighbor.getG())) {
-                        continue;
+                    } else if (openSet.get(neighbor).getG() > neighbor.getG()) {
+                        openSet.update(neighbor);
                     }
                 }
             }
@@ -77,11 +79,11 @@ public class ALGORITHM {
         return Collections.emptyList();
     }
 
-    private static int heuristic(Point a, Point b) {
+    private static int heuristic(@NotNull Point a, @NotNull Point b) {
         return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
     }
 
-    private static List<Point> reconstructPath(Point current) {
+    private static @NotNull List<Point> reconstructPath(Point current) {
         List<Point> path = new ArrayList<>();
         while (current != null) {
             path.add(0, current);
@@ -93,9 +95,9 @@ public class ALGORITHM {
     static class Point {
         int row;
         int col;
-        int f;
-        int g;
-        int h;
+        int f; // Total cost
+        int g; // Cost from start
+        int h; // Estimated distance to end
         Point parent;
 
         public Point(int row, int col) {
@@ -153,5 +155,47 @@ public class ALGORITHM {
             return "(" + row + ", " + col + ")";
         }
     }
-}
 
+    static class FastOpenSet {
+        private final PriorityQueue<Point> priorityQueue;
+        private final HashSet<Point> hashSet;
+
+        public FastOpenSet() {
+            this.priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Point::getF));
+            this.hashSet = new HashSet<>();
+        }
+
+        public void add(Point point) {
+            priorityQueue.add(point);
+            hashSet.add(point);
+        }
+
+        public boolean contains(Point point) {
+            return hashSet.contains(point);
+        }
+
+        public Point poll() {
+            Point point = priorityQueue.poll();
+            hashSet.remove(point);
+            return point;
+        }
+
+        public boolean isEmpty() {
+            return priorityQueue.isEmpty();
+        }
+
+        public Point get(Point point) {
+            for (Point p : priorityQueue) {
+                if (p.equals(point)) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public void update(Point point) {
+            priorityQueue.remove(point);
+            priorityQueue.add(point);
+        }
+    }
+}
