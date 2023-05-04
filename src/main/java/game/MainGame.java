@@ -36,6 +36,7 @@ public class MainGame {
 	public static World world;
 	public static Player[] player = new Player[2];
 	public static Block[][] blocks;
+	public static int[][] blockCosts;
 	public static HashSet<Spawn> spawners = new HashSet<>();
 	public static HashSet<Enemy> enemies = new HashSet<>();
 	public static HashSet<Pickup> pickups = new HashSet<>();
@@ -108,6 +109,8 @@ public class MainGame {
 
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
+		blockCosts = new int[gridSize][gridSize];
+		Arrays.stream(blockCosts).forEach(a -> Arrays.fill(a, 1));
 
 		try {
 			if (!loadLevel(level)) throw new ExceptionInInitializerError("Failed to initialise level!");
@@ -130,6 +133,41 @@ public class MainGame {
 			System.out.println("Failed to load level!");
 			WindowPlay.hideGameOverlay();
 			WindowMenu.showMenu();
+		}
+
+		outputDebug();
+	}
+
+	public static void outputDebug() {
+		System.out.println("");
+
+		for (int y = gridSize - 1; y >= 0; y--) {
+			for (int x = 0; x < gridSize; x++) {
+				Block b = blocks[x][y];
+
+				if (b != null) {
+					System.out.print(b.type.toString().toCharArray()[0] + "  ");
+				} else {
+					System.out.print("   ");
+				}
+			}
+			System.out.print("\n");
+		}
+
+		System.out.println("");
+
+		for (int y = gridSize - 1; y >= 0; y--) {
+			for (int x = 0; x < gridSize; x++) {
+				Block b = blocks[x][y];
+				int cost = blockCosts[x][y];
+
+				if (cost == -1) {
+					System.out.print("N  ");
+				} else {
+					System.out.print(cost + "  ");
+				}
+			}
+			System.out.print("\n");
 		}
 	}
 

@@ -25,9 +25,12 @@ public class Block extends StaticBody {
 	protected boolean damageable;
 	protected int maxHealth;
 	public int health;
+	private final Vec2 pos;
 
 	public Block(@NotNull BlockType type, @NotNull Vec2 pos, boolean force) throws IllegalStateException {
 		super(world, shape);
+
+		this.pos = pos;
 
 		// Check if block is illegal.
 		if ((type == BlockType.NONE || type == BlockType.ENEMY_SPAWN || type == BlockType.PLAYER_SPAWN) && !force) {
@@ -55,6 +58,8 @@ public class Block extends StaticBody {
 
 		damageSound = type.damageSound;
 		destroySound = type.destroySound;
+
+		calculateBlockCost();
 
 		blocks[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = this;
 
@@ -90,6 +95,23 @@ public class Block extends StaticBody {
 	}
 
 	/**
+	 * Calculates the travel cost of the block.
+	 */
+	private void calculateBlockCost() {
+		if (type == BlockType.BASE) {
+			blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = 9;
+		} else if (!type.damageable) {
+			if (type.isDrivable) {
+				blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = 1;
+			} else {
+				blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = -1;
+			}
+		} else if (type.isSolid) {
+			blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = health + 1;
+		}
+	}
+
+	/**
 	 * Destroys the block.
 	 */
 	public void destroy() {
@@ -119,6 +141,8 @@ public class Block extends StaticBody {
 			}
 			soundHandler.play(damageSound);
 		} else soundHandler.play(destroySound);
+
+		calculateBlockCost();
 
 		// TODO: Add damage animation.
 	}

@@ -41,6 +41,7 @@ public class LevelCreator {
 
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
+		blockCosts = new int[gridSize][gridSize];
 
 		// Create the overlay.
 		createBuildOverlay();

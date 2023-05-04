@@ -38,10 +38,6 @@ public class WindowHighScore extends WindowCommons {
         int btnX = (pnlMain.getPreferredSize().width - btnWidth) / 2;
         int pnlMainHeight = pnlMain.getPreferredSize().height;
 
-        // Make the inner panel transparent.
-//        innerPane.setForeground(new Color(0, 0, 0, 255));
-//        innerPane.setOpaque(false);
-
         // Add the inner panel to the high score panel.
         pnlHighScore.add(innerPane, JLayeredPane.DEFAULT_LAYER, 1);
         innerPane.setBounds(50, btnHeight / 2, pnlMain.getPreferredSize().width - 100, (int) (Config.resolution.y - (2.75 * btnHeight)));
@@ -74,7 +70,7 @@ public class WindowHighScore extends WindowCommons {
             // Get the high scores from the database.
             ResultSet rs = DatabaseHandler.getHighScores(selectedLevel);
 
-            int lblWidth = pnlMain.getPreferredSize().width / 2;
+            int lblWidth = (pnlMain.getPreferredSize().width - 100) / 2;
             int lblHeight = (int) ((Config.resolution.y / gridSize) * 1.1f);
 
             int i = 0;
@@ -97,8 +93,6 @@ public class WindowHighScore extends WindowCommons {
                 System.out.println("Error: Could not get high scores.");
                 e.printStackTrace();
             }
-
-//            innerPane.setBounds(0, 0, pnlMain.getPreferredSize().width, (int) (lblHeight * 1.1) * i);
         }
     }
 
