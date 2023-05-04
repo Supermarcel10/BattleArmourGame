@@ -55,8 +55,6 @@ public class WindowPlay extends WindowCommons {
     }
 
     public static void selectNumOfPlayers() {
-        System.out.println("Select number of players");
-        System.out.println(pnlPlayerSelection.isVisible());
         if (setVisible(pnlPlayerSelection)) return;
 
         int btnWidth = (int) Config.resolution.x / 2;
