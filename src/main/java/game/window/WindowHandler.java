@@ -3,31 +3,31 @@ package game.window;
 import city.cs.engine.DebugViewer;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
-import game.input.Config;
-import game.main.Game;
+import game.IO.Config;
+import game.MainGame;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static game.main.Game.*;
+import static game.MainGame.*;
 
 
+/**
+ * This class handles the window and the user view.
+ */
 public class WindowHandler extends WindowCommons {
-	private static final World world = Game.world;
+	private static final World world = MainGame.world;
 
 	protected static final JLayeredPane pnlMain = new JLayeredPane();
 	protected static final JLayeredPane pnlOverlay = new JLayeredPane();
 	public static final JFrame root = new JFrame(Config.title);
 	public static UserView view = new UserView(world, 0, 0);
 
-	protected static JButton[] btnsMenu;
-	protected static JPanel pnlMenu;
-	public static boolean inMenu = true;
-
-	protected static JLabel lblScore;
-
-	public static void createWindow(World world) {
+	/**
+	 * Creates the initial window.
+	 */
+	public static void createWindow() {
 		updateWindow();
 
 		pnlMain.setPreferredSize(view.getPreferredSize());
@@ -62,6 +62,9 @@ public class WindowHandler extends WindowCommons {
 		WindowMenu.createMenu();
 	}
 
+	/**
+	 * Updates the window.
+	 */
 	public static void updateWindow() {
 		// Get the default screen device
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -97,41 +100,4 @@ public class WindowHandler extends WindowCommons {
 			root.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);
 		}
 	}
-
-	public static void createOptionsMenu() {
-
-	}
-
-	public static void createLoadMenu() {
-
-	}
-
-	public static void createNewGameMenu() {
-
-	}
-
-	public static void createPauseMenu() {
-
-	}
-
-	public static void createGameOverlay() {
-		if (lblScore == null) {
-			lblScore = createText("SCORE: " + score, 1, pnlOverlay, 1);
-
-			int lblScoreWidth = (int) Config.resolution.x;
-			int lblScoreHeight = (int) Config.resolution.y / gridSize;
-			int lblScoreX = (pnlMain.getPreferredSize().width - lblScoreWidth) / 2;
-			int lblScoreY = (int) (2 * scaleFactor);
-
-			lblScore.setBounds(lblScoreX, lblScoreY, lblScoreWidth, lblScoreHeight);
-		} else {
-			// Make the scoreLabel visible again.
-			lblScore.setVisible(true);
-		}
-	}
-
-	public static void updateScore() {
-		lblScore.setText("SCORE: " + score);
-	}
-
 }

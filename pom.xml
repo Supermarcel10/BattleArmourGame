@@ -26,7 +26,6 @@
             <name>Apache Snapshots</name>
             <url>https://repository.apache.org/content/repositories/snapshots/</url>
         </repository>
-
     </repositories>
 
     <build>
@@ -41,7 +40,7 @@
                     <!--                    <argLine>-Djava.library.path=${project.basedir}/lib/lwjgl-3.3.1/native</argLine>-->
                     <archive>
                         <manifest>
-                            <mainClass>game.main.Game</mainClass>
+                            <mainClass>game.MainGame</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -98,6 +97,14 @@
             <groupId>javazoom</groupId>
             <artifactId>jlayer</artifactId>
             <version>1.0.1</version>
+        </dependency>
+
+        <!--        SQLite JDBC Database Driver-->
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.41.2.1</version>
         </dependency>
 
         <!--        Jetbrains annotations-->

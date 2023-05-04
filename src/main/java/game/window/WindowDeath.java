@@ -1,21 +1,35 @@
 package game.window;
 
-import game.input.Config;
+import game.IO.Config;
+import game.IO.DatabaseHandler;
+import game.window.customAssets.CustomButtonUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static game.main.Game.*;
+import static game.MainGame.*;
 
 
+// TODO: REWRITE THIS CLASS
 public class WindowDeath extends WindowHandler {
 	public static void createDeathMenu() {
-		lblScore.setVisible(false);
+		// Stop the world simulation.
+		world.stop();
+		spawnThread.interrupt();
 
-		pnlOverlay.setBackground(new Color(0.9f, 0, 0, 0));
-		pnlOverlay.setOpaque(true);
+		WindowPlay.hideGameOverlay();
+
+		JLayeredPane pnlDeath = new JLayeredPane();
+
+		pnlDeath.setPreferredSize(view.getPreferredSize());
+		pnlDeath.setSize(view.getPreferredSize());
+
+		pnlMain.add(pnlDeath, JLayeredPane.PALETTE_LAYER);
+
+		pnlDeath.setBackground(new Color(0.9f, 0, 0, 0));
+		pnlDeath.setOpaque(true);
 
 		final boolean[] complete = new boolean[]{false, false};
 
@@ -30,12 +44,12 @@ public class WindowDeath extends WindowHandler {
 					complete[0] = true;
 					((Timer) e.getSource()).stop();
 				}
-				pnlOverlay.setBackground(new Color(0.9f, 0, 0, alpha));
-				pnlOverlay.repaint();
+				pnlDeath.setBackground(new Color(0.9f, 0, 0, alpha));
+				pnlDeath.repaint();
 			}
 		}).start();
 
-		JLabel lblGameOver = createText("GAME OVER!", 1.25f, pnlOverlay, 0);
+		JLabel lblGameOver = createText("GAME OVER!", 1.25f, pnlDeath, 0);
 
 		int gameOverLabelWidth = (int) Config.resolution.x;
 		int gameOverLabelHeight = (int) (Config.resolution.y / gridSize) * 2;
@@ -48,7 +62,7 @@ public class WindowDeath extends WindowHandler {
 
 		Timer timer = new Timer(10, e -> {
 			if (complete[0] && lblGameOver.getY() > endGameOverLabelY) {
-				pnlOverlay.repaint();
+				pnlDeath.repaint();
 				lblGameOver.setLocation(lblGameOver.getX(), (int) (lblGameOver.getY() - 4.5f * scaleFactor));
 			} else if (complete[0]) {
 				complete[1] = true;
@@ -59,22 +73,30 @@ public class WindowDeath extends WindowHandler {
 		timer.setInitialDelay(400);
 		timer.start();
 
-		JLabel lblScore = createText("Your score: " + score, 0.55f, pnlOverlay, 0);
+		JLabel lblScore = createText("Your score: " + score, 0.55f, pnlDeath, 0);
+		lblScore.setForeground(Color.LIGHT_GRAY);
 		lblScore.setVisible(false);
 		lblScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 4f)), gameOverLabelWidth, gameOverLabelHeight);
 
-		JLabel lblBlockBrokenScore = createText("Tanks destroyed: " + kills, 0.55f, pnlOverlay, 0);
+		JLabel lblBlockBrokenScore = createText("Tanks destroyed: " + kills, 0.55f, pnlDeath, 0);
+		lblBlockBrokenScore.setForeground(Color.LIGHT_GRAY);
 		lblBlockBrokenScore.setVisible(false);
 		lblBlockBrokenScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 3f)), gameOverLabelWidth, gameOverLabelHeight);
 
-		JLabel lblKillScore = createText("Blocks destroyed: " + brokenBlocks, 0.55f, pnlOverlay, 0);
+		JLabel lblKillScore = createText("Blocks destroyed: " + brokenBlocks, 0.55f, pnlDeath, 0);
+		lblKillScore.setForeground(Color.LIGHT_GRAY);
 		lblKillScore.setVisible(false);
 		lblKillScore.setBounds(gameOverLabelX, (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) - 2f)), gameOverLabelWidth, gameOverLabelHeight);
 
-		JButton btnMainMenu = createButton("Main Menu", .8f, pnlOverlay, 10);
+		JButton btnMainMenu = createButton("Main Menu", .8f, pnlDeath, 10);
+		btnMainMenu.setForeground(Color.WHITE);
 		btnMainMenu.setVisible(false);
-		JButton btnAddHighScore = createButton("Add High Score", .8f, pnlOverlay, 10);
+		JButton btnAddHighScore = createButton("Add High Score", .8f, pnlDeath, 10);
+		btnAddHighScore.setForeground(Color.WHITE);
 		btnAddHighScore.setVisible(false);
+
+		btnMainMenu.setUI(new CustomButtonUI(new Color(135, 17, 0)));
+		btnAddHighScore.setUI(new CustomButtonUI(new Color(135, 17, 0)));
 
 		int btnMainMenuWidth = (int) Config.resolution.x / 2;
 		int btnMainMenuHeight = (int) ((Config.resolution.y / gridSize) * 1.25f);
@@ -104,12 +126,28 @@ public class WindowDeath extends WindowHandler {
 		t2.start();
 
 		btnMainMenu.addActionListener(e -> {
-			WindowMenu.changeMenuState(true);
-			pnlOverlay.setVisible(false);
+			WindowMenu.showMenu();
+			resetGame();
+
+			pnlDeath.setVisible(false);
 		});
 
 		btnAddHighScore.addActionListener(e -> {
+			String name = JOptionPane.showInputDialog(view, "Enter your name: ");
 
+			if (name == null || name.equals("")) {
+				JOptionPane.showMessageDialog(view, "Invalid name entered", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (!DatabaseHandler.addHighScore(name)) {
+				JOptionPane.showMessageDialog(view, "Failed to add high score", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			resetGame();
+			pnlDeath.setVisible(false);
+			WindowMenu.showMenu();
 		});
 	}
 }
