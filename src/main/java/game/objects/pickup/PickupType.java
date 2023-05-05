@@ -1,10 +1,13 @@
 package game.objects.pickup;
 
+import game.IO.AM;
 import game.objects.shot.ShotStyle;
 import game.objects.tank.Player;
 import game.objects.shot.ShotType;
 
 import java.util.HashMap;
+
+import static game.MainGame.toCamelCase;
 
 
 /**
@@ -21,14 +24,18 @@ public enum PickupType {
 	PENETRATING_BULLETS(10, 5),
 	EXPLOSIVE_BULLETS(10, 2);
 
+	public final String image;
+
 	public final int duration;
 	public int bulletCount;
 
 	PickupType(int duration) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.duration = duration;
 	}
 
 	PickupType(int duration, int bulletCount) {
+		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.duration = duration;
 		this.bulletCount = bulletCount;
 	}
