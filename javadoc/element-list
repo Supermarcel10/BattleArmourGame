@@ -1,0 +1,10 @@
+game
+game.IO
+game.main
+game.objects.abstractBody
+game.objects.block
+game.objects.pickup
+game.objects.shot
+game.objects.tank
+game.window
+game.window.customAssets
