@@ -40,6 +40,9 @@ public class WindowHandler extends WindowCommons {
 		// Add the layered pane to the frame.
 		root.setContentPane(pnlMain);
 
+		// Set the icon.
+		root.setIconImage(new ImageIcon(AM.image.get("windowIcon")).getImage());
+
 		// Set exit on close.
 		root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
