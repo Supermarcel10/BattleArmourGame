@@ -20,7 +20,7 @@ public class Pickup extends DynamicBody implements SensorListener {
 	private static final Shape shape = new CircleShape((halfSize / 1.5f) * scaleFactor);
 	public final PickupType type;
 
-	public Pickup(PickupType type, Vec2 position) {
+	public Pickup(@NotNull PickupType type, Vec2 position) {
 		super(0f);
 		this.type = type;
 
@@ -33,9 +33,7 @@ public class Pickup extends DynamicBody implements SensorListener {
 		new GhostlyFixture(this, shape);
 		Sensor sensor = new Sensor(this, shape);
 
-		this.setFillColor(java.awt.Color.RED);
-
-		setBullet(true);
+		this.addImage(new BodyImage(type.image, halfSize * 2));
 
 		// Add collision listener.
 		sensor.addSensorListener(this);
