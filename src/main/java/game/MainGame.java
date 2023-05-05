@@ -280,4 +280,22 @@ public class MainGame {
 		float dy = Math.abs(vec1.y - vec2.y);
 		return dx <= distance && dy <= distance;
 	}
+
+	/**
+	 * Converts the enum name to camel case.
+	 * @param s The enum name.
+	 * @return The enum name in camel case.
+	 */
+	public static @NotNull String toCamelCase(@NotNull String s) {
+		String[] parts = s.split("_");
+		StringBuilder out = new StringBuilder();
+		out.append(parts[0].toLowerCase());
+
+		for (int i = 1; i < parts.length; i++) {
+			out.append(parts[i].substring(0, 1).toUpperCase());
+			out.append(parts[i].substring(1).toLowerCase());
+		}
+
+		return out.toString();
+	}
 }

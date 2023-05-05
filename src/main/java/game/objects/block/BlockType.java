@@ -1,7 +1,8 @@
 package game.objects.block;
 
 import game.IO.AM;
-import org.jetbrains.annotations.NotNull;
+
+import static game.MainGame.toCamelCase;
 
 
 /**
@@ -93,23 +94,5 @@ public enum BlockType {
 	BlockType() {
 		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.damageable = false;
-	}
-
-	/**
-	 * Converts the enum name to camel case.
-	 * @param s The enum name.
-	 * @return The enum name in camel case.
-	 */
-	private static @NotNull String toCamelCase(@NotNull String s) {
-		String[] parts = s.split("_");
-		StringBuilder out = new StringBuilder();
-		out.append(parts[0].toLowerCase());
-
-		for (int i = 1; i < parts.length; i++) {
-			out.append(parts[i].substring(0, 1).toUpperCase());
-			out.append(parts[i].substring(1).toLowerCase());
-		}
-
-		return out.toString();
 	}
 }
