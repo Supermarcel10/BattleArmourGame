@@ -133,6 +133,13 @@ public class Tank extends DynamicBody {
 				kills++;
 			}
 
+			// Play the tank dead sound && explode if the tank is an exploding tank.
+			if (this instanceof Enemy e && e.type == TankType.EXPLODING) {
+				explode();
+			} else {
+				soundHandler.play(AM.tankSound.get("tankDead"));
+			}
+
 			destroy();
 			//noinspection SuspiciousMethodCalls
 			enemies.remove(this);
