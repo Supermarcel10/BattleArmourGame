@@ -45,6 +45,8 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 
 	public void explode() {
 		destroy();
+
+		soundHandler.play(AM.tankSound.get("tankExplode"));
 		// TODO: Add explosion animation.
 		// TODO: Add explosion sound.
 		// TODO: Add explosion damage.
