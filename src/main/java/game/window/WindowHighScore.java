@@ -70,7 +70,7 @@ public class WindowHighScore extends WindowCommons {
             // Get the high scores from the database.
             ResultSet rs = DatabaseHandler.getHighScores(selectedLevel);
 
-            int lblWidth = (int) (Config.resolution.x * 0.8f);
+            int lblWidth = (int) (Config.resolution.x - 50) / 2;
             int lblHeight = (int) ((Config.resolution.y / gridSize) * 1.1f);
 
             int i = 0;
@@ -84,8 +84,8 @@ public class WindowHighScore extends WindowCommons {
                     lblName.setForeground(Color.DARK_GRAY);
                     lblScore.setForeground(Color.GRAY);
 
-                    lblName.setBounds(0, lblHeight * i, lblWidth, lblHeight);
-                    lblScore.setBounds(lblWidth, lblHeight * i, lblWidth, lblHeight);
+                    lblName.setBounds(- 25, lblHeight * i, lblWidth, lblHeight);
+                    lblScore.setBounds(lblWidth - 25, lblHeight * i, lblWidth, lblHeight);
 
                     i++;
                 }
