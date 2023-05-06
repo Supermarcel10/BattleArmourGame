@@ -29,6 +29,8 @@ public class Tank extends DynamicBody {
 	private static final PickupType[] pickupTypes = PickupType.values();
 	private static final int PICKUP_CHANCE = 20;
 
+	private static final Random random = new Random();
+
 	public static float halfSize = scaledGridSize * scaleFactor * .8f;
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
@@ -94,7 +96,6 @@ public class Tank extends DynamicBody {
 
 		// If the tank is in quad shot mode, create 4 shots instead of 1.
 		if (shotStyle.containsKey(ShotStyle.QUAD)) {
-			// Create 4 shots.
 			for (int i = 0; i < 4; i++) {
 				new Shot(this.getPositionJBox(), new Vec2((float) Math.cos(i * Math.PI / 2), (float) Math.sin(i * Math.PI / 2)), this, shotSpeed, shotDamage, shotType.get());
 			}
@@ -105,14 +106,7 @@ public class Tank extends DynamicBody {
 			// If the quad shot is out of ammo, remove it.
 			if (shotStyle.get(ShotStyle.QUAD) <= 0) shotStyle.remove(ShotStyle.QUAD);
 		} else {
-			// Get the tank direction based on the angle of it.
-			Vec2 moveDirection = new Vec2(
-				(float) -Math.round(Math.sin(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2))),
-				(float) Math.round(Math.cos(Math.round(this.getAngle() / (Math.PI / 2)) * (Math.PI / 2)))
-			);
-
-			// Create the shot.
-			new Shot(this.getPositionJBox(), moveDirection, this, shotSpeed, shotDamage, shotType.get());
+			new Shot(this.getPositionJBox(), radiansToVec2(this.getAngle()), this, shotSpeed, shotDamage, shotType.get());
 		}
 
 		// Play the shoot sound.
