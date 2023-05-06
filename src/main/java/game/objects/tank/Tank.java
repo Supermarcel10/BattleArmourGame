@@ -138,7 +138,7 @@ public class Tank extends DynamicBody {
 			enemies.remove(this);
 
 			// Give a chance to spawn a pickup.
-			if (new Random().nextInt(100) < PICKUP_CHANCE && this instanceof Enemy) {
+			if (random.nextInt(100) < PICKUP_CHANCE && this instanceof Enemy) {
 				Random random = new Random();
 
 				new Pickup(pickupTypes[random.nextInt(pickupTypes.length)], this.getPosition());
