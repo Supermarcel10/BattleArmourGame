@@ -91,6 +91,7 @@ public class WindowDeath extends WindowHandler {
 		JButton btnMainMenu = createButton("Main Menu", .8f, pnlDeath, 10);
 		btnMainMenu.setForeground(Color.WHITE);
 		btnMainMenu.setVisible(false);
+
 		JButton btnAddHighScore = createButton("Add High Score", .8f, pnlDeath, 10);
 		btnAddHighScore.setForeground(Color.WHITE);
 		btnAddHighScore.setVisible(false);
@@ -98,18 +99,15 @@ public class WindowDeath extends WindowHandler {
 		btnMainMenu.setUI(new CustomButtonUI(new Color(135, 17, 0)));
 		btnAddHighScore.setUI(new CustomButtonUI(new Color(135, 17, 0)));
 
-		int btnMainMenuWidth = (int) Config.resolution.x / 2;
-		int btnMainMenuHeight = (int) ((Config.resolution.y / gridSize) * 1.25f);
-		int btnMainMenuX = (pnlMain.getPreferredSize().width - btnMainMenuWidth) / 2;
-		int btnMainMenuY = (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) + 1f));
+		int btnWidth = (int) (Config.resolution.x * 0.8f);
+		int btnHeight = (int) ((Config.resolution.y / gridSize) * 1.25f);
+		int btnX = (pnlMain.getPreferredSize().width - btnWidth) / 2;
 
-		int btnAddHighScoreWidth = (int) Config.resolution.x / 2;
-		int btnAddHighScoreHeight = (int) ((Config.resolution.y / gridSize) * 1.25f);
-		int btnAddHighScoreX = (pnlMain.getPreferredSize().width - btnAddHighScoreWidth) / 2;
+		int btnMainMenuY = (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) + 1f));
 		int btnAddHighScoreY = (int) ((Config.resolution.y / gridSize) * ((gridSize / 2f) + 3f));
 
-		btnMainMenu.setBounds(btnMainMenuX, btnMainMenuY, btnMainMenuWidth, btnMainMenuHeight);
-		btnAddHighScore.setBounds(btnAddHighScoreX, btnAddHighScoreY, btnAddHighScoreWidth, btnAddHighScoreHeight);
+		btnMainMenu.setBounds(btnX, btnMainMenuY, btnWidth, btnHeight);
+		btnAddHighScore.setBounds(btnX, btnAddHighScoreY, btnWidth, btnHeight);
 
 		Timer t2 = new Timer(10, e -> {
 			if (complete[1]) {
