@@ -26,11 +26,11 @@ import static game.MainGame.gridSize;
 public class WindowMenu extends WindowHandler {
 	protected static CustomLayeredPane pnlMenu = new CustomLayeredPane(new Color(224, 242, 203));
 	protected static HashMap<JButton, Runnable> btnsMenu = new LinkedHashMap<>() {{
-		put(createButton("EXIT", .8f, pnlMenu, 10), () -> System.exit(0));
-		put(createButton("OPTIONS", .8f, pnlMenu, 10), WindowMenu::options);
-		put(createButton("HIGH SCORE", .8f, pnlMenu, 10), WindowMenu::highScore);
-		put(createButton("CREATE", .8f, pnlMenu, 10), WindowMenu::create);
 		put(createButton("PLAY", .8f, pnlMenu, 10), WindowMenu::play);
+		put(createButton("CREATE", .8f, pnlMenu, 10), WindowMenu::create);
+		put(createButton("HIGH SCORE", .8f, pnlMenu, 10), WindowMenu::highScore);
+		put(createButton("OPTIONS", .8f, pnlMenu, 10), WindowMenu::options);
+		put(createButton("EXIT", .8f, pnlMenu, 10), () -> System.exit(0));
 	}};
 
 	/**
@@ -39,17 +39,17 @@ public class WindowMenu extends WindowHandler {
 	public static void createMenu() {
 		gameState = GameState.MENU;
 
-		int btnMainMenuWidth = (int) Config.resolution.x / 2;
+		int btnMainMenuWidth = (int) (Config.resolution.x * 0.8f);
 		int btnMainMenuHeight = (int) ((Config.resolution.y / gridSize) * 1.5f);
 		int btnMainMenuX = (pnlMain.getPreferredSize().width - btnMainMenuWidth) / 2;
 		int pnlMainHeight = pnlMain.getPreferredSize().height;
 
 		// Set the position and UI of each button in the same order they were added.
-		int btnY = pnlMainHeight - btnMainMenuHeight; // Set initial Y position from bottom of screen.
+		int btnY = pnlMainHeight - (btnMainMenuHeight * (btnsMenu.size() + 2));
 		Color pressedColor = new Color(0, 40, 0, 100); // Button pressed color.
 
 		for (JButton button : btnsMenu.keySet()) {
-			button.setBounds(btnMainMenuX, btnY -= btnMainMenuHeight, btnMainMenuWidth, btnMainMenuHeight);
+			button.setBounds(btnMainMenuX, btnY += btnMainMenuHeight, btnMainMenuWidth, btnMainMenuHeight);
 			button.setUI(new CustomButtonUI(pressedColor));
 
 			// Add action listener to each button
