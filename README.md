@@ -30,7 +30,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Create player shooting
 - [x] Create enemy spawning
 - [x] Create pick-ups
-- [ ] Create art for perks
+- [x] Create art for perks
 - [x] Create new art for blocks
 - [x] Create a "base" to protect
 - [x] Add a score system
@@ -39,7 +39,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 - [x] Add a "game over" screen
 - [x] Add a high-score system
 - [x] Create more enemies
-- [ ] Make co-op harder
+- [x] Make co-op harder
 - [ ] Update the AI with different AIs for enemies
 - [x] Add texture images to the game
 - [ ] Animate the images
@@ -68,11 +68,27 @@ The font is created by CodeMan38 and can be found [here](https://fonts.google.co
 
 ### <u>Sounds</u>
 
-All utilised sounds are created by [Dark Fantasy Studio](https://www.youtube.com/c/DarkFantasyStudioNicolasJeudy) and are licensed under the [Dark Fantasy Studio Licence](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/legal/DARK_FANTASY_STUDIO_LICENCE.pdf).
+The following utilised sounds are created by [Dark Fantasy Studio](https://www.youtube.com/c/DarkFantasyStudioNicolasJeudy) and are licensed under the [Dark Fantasy Studio Licence](https://github.com/cityteaching/javaproject2023-Supermarcel10/blob/main/src/main/resources/legal/DARK_FANTASY_STUDIO_LICENCE.pdf).
 These tracks are paid for and are NOT free to use. To receive a licence in your name, you must purchase the tracks from [Dark Fantasy Studio](https://www.youtube.com/c/DarkFantasyStudioNicolasJeudy).
 <ul>
 <li>Tank Shot (Album: Earth Spell)</li>
 <li>Block Break (Album: Earth Spell)</li>
+</ul>
+
+The following utilised sounds are created by [Mixkit](https://mixkit.co/) and are licenced under the [Mixkit Sound Effects Free Licence](https://mixkit.co/license/).
+<ul>
+<li>Button Click</li>
+<li>Game Over</li>
+<li>Game Start</li>
+<li>Power Up (High)</li>
+<li>Power Up (Low)</li>
+<li>Player Dead</li>
+<li>Player Move</li>
+</ul>
+
+The following utilised sounds are created by [ZapSplat](https://www.zapsplat.com) and are licenced under the [Standard Licence](https://www.zapsplat.com/license-type/standard-license/).
+<ul>
+<li>Tank Explode</li>
 </ul>
 
 ### <u>Music</u>
