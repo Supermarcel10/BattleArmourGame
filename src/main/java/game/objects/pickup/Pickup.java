@@ -60,14 +60,12 @@ public class Pickup extends DynamicBody implements StepListener {
 	public void preStep(StepEvent stepEvent) {
 		if (untilCheck == 0) {
 			for (Player p : player) {
-				System.out.println("Checking if player is in range");
 				if (p == null || p.health <= 0) continue;
 
 				Vec2 pos = getPosition();
 				Vec2 playerPos = p.getPosition();
 
 				if (isWithinDistance(pos, playerPos, 0.75f)) {
-					System.out.println("Player is in range");
 					destroy();
 					p.pickUp(this);
 				}
