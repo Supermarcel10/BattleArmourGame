@@ -115,6 +115,7 @@ public class MainGame {
 		Arrays.stream(blockCosts).forEach(a -> Arrays.fill(a, 1));
 
 		// Play the game started sound.
+		soundHandler.playBackgroundMusic();
 		soundHandler.play(AM.miscSound.get("gameStart"));
 
 		// Load the level.
