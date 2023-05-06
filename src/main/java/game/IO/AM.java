@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Objects;
 
+
 /**
  * Asset Manager used for managing all assets in game:
  * - texture images
@@ -18,16 +19,19 @@ public class AM {
 	private static final String CD = System.getProperty("user.dir") + "/src/main/resources/";
 
 	public static HashMap<String, String> image = new HashMap<>();
-	public static HashMap<String, String> tankSound = new HashMap<>();
 	public static HashMap<String, String> blockSound = new HashMap<>();
+	public static HashMap<String, String> tankSound = new HashMap<>();
+	public static HashMap<String, String> miscSound = new HashMap<>();
 	public static HashMap<String, String> music = new HashMap<>();
 	public static HashMap<String, String> font = new HashMap<>();
 	public static HashMap<String, String> level = new HashMap<>();
 
 	static {
 		addAllToHashMap(image, new File(CD + "img/")); // image
-		addAllToHashMap(tankSound, new File(CD + "sound/tank/")); // tankSound
 		addAllToHashMap(blockSound, new File(CD + "sound/blocks/")); // blockSound
+		addAllToHashMap(tankSound, new File(CD + "sound/tank/")); // tankSound
+		addAllToHashMap(miscSound, new File(CD + "sound/menu/")); // tankSound
+		addAllToHashMap(miscSound, new File(CD + "sound/powerup/")); // tankSound
 		addAllToHashMap(music, new File(CD + "music/")); // music
 		addAllToHashMap(font, new File(CD + "font/")); // font
 		addAllToHashMap(level, new File(CD + "levels/")); // level
