@@ -57,7 +57,7 @@ public class WindowPlay extends WindowCommons {
     public static void selectNumOfPlayers() {
         if (setVisible(pnlPlayerSelection)) return;
 
-        int btnWidth = (int) Config.resolution.x / 2;
+        int btnWidth = (int) (Config.resolution.x * 0.8f);
         int btnHeight = (int) ((Config.resolution.y / gridSize) * 1.5f);
         int btnX = (pnlMain.getPreferredSize().width - btnWidth) / 2;
         int btnY = (int) (btnHeight * 1.5);

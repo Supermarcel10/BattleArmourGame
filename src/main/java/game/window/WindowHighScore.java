@@ -33,7 +33,7 @@ public class WindowHighScore extends WindowCommons {
         }
 
         // Button size and position
-        int btnWidth = (int) Config.resolution.x / 2;
+        int btnWidth = (int) (Config.resolution.x * 0.8f);
         int btnHeight = (int) ((Config.resolution.y / gridSize) * 1.5f);
         int btnX = (pnlMain.getPreferredSize().width - btnWidth) / 2;
         int pnlMainHeight = pnlMain.getPreferredSize().height;
@@ -70,7 +70,7 @@ public class WindowHighScore extends WindowCommons {
             // Get the high scores from the database.
             ResultSet rs = DatabaseHandler.getHighScores(selectedLevel);
 
-            int lblWidth = (pnlMain.getPreferredSize().width - 100) / 2;
+            int lblWidth = (int) (Config.resolution.x * 0.8f);
             int lblHeight = (int) ((Config.resolution.y / gridSize) * 1.1f);
 
             int i = 0;
