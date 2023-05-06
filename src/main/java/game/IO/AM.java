@@ -48,7 +48,9 @@ public class AM {
 				addAllToHashMap(hashMap, f);
 			}
 		} else {
-			if (file.getName().split("\\.").length > 2 && Objects.equals(file.getName().split("\\.")[2], "kra")) return;
+			if ((file.getName().split("\\.").length > 2 && Objects.equals(file.getName().split("\\.")[2], "kra")) ||
+					Objects.equals(file.getName().split("\\.")[1], "piskel")) return;
+
 			hashMap.put(file.getName().split("\\.")[0], file.getPath());
 		}
 	}
