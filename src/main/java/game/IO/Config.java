@@ -21,14 +21,17 @@ public class Config {
 	public static Vec2 resolution = new Vec2(2560, 1440);
 	public static int fps = 60;
 	public static String title = "Battle Armour";
-	public static HashMap<Character, String> key_binding = new HashMap<>(){{
-		put('w', "player1-UP");
-		put('a', "player1-LEFT");
-		put('s', "player1-DOWN");
-		put('d', "player1-RIGHT");
-		put('↑', "player2-UP");
-		put('←', "player2-LEFT");
-		put('↓', "player2-DOWN");
-		put('→', "player2-RIGHT");
+	public static HashMap<String, Character> key_binding = new HashMap<>(){{
+		put("player1-UP", 'w');
+		put("player1-LEFT", 'a');
+		put("player1-DOWN", 's');
+		put("player1-RIGHT", 'd');
+		put("player1-SHOOT", ' ');
+
+		put("player2-UP", '↑');
+		put("player2-LEFT", '←');
+		put("player2-DOWN", '↓');
+		put("player2-RIGHT", '→');
+		put("player2-SHOOT", '\n');
 	}};
 }
