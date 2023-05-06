@@ -9,8 +9,10 @@ import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
 
 import java.io.InputStream;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -27,7 +29,6 @@ public class SoundHandler implements Runnable {
 	private final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 	private Thread thread;
 
-	private int currentSongIndex = 0;
 	private Thread bgmThread;
 
 	/**
@@ -46,16 +47,17 @@ public class SoundHandler implements Runnable {
 	 */
 	public void playBackgroundMusic() {
 		String[] musicArray = AM.music.values().toArray(new String[0]);
+		AtomicInteger currentSongIndex = new AtomicInteger(new Random().nextInt(0, musicArray.length - 1));
 
 		if (bgmThread == null || !bgmThread.isAlive()) {
 			bgmThread = new Thread(() -> {
 				try {
 					while (!Thread.currentThread().isInterrupted()) {
-						CustomPlayer player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex]));
+						CustomPlayer player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex.get()]));
 						player.setVolume(Config.musicVolume);
 						player.play();
 
-						currentSongIndex = (currentSongIndex + 1) % musicArray.length;
+						currentSongIndex.set((currentSongIndex.get() + 1) % musicArray.length);
 					}
 				} catch (Exception ignored) {
 				}
