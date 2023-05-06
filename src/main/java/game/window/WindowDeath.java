@@ -1,5 +1,6 @@
 package game.window;
 
+import game.IO.AM;
 import game.IO.Config;
 import game.IO.DatabaseHandler;
 import game.window.customAssets.CustomButtonUI;
@@ -15,6 +16,10 @@ import static game.MainGame.*;
 // TODO: REWRITE THIS CLASS
 public class WindowDeath extends WindowHandler {
 	public static void createDeathMenu() {
+		// Play death sound andd pause background music.
+		soundHandler.stopBackgroundMusic();
+		soundHandler.play(AM.miscSound.get("gameOver"));
+
 		// Stop the world simulation.
 		world.stop();
 		spawnThread.interrupt();
