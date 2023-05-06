@@ -15,26 +15,29 @@ import static game.MainGame.toCamelCase;
  */
 public enum PickupType {
 	// TODO: Add on screen display for the pickup.
-	QUAD_SHOT(10, 3),
-	DOUBLE_DAMAGE(8),
-	SHIELD(20),
-	SPEED_BOOST(4),
-	FAST_SHOT(8),
-	BULLET_PROPULSION(4),
-	PENETRATING_BULLETS(10, 5),
-	EXPLOSIVE_BULLETS(10, 2);
+	QUAD_SHOT("powerupLow", 10, 3),
+	DOUBLE_DAMAGE("powerupLow", 8),
+	SHIELD("powerupLow", 20),
+	SPEED_BOOST("powerupLow", 4),
+	FAST_SHOT("powerupLow", 8),
+	BULLET_PROPULSION("powerupLow", 4),
+	PENETRATING_BULLETS("powerupHigh", 10, 5),
+	EXPLOSIVE_BULLETS("powerupHigh", 10, 2);
 
 	public final String image;
 
+	public final String soundFile;
 	public final int duration;
 	public int bulletCount;
 
-	PickupType(int duration) {
+	PickupType(String soundFile, int duration) {
+		this.soundFile = AM.miscSound.get(soundFile);
 		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.duration = duration;
 	}
 
-	PickupType(int duration, int bulletCount) {
+	PickupType(String soundFile, int duration, int bulletCount) {
+		this.soundFile = AM.miscSound.get(soundFile);
 		this.image = AM.image.get(toCamelCase(this.toString()));
 		this.duration = duration;
 		this.bulletCount = bulletCount;

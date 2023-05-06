@@ -66,6 +66,7 @@ public class Pickup extends DynamicBody implements StepListener {
 				Vec2 playerPos = p.getPosition();
 
 				if (isWithinDistance(pos, playerPos, 0.75f)) {
+					soundHandler.play(type.soundFile);
 					destroy();
 					p.pickUp(this);
 				}
