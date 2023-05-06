@@ -13,11 +13,12 @@ public class Config {
 	public static final boolean DEBUG = true;
 	public static final boolean DEBUG_DRAW = false;
 
+	public static float soundVolume = 0.2f, musicVolume = 0.4f;
+
 	public static boolean fullscreen = false;
 //	public static Vec2 resolution = new Vec2(1280, 720);
 //	public static Vec2 resolution = new Vec2(1920, 1080);
 	public static Vec2 resolution = new Vec2(2560, 1440);
-	public static boolean fpsLock = false;
 	public static int fps = 60;
 	public static String title = "Battle Armour";
 	public static HashMap<Character, String> key_binding = new HashMap<>(){{
