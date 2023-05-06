@@ -11,7 +11,7 @@ import org.jbox2d.common.Vec2;
 import javax.swing.*;
 import java.awt.*;
 
-import static game.MainGame.*;
+import static game.IO.Config.resolution;
 
 
 /**
@@ -78,6 +78,8 @@ public class WindowHandler extends WindowCommons {
 			device.setFullScreenWindow(root);
 			// TODO: BUG: The game window is not the same size as the screen.
 			view.setSize(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight());
+
+			resolution = new Vec2(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight());
 		} else {
 			// Exit full screen.
 			device.setFullScreenWindow(null);
@@ -85,23 +87,15 @@ public class WindowHandler extends WindowCommons {
 			root.setLocationByPlatform(true);
 			root.setResizable(false);
 
-			// Get the screen size.
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-			// Set the game resolution.
-			Vec2 resolution = Config.resolution;
-
 			// Create the user view. Round the resolution to the nearest multiple of gridSize to reduce pixel peaking.
-			view = resolution.x > resolution.y ?
-					new UserView(world,
-							(int) (resolution.y / gridSize) * gridSize,
-							(int) (resolution.y / gridSize) * gridSize) :
-					new UserView(world,
-							(int) (resolution.x / gridSize) * gridSize,
-							(int) (resolution.x / gridSize) * gridSize) ;
+			if (resolution.x > resolution.y) resolution.x = resolution.y;
+			else resolution.y = resolution.x;
+
+			view = new UserView(world, (int) resolution.x, (int) resolution.y);
 
 			// Center the game window.
-			root.setLocation((int) (screenSize.width - resolution.x) / 2, (int) (screenSize.height - resolution.y) / 2);
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			root.setLocation((screenSize.width - (int) resolution.x) / 2, (screenSize.height - (int) resolution.y) / 2 - 50);
 		}
 	}
 }
