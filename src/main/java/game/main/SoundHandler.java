@@ -3,6 +3,7 @@ package game.main;
 import java.io.FileInputStream;
 
 import game.IO.AM;
+import game.IO.Config;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
@@ -23,8 +24,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  * </p>
  */
 public class SoundHandler implements Runnable {
-	private final static float soundVolume= 0f, musicVolume = 0f;
-
 	private final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 	private Thread thread;
 
@@ -53,7 +52,7 @@ public class SoundHandler implements Runnable {
 				try {
 					while (!Thread.currentThread().isInterrupted()) {
 						CustomPlayer player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex]));
-						player.setVolume(musicVolume);
+						player.setVolume(Config.musicVolume);
 						player.play();
 
 						currentSongIndex = (currentSongIndex + 1) % musicArray.length;
@@ -97,7 +96,7 @@ public class SoundHandler implements Runnable {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
 				CustomPlayer player = new CustomPlayer(new FileInputStream(queue.take()));
-				player.setVolume(soundVolume);
+				player.setVolume(Config.soundVolume);
 
 				new Thread(() -> {
 					try {
