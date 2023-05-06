@@ -6,8 +6,9 @@ import game.IO.AM;
 import game.IO.Config;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.JavaSoundAudioDevice;
-import javazoom.jl.player.Player;
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -29,6 +30,9 @@ public class SoundHandler implements Runnable {
 	private final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 	private Thread thread;
 
+	private static final String[] musicArray = AM.music.values().toArray(new String[0]);
+	private static final AtomicInteger currentSongIndex = new AtomicInteger(new Random().nextInt(musicArray.length));
+	private CustomPlayer player;
 	private Thread bgmThread;
 
 	/**
@@ -46,32 +50,28 @@ public class SoundHandler implements Runnable {
 	 * </p>
 	 */
 	public void playBackgroundMusic() {
-		String[] musicArray = AM.music.values().toArray(new String[0]);
-		AtomicInteger currentSongIndex = new AtomicInteger(new Random().nextInt(0, musicArray.length - 1));
+		if (bgmThread != null) bgmThread.interrupt();
 
-		if (bgmThread == null || !bgmThread.isAlive()) {
-			bgmThread = new Thread(() -> {
-				try {
-					while (!Thread.currentThread().isInterrupted()) {
-						CustomPlayer player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex.get()]));
-						player.setVolume(Config.musicVolume);
-						player.play();
-
-						currentSongIndex.set((currentSongIndex.get() + 1) % musicArray.length);
-					}
-				} catch (Exception ignored) {
+		bgmThread = new Thread(() -> {
+			try {
+				while (player == null || !player.stopRequested) {
+					player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex.get()]));
+					player.setVolume(Config.musicVolume);
+					player.play();
+					currentSongIndex.set((currentSongIndex.get() + 1) % musicArray.length);
 				}
-			});
-			bgmThread.start();
-		}
+			} catch (JavaLayerException | FileNotFoundException ignored) {}
+		});
+		bgmThread.start();
 	}
 
 	/**
 	 * Stops the background music.
 	 */
 	public void stopBackgroundMusic() {
-		if (bgmThread != null && bgmThread.isAlive()) {
+		if (bgmThread != null) {
 			bgmThread.interrupt();
+			player.stop();
 		}
 	}
 
@@ -120,8 +120,9 @@ public class SoundHandler implements Runnable {
  *     The only difference is that it uses a custom audio device that allows for volume control.
  * </p>
  */
-class CustomPlayer extends Player {
+class CustomPlayer extends AdvancedPlayer {
 	private final CustomJavaSoundAudioDevice audioDevice;
+	public boolean stopRequested = false;
 
 	public CustomPlayer(InputStream stream) throws JavaLayerException {
 		this(stream, new CustomJavaSoundAudioDevice());
@@ -138,6 +139,17 @@ class CustomPlayer extends Player {
 
 	public float getVolume() {
 		return audioDevice.getVolume();
+	}
+
+	@Override
+	public boolean play(int frames) throws JavaLayerException {
+		stopRequested = false;
+		return super.play(frames);
+	}
+
+	public void stop() {
+		stopRequested = true;
+		close();
 	}
 }
 
