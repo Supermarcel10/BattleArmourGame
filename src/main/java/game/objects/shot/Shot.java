@@ -42,8 +42,6 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 		Sensor sensor = new Sensor(this, shape);
 
 		// Apply impulse
-		// TODO: Fix resolution affecting the speed of the shot.
-		// TODO: Fix frame time affecting the speed of the shot.
 		applyImpulse(travelDirection.mul(speed));
 
 		// Change properties
@@ -76,7 +74,7 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 		Iterator<Shot> iterator = shots.iterator();
 		while (iterator.hasNext()) {
 			Shot shot = iterator.next();
-			if (shot == this) continue;
+			if (shot == this || shot.shooter == this.shooter) continue;
 
 			if (isWithinDistance(this.getPosition(), shot.getPosition(), ((halfSize * 0.28f) * scaleFactor) / 2f)) {
 				iterator.remove();
