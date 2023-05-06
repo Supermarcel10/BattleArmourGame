@@ -38,9 +38,7 @@ public class SoundHandler implements Runnable {
 	/**
 	 * Creates a new sound handler.
 	 */
-	public SoundHandler() {
-		playBackgroundMusic();
-	}
+	public SoundHandler() {}
 
 	/**
 	 * Plays the background music.
