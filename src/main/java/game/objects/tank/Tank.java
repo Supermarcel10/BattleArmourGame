@@ -26,14 +26,14 @@ import static game.MainGame.*;
  * The base class for all tanks.
  */
 public class Tank extends DynamicBody {
+	private static final PickupType[] pickupTypes = PickupType.values();
+	private static final int PICKUP_CHANCE = 20;
+
 	public static float halfSize = scaledGridSize * scaleFactor * .8f;
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
 	// TODO: Add a shield image to the tank.
 	public boolean shielded = false;
-
-	private static final PickupType[] pickupTypes = PickupType.values();
-	private static final int pickupChance = 20;
 
 	protected boolean canShoot = true;
 	private final int shootingDelay = 500;
@@ -144,7 +144,7 @@ public class Tank extends DynamicBody {
 			enemies.remove(this);
 
 			// Give a chance to spawn a pickup.
-			if (new Random().nextInt(100) < pickupChance && this instanceof Enemy) {
+			if (new Random().nextInt(100) < PICKUP_CHANCE && this instanceof Enemy) {
 				Random random = new Random();
 
 				new Pickup(pickupTypes[random.nextInt(pickupTypes.length)], this.getPosition());
