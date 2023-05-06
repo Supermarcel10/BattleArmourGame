@@ -236,27 +236,80 @@ public class MainGame {
 	}
 
 	private static void enemySpawn() {
-		// TODO: Randomise enemy type and make progression harder.
 		while (true) {
-			if (enemies.size() < 3) {
-				Vec2 pos;
-
-				try {
-					pos = generateSpawnPos();
-					new Spawn(TankType.BASIC, pos);
-				} catch (NullPointerException ignored) {
-					// TODO: Check what the issue might be here
-					new Spawn(TankType.BASIC, generateSpawnPos());
-				} catch (StackOverflowError ignored) {}
-			}
+			if (enemies.size() < 3) spawnEnemy();
 
 			try {
-				sleep(1000 + (int) (Math.random() * 5000));
+				sleep(1000 + (int) (Math.random() * 4000));
 			} catch (InterruptedException ignored) {
 				break;
 			}
 		}
 	}
+
+	private static void spawnEnemy() {
+		try {
+			new Spawn(determineSpawnType(), generateSpawnPos());
+		} catch (NullPointerException ignored) {
+			spawnEnemy();
+		} catch (StackOverflowError ignored) {}
+	}
+
+	private static TankType determineSpawnType() {
+		int totalSpawnPercentage = 100;
+
+		// Define the initial spawn chances.
+		double basicChance = 80.0;
+		double fastChance = 10.0;
+		double heavyChance = 5.0;
+		double explodingChance = 5.0;
+
+		// Define the desired proportional increase percentages at max score.
+		double basicIncrease = 20.0;
+		double fastIncrease = 22.5;
+		double heavyIncrease = 22.5;
+		double explodingIncrease = 22.5;
+
+		float scoreLimit = 25_000f / numOfPlayers;
+
+		// Calculate the available percentage increase based on the score
+		double availableIncrease = Math.min(score / scoreLimit * 17.5, 17.5);
+
+		// Distribute the available increase proportionally among the three enemy types
+		double increasePerType = availableIncrease / 3;
+
+		// Adjust the spawn chances accordingly
+		basicChance += basicIncrease + increasePerType;
+		fastChance += fastIncrease + increasePerType;
+		heavyChance += heavyIncrease + increasePerType;
+		explodingChance += explodingIncrease;
+
+		// Ensure the total spawn percentage remains unchanged (excluding EXPLODING)
+		double totalAdjustedPercentage = basicChance + fastChance + heavyChance + explodingChance;
+		double adjustmentFactor = totalSpawnPercentage / totalAdjustedPercentage;
+
+		// Apply the adjustment factor to keep the total spawn percentage at 100%
+		basicChance *= adjustmentFactor;
+		fastChance *= adjustmentFactor;
+		heavyChance *= adjustmentFactor;
+		explodingChance *= adjustmentFactor;
+
+		// Return the appropriate TankType based on the adjusted spawn chances
+		double randomValue = Math.random() * totalSpawnPercentage;
+
+		if (randomValue < basicChance) {
+			return TankType.BASIC;
+		} else if (randomValue < basicChance + fastChance) {
+			return TankType.FAST;
+		} else if (randomValue < basicChance + fastChance + heavyChance) {
+			return TankType.HEAVY;
+		} else if (randomValue < basicChance + fastChance + heavyChance + explodingChance) {
+			return TankType.EXPLODING;
+		} else {
+			return TankType.BASIC;
+		}
+	}
+
 
 	private static Vec2 generateSpawnPos() {
 		Vec2 pos = enemySpawnPos.get((int) (Math.random() * enemySpawnPos.size()));
