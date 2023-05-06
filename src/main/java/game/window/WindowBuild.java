@@ -44,7 +44,7 @@ public class WindowBuild {
 		int lblPlacementBlockY = (int) (2 * scaleFactor);
 		lblHeader.setBounds(lblPlacementBlockX, lblPlacementBlockY, (int) Config.resolution.x, (int) Config.resolution.y / gridSize);
 
-		lblInformation = createText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD.", 0.4f, new Color(200, 30, 30, 255), pnlOverlay, 1);
+		lblInformation = createText("ESC to Save & Exit. BACKSPACE to Exit. L to LOAD.", 0.35f, new Color(200, 30, 30, 255), pnlOverlay, 1);
 		int lblExitBuildModeX = (int) ((pnlMain.getPreferredSize().width - Config.resolution.x) / 2);
 		int lblExitBuildModeY = (int) ((Config.resolution.y / 2) - (35 * scaleFactor));
 		lblInformation.setBounds(lblExitBuildModeX, lblExitBuildModeY, (int) Config.resolution.x, (int) Config.resolution.y);
