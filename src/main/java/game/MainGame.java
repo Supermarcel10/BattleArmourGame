@@ -1,6 +1,7 @@
 package game;
 
 import city.cs.engine.*;
+import game.IO.AM;
 import game.IO.Config;
 import game.IO.DatabaseHandler;
 import game.main.GameState;
@@ -107,11 +108,16 @@ public class MainGame {
 	public static void loadGame(File level) {
 		currentLevel = level;
 
+		// Set the grid size and scaled grid size.
 		scaledGridSize = (((27 * scaleFactor) / gridSize) / scaleFactor);
 		blocks = new Block[gridSize][gridSize];
 		blockCosts = new int[gridSize][gridSize];
 		Arrays.stream(blockCosts).forEach(a -> Arrays.fill(a, 1));
 
+		// Play the game started sound.
+		soundHandler.play(AM.miscSound.get("gameStart"));
+
+		// Load the level.
 		try {
 			if (!loadLevel(level)) throw new ExceptionInInitializerError("Failed to initialise level!");
 			WindowPlay.createGameOverlay();
@@ -309,7 +315,6 @@ public class MainGame {
 			return TankType.BASIC;
 		}
 	}
-
 
 	private static Vec2 generateSpawnPos() {
 		Vec2 pos = enemySpawnPos.get((int) (Math.random() * enemySpawnPos.size()));
