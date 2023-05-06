@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static game.MainGame.scaleFactor;
+import static game.MainGame.soundHandler;
 import static game.window.WindowHandler.view;
 
 
@@ -93,6 +94,9 @@ public class WindowCommons {
 		button.setBorder(BorderFactory.createEmptyBorder());
 		button.setFocusPainted(false);
 		button.setOpaque(false);
+
+		// Play the button click sound
+		button.addActionListener(e -> soundHandler.play(AM.miscSound.get("buttonClick")));
 
 		panel.add(button, JLayeredPane.DEFAULT_LAYER, index);
 
