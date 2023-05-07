@@ -195,11 +195,7 @@ public class MainGame {
 		player = new Player[2];
 
 		// Remove all shots.
-		Iterator<Shot> iterator = shots.iterator();
-		while (iterator.hasNext()) {
-			Shot s = iterator.next();
-			s.destroy();
-		}
+		shots.iterator().forEachRemaining(Shot::destroyForReset);
 
 		// Remove all enemies.
 		for (Enemy enemy : enemies) {

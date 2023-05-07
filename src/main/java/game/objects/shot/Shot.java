@@ -70,13 +70,18 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 		shots.remove(this);
 	}
 
+	public void destroyForReset() {
+		super.destroy();
+		world.removeStepListener(this);
+	}
+
 	private void checkShotCollided() {
 		Iterator<Shot> iterator = shots.iterator();
 		while (iterator.hasNext()) {
 			Shot shot = iterator.next();
 			if (shot == this || shot.shooter == this.shooter) continue;
 
-			if (isWithinDistance(this.getPosition(), shot.getPosition(), ((halfSize * 0.28f) * scaleFactor) / 2f)) {
+			if (isWithinDistance(this.getPosition(), shot.getPosition(), (halfSize * 0.28f) )) {
 				iterator.remove();
 				shot.destroy();
 				this.destroy();
