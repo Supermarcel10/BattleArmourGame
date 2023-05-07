@@ -2,6 +2,7 @@ package game.IO;
 
 import org.jbox2d.common.Vec2;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 
@@ -21,17 +22,17 @@ public class Config {
 	public static Vec2 resolution = new Vec2(2560, 1440);
 	public static int fps = 60;
 	public static String title = "Battle Armour";
-	public static HashMap<String, Character> key_binding = new HashMap<>(){{
-		put("player1-UP", 'w');
-		put("player1-LEFT", 'a');
-		put("player1-DOWN", 's');
-		put("player1-RIGHT", 'd');
-		put("player1-SHOOT", ' ');
+	public static HashMap<String, Integer> key_binding = new HashMap<>(){{
+		put("player1-UP", KeyEvent.VK_W);
+		put("player1-LEFT", KeyEvent.VK_A);
+		put("player1-DOWN", KeyEvent.VK_S);
+		put("player1-RIGHT", KeyEvent.VK_D);
+		put("player1-SHOOT", KeyEvent.VK_SPACE);
 
-		put("player2-UP", '↑');
-		put("player2-LEFT", '←');
-		put("player2-DOWN", '↓');
-		put("player2-RIGHT", '→');
-		put("player2-SHOOT", '\n');
+		put("player2-UP", KeyEvent.VK_UP);
+		put("player2-LEFT", KeyEvent.VK_LEFT);
+		put("player2-DOWN", KeyEvent.VK_DOWN);
+		put("player2-RIGHT", KeyEvent.VK_RIGHT);
+		put("player2-SHOOT", KeyEvent.VK_ENTER);
 	}};
 }
