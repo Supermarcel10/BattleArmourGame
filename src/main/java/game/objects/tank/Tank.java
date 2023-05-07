@@ -36,13 +36,13 @@ public class Tank extends DynamicBody {
 	public boolean shielded = false;
 
 	protected boolean canShoot = true;
-	private final int shootingDelay = 500;
+	protected int shootingDelay = 500;
+	protected final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 	public int shotPollingSpeed = 1;
-	public float shotSpeed = 0.5f;
+	public float shotSpeed = 50f;
 	public int shotDamage = 1;
 	public HashMap<ShotStyle, Integer> shotStyle = new HashMap<>();
 	public List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
-	private final Timer shootingTimer = new Timer(shootingDelay, e -> canShoot = true);
 
 	protected static String shootSound = AM.tankSound.get("shoot");
 	protected static String damageSound, destroySound;
