@@ -129,6 +129,8 @@ public class WindowDeath extends WindowHandler {
 		t2.start();
 
 		btnMainMenu.addActionListener(e -> {
+			soundHandler.playMenuMusic();
+
 			WindowMenu.showMenu();
 			resetGame();
 
