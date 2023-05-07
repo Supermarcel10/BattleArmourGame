@@ -56,6 +56,17 @@ public class WindowMenu extends WindowHandler {
 			button.addActionListener(e -> btnsMenu.get(button).run());
 		}
 
+		// Title // TODO: Fix title bar not showing up properly.
+//		try {
+//			ImageIcon imageIcon = new ScaledImageIcon(AM.image.get("title"), pnlMain.getPreferredSize().width, 400);
+//
+//			JLabel title = new JLabel(imageIcon);
+//			pnlMenu.add(title, CustomLayeredPane.DEFAULT_LAYER);
+//			title.setBounds(0, 0, pnlMain.getPreferredSize().width, (int) (400 * scaleFactor));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
 		// Add the menu to the main panel.
 		pnlMain.add(pnlMenu, CustomLayeredPane.DEFAULT_LAYER);
 		pnlMenu.setBounds(0, 0, view.getPreferredSize().width, view.getPreferredSize().height);
