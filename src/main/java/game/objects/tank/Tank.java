@@ -1,5 +1,6 @@
 package game.objects.tank;
 
+import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import game.IO.AM;
@@ -34,7 +35,7 @@ public class Tank extends DynamicBody {
 	public static float halfSize = scaledGridSize * scaleFactor * .8f;
 	private static final Shape shape = new BoxShape(halfSize, halfSize);
 
-	// TODO: Add a shield image to the tank.
+	public static final String shieldImage = AM.image.get("playerShield");
 	public boolean shielded = false;
 
 	protected boolean canShoot = true;
@@ -113,6 +114,19 @@ public class Tank extends DynamicBody {
 		soundHandler.play(shootSound);
 	}
 
+	public void addShield() {
+		shielded = true;
+
+		addImage(new BodyImage(shieldImage, halfSize * 3));
+	}
+
+	public void removeShield() {
+		shielded = false;
+
+		removeAllImages();
+		addImage(new BodyImage(TankType.PLAYER.image, halfSize * 2));
+	}
+
 	/**
 	 * Damages the tank.
 	 * @param damage The amount of damage to deal.
@@ -120,7 +134,7 @@ public class Tank extends DynamicBody {
 	 */
 	public void damage(int damage, Tank shooter) {
 		if (shielded) {
-			shielded = false;
+			removeShield();
 			return;
 		}
 

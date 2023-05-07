@@ -51,8 +51,11 @@ public enum PickupType {
 		switch (this) {
 			case QUAD_SHOT -> player.shotStyle.put(ShotStyle.QUAD, bulletCount);
 			case DOUBLE_DAMAGE -> player.shotDamage *= 2;
-			case SHIELD -> player.shielded = true;
-			case SPEED_BOOST -> player.speed += 0.2f;
+			case SHIELD -> player.addShield();
+//			case SPEED_BOOST -> {
+//				player.movePollingRate -= 2;
+//				player.currentMovePoll -= 2;
+//			}
 			case FAST_SHOT -> player.changeShootingDelay(350);
 			case BULLET_PROPULSION -> player.shotSpeed = 300f;
 			case PENETRATING_BULLETS -> player.availableShots.add(new HashMap<>(){{
@@ -72,8 +75,8 @@ public enum PickupType {
 		switch (this) {
 			case QUAD_SHOT -> player.shotStyle.remove(ShotStyle.QUAD);
 			case DOUBLE_DAMAGE -> player.shotDamage /= 2;
-			case SHIELD -> player.shielded = false;
-			case SPEED_BOOST -> player.speed -= 0.2f;
+			case SHIELD -> player.removeShield();
+//			case SPEED_BOOST -> player.movePollingRate += 2;
 			case FAST_SHOT -> player.changeShootingDelay(500);
 			case BULLET_PROPULSION -> player.shotSpeed = 150f;
 			case PENETRATING_BULLETS -> player.availableShots.removeIf(shot -> shot.containsKey(ShotType.PENETRATING));
