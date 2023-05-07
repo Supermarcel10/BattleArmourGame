@@ -58,7 +58,7 @@ public enum PickupType {
 
 			}
 			case FAST_SHOT -> player.changeShootingDelay(350);
-			case BULLET_PROPULSION -> player.shotSpeed = 1f;
+			case BULLET_PROPULSION -> player.shotSpeed = 75f;
 			case PENETRATING_BULLETS -> player.availableShots.add(new HashMap<>(){{
 				put(ShotType.PENETRATING, bulletCount);
 			}});
@@ -79,7 +79,7 @@ public enum PickupType {
 			case SHIELD -> player.removeShield();
 			case SPEED_BOOST -> player.movePollingRate += 1;
 			case FAST_SHOT -> player.changeShootingDelay(500);
-			case BULLET_PROPULSION -> player.shotSpeed = 0.5f;
+			case BULLET_PROPULSION -> player.shotSpeed = 50f;
 			case PENETRATING_BULLETS -> player.availableShots.removeIf(shot -> shot.containsKey(ShotType.PENETRATING));
 //			case EXPLOSIVE_BULLETS -> player.availableShots.removeIf(shot -> shot.containsKey(ShotType.EXPLOSIVE));
 		}
