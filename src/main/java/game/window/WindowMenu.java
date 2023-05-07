@@ -11,8 +11,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static game.MainGame.gameState;
-import static game.MainGame.gridSize;
+import static game.MainGame.*;
 
 
 /**
