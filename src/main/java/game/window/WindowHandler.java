@@ -22,7 +22,7 @@ public class WindowHandler extends WindowCommons {
 
 	protected static final JLayeredPane pnlMain = new JLayeredPane();
 	protected static final JLayeredPane pnlOverlay = new JLayeredPane();
-	public static final JFrame root = new JFrame(Config.title);
+	public static final JFrame root = new JFrame("Battle Armour");
 	public static UserView view = new UserView(world, 0, 0);
 
 	/**
@@ -55,13 +55,6 @@ public class WindowHandler extends WindowCommons {
 		pnlOverlay.setOpaque(false);
 		pnlMain.add(pnlOverlay, JLayeredPane.PALETTE_LAYER);
 		pnlOverlay.setSize(view.getPreferredSize());
-
-		// Enable debugs.
-		if (Config.DEBUG_DRAW) {
-			new DebugViewer(world, (int) Config.resolution.x, (int) Config.resolution.y);
-			view.setGridResolution(3.75f);
-			view.add(new JTextField(String.valueOf(world.getSimulationSettings().getFrameRate())));
-		}
 
 		WindowMenu.createMenu();
 	}
