@@ -199,14 +199,9 @@ class CustomPlayer extends AdvancedPlayer {
 	}
 
 	@Override
-	public boolean play(int frames) {
+	public boolean play(int frames) throws JavaLayerException {
 		stopRequested = false;
-
-		try {
-			return super.play(frames);
-		} catch (JavaLayerException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+		return super.play(frames);
 	}
 
 	public void stop() {
