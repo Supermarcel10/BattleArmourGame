@@ -6,6 +6,7 @@ import game.MainGame;
 import game.main.GameState;
 import game.main.LevelCreator;
 import game.objects.block.BlockType;
+import game.objects.shot.Shot;
 import game.window.WindowDeath;
 import game.objects.tank.Enemy;
 import game.window.WindowPlay;
@@ -153,6 +154,8 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 		if (player[1] != null) player[1].update();
 
 		for (Enemy enemy : enemies) enemy.update();
+
+		for (Shot shot : shots) shot.update();
 
 		if ((MainGame.basePos != null && blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y] != null &&
 				blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y].health <= 0) || // Base destroyed.

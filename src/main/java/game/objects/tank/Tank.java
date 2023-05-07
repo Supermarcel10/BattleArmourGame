@@ -13,12 +13,9 @@ import game.objects.shot.ShotStyle;
 import game.objects.shot.ShotType;
 import org.jbox2d.common.Vec2;
 
-import javax.swing.*;
+import javax.swing.Timer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static game.MainGame.*;
@@ -40,7 +37,8 @@ public class Tank extends DynamicBody {
 
 	protected boolean canShoot = true;
 	private final int shootingDelay = 500;
-	public float shotSpeed = 150f;
+	public int shotPollingSpeed = 1;
+	public float shotSpeed = 0.5f;
 	public int shotDamage = 1;
 	public HashMap<ShotStyle, Integer> shotStyle = new HashMap<>();
 	public List<HashMap<ShotType, Integer>> availableShots = new ArrayList<>();
@@ -57,8 +55,8 @@ public class Tank extends DynamicBody {
 		shootingTimer.setRepeats(false);
 	}
 
-	public Tank(float speed, Vec2 position) {
-		super(speed, position, shape);
+	public Tank(int movePollingRate, Vec2 position) {
+		super(movePollingRate, position, shape);
 		shootingTimer.setRepeats(false);
 	}
 
@@ -186,6 +184,77 @@ public class Tank extends DynamicBody {
 				}
 			}
 		}
+	}
+
+	private boolean isNotDrivable(Block block) {
+		return block != null && !block.type.isDrivable;
+	}
+
+	private boolean isBlocked(int x1, int y1, int x2, int y2, Vec2 newPosition) {
+		Block adjacentBlockFloor = blocks[x1][y1];
+		Block adjacentBlockCeil = blocks[x2][y2];
+
+		return (isNotDrivable(adjacentBlockFloor) && isWithinDistance(newPosition, adjacentBlockFloor.getPosition(), .75f))
+				|| (isNotDrivable(adjacentBlockCeil) && isWithinDistance(newPosition, adjacentBlockCeil.getPosition(), .75f));
+	}
+
+	public static float roundToNearestQuarter(float number) {
+		double wholePart = Math.floor(number);
+		double fractionPart = number - wholePart;
+
+		if (fractionPart < 0.125) {
+			fractionPart = 0.0;
+		} else if (fractionPart < 0.375) {
+			fractionPart = 0.25;
+		} else if (fractionPart < 0.625) {
+			fractionPart = 0.5;
+		} else if (fractionPart < 0.875) {
+			fractionPart = 0.75;
+		} else {
+			fractionPart = 1.0;
+		}
+
+		return (float) (wholePart + fractionPart);
+	}
+
+	public void updateMovement() {
+		// Remove redundant calls
+		if (moveDirection.equals(new Vec2(0, 0))) return;
+
+		// Get the updated player object position based on the current movement direction and speed.
+		Vec2 newPosition = getPosition().add(moveDirection.mul(0.25f));
+
+		// If the player is moving into blocks, tanks or spawners then prevent them.
+		Vec2 adjacentBlockPosRaw = new Vec2(getPosition().x + moveDirection.x + hGridSize, getPosition().y + moveDirection.y + hGridSize);
+		Vec2 adjacentBlockPos = new Vec2(roundToNearestQuarter(adjacentBlockPosRaw.x), roundToNearestQuarter(adjacentBlockPosRaw.y));
+
+		int floorX = (int) Math.floor(adjacentBlockPos.x);
+		int ceilX = (int) Math.ceil(adjacentBlockPos.x);
+		int floorY = (int) Math.floor(adjacentBlockPos.y);
+		int ceilY = (int) Math.ceil(adjacentBlockPos.y);
+
+		if (floorX == ceilX) {
+			if (isBlocked(floorX, floorY, floorX, ceilY, newPosition)) return;
+		} else if (floorY == ceilY) {
+			if (isBlocked(floorX, floorY, ceilX, floorY, newPosition)) return;
+		} else return;
+
+		for (Spawn s : spawners) {
+			if (isWithinDistance(newPosition, s.getPosition(), .75f)) return;
+		}
+
+		for (Tank tank : player) {
+			if (tank == this) continue;
+			if (tank != null && tank.health != 0 && isWithinDistance(newPosition, tank.getPosition(), .75f)) return;
+		}
+
+		for (Tank tank : enemies) {
+			if (tank == this) continue;
+			if (isWithinDistance(newPosition, tank.getPosition(), .75f)) return;
+		}
+
+		// If no collisions occur, move the player.
+		setPosition(new Vec2(roundToNearestQuarter(newPosition.x), roundToNearestQuarter(newPosition.y)));
 	}
 
 	/**

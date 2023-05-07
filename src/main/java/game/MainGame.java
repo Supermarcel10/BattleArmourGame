@@ -61,7 +61,7 @@ public class MainGame {
 	public static int kills = 0;
 	public static int brokenBlocks = 0;
 
-	public static Thread spawnThread = new Thread(MainGame::enemySpawn);
+	public static Thread spawnThread = new Thread(MainGame::proceduralEnemySpawn);
 	public static GameState gameState = GameState.NONE;
 
 
@@ -92,20 +92,6 @@ public class MainGame {
 		view.addMouseListener(listener);
 		view.addKeyListener(listener);
 		world.addStepListener(listener);
-
-		// Create a thread to print the FPS.
-//		Thread thread = new Thread(() -> {
-//			while (true) {
-//				System.out.println(world.getSimulationSettings().getAveragedFPS());
-//				// Sleep for 1 second.
-//				try {
-//					sleep(1000);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//		thread.start();
 	}
 
 	public static void loadGame(File level) {
@@ -136,7 +122,7 @@ public class MainGame {
 			}
 
 			// Spawn enemies progressively.
-			if (spawnThread.getState() == Thread.State.TERMINATED) spawnThread = new Thread(MainGame::enemySpawn);
+			if (spawnThread.getState() == Thread.State.TERMINATED) spawnThread = new Thread(MainGame::proceduralEnemySpawn);
 			spawnThread.start();
 
 			gameState = GameState.GAME;
@@ -181,7 +167,6 @@ public class MainGame {
 	}
 
 	public static void resetGame() {
-		// TODO: Rewrite this method.
 		if (spawnThread.isAlive()) spawnThread.interrupt();
 
 		// Remove all blocks.
@@ -246,7 +231,7 @@ public class MainGame {
 		}
 	}
 
-	private static void enemySpawn() {
+	private static void proceduralEnemySpawn() {
 		while (true) {
 			if (enemies.size() < 3) spawnEnemy();
 

@@ -1,16 +1,17 @@
 package game.objects.tank;
 
-import city.cs.engine.*;
+import city.cs.engine.BodyImage;
 import game.objects.pickup.Pickup;
 import game.objects.pickup.PickupType;
-import game.objects.shot.Shot;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
-import static game.MainGame.scaleFactor;
+import static game.MainGame.*;
 
 
 /**
@@ -19,12 +20,12 @@ import static game.MainGame.scaleFactor;
 public class Player extends Tank {
 	public HashMap<PickupType, Integer[]> perks = new HashMap<>();
 
-	public Player(Vec2 position) {
-		super(position);
+	private int playerIndex = -1;
 
-		speed = TankType.PLAYER.speed;
+	public Player(Vec2 position) {
+		super(TankType.PLAYER.updateFrequency, position);
 		setMaxHealth(TankType.PLAYER.health);
-		this.addImage(new BodyImage(TankType.PLAYER.image, halfSize * 2));
+		addImage(new BodyImage(TankType.PLAYER.image, halfSize * 2));
 		scoreValue = TankType.PLAYER.scoreValue;
 	}
 
@@ -57,33 +58,19 @@ public class Player extends Tank {
 		pickup.type.applyPerk(this);
 	}
 
-	/**
-	 * Update the player object position and angle based on the current movement direction and speed.
-	 */
 	@Override
 	public void update() {
-		// Get the updated player object position based on the current movement direction and speed.
-		Vec2 newPosition = getPositionJBox().add(moveDirection.mul(speed * scaleFactor));
+		super.update();
 
-		for (Body b : this.getBodiesInContact()) {
-			for (Fixture f : b.getFixtureList()) {
-				if (f.getBody() instanceof Shot || f.getBody() instanceof Pickup) {
-					 break;
-				}
-
-				if (f.intersects(newPosition, halfSize, halfSize)) {
-					return;
-				}
-			}
+		// Play sound if the player is moving.
+		if (playerIndex == -1) {
+			playerIndex = Arrays.asList(player).indexOf(this);
 		}
 
-		// TODO: Consider smoothing out movement.
-		// If no collisions occur, move the player.
-		setPositionJBox(newPosition);
-
-		// Angle the player towards the moving direction.
-		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
-			setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
+		if (Objects.equals(moveDirection, new Vec2(0, 0))) {
+			soundHandler.stopPlayerMovement(playerIndex);
+		} else {
+			soundHandler.playPlayerMovement(playerIndex);
 		}
 	}
 }
