@@ -21,12 +21,11 @@ import static game.objects.tank.Tank.roundToNearestQuarter;
  * A shot fired by a tank.
  */
 public class Shot extends DynamicBody implements SensorListener, StepListener {
-	private static final Shape shape = new CircleShape((halfSize * 0.28f) * scaleFactor);
+	private static final Shape shape = new CircleShape((halfSize * 0.28f));
 	protected ShotType type;
 	protected List<Tank> penetratedBodies = new ArrayList<>();
 	protected int damage;
 	protected Tank shooter;
-	public float speed;
 
 	public Shot(Vec2 position, @NotNull Vec2 travelDirection, @NotNull Tank shooter, float shotSpeed, int damage, ShotType type) {
 		super(shooter.shotPollingSpeed);
@@ -36,9 +35,10 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 		this.shooter = shooter;
 		this.damage = damage;
 		this.type = type;
-		speed = shotSpeed;
 
 		shots.add(this);
+
+		applyImpulse(moveDirection.mul(shotSpeed * scaleFactor));
 
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, shape);
@@ -92,6 +92,7 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 	@Override
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b && b.type.isSolid) {
+			System.out.println("Shot collided with block.");
 			switch (type) {
 				case BASIC, PENETRATING -> b.damage(damage, shooter);
 //				case EXPLOSIVE -> explode(); // TODO: Fix this.
@@ -117,17 +118,6 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 //				case EXPLOSIVE -> explode(); // TODO: Fix this.
 			}
 		}
-	}
-
-	public void updateMovement() {
-		// Remove redundant calls
-		if (moveDirection.equals(new Vec2(0, 0))) return;
-
-		// Get the updated player object position based on the current movement direction and speed.
-		Vec2 newPosition = getPosition().add(moveDirection.mul(speed));
-
-		// If no collisions occur, move the player.
-		setPosition(new Vec2(roundToNearestQuarter(newPosition.x), roundToNearestQuarter(newPosition.y)));
 	}
 
 	@Override
