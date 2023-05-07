@@ -18,6 +18,8 @@ public class WindowDeath extends WindowHandler {
 	public static void createDeathMenu() {
 		// Play death sound andd pause background music.
 		soundHandler.stopBackgroundMusic();
+		soundHandler.stopPlayerMovement(0);
+		soundHandler.stopPlayerMovement(1);
 		soundHandler.play(AM.miscSound.get("gameOver"));
 
 		// Stop the world simulation.
