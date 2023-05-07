@@ -4,6 +4,7 @@ import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import game.IO.AM;
+import game.objects.block.Block;
 import game.objects.pickup.Pickup;
 import game.objects.abstractBody.DynamicBody;
 import game.objects.pickup.PickupType;
@@ -29,7 +30,6 @@ import static game.MainGame.*;
 public class Tank extends DynamicBody {
 	private static final PickupType[] pickupTypes = PickupType.values();
 	private static final int PICKUP_CHANCE = 20;
-
 	private static final Random random = new Random();
 
 	public static float halfSize = scaledGridSize * scaleFactor * .8f;
@@ -168,6 +168,24 @@ public class Tank extends DynamicBody {
 			// Play the destroy sound if it exists.
 			soundHandler.play(destroySound);
 		} else soundHandler.play(damageSound);
+	}
+
+	public void explode() {
+		destroy();
+
+		soundHandler.play(AM.tankSound.get("tankExplode"));
+
+		Vec2 position = getPosition();
+
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				Block b = blocks[(int) position.x + hGridSize + x][(int) position.y + hGridSize + y];
+
+				if (b != null) {
+					b.damage(1, this);
+				}
+			}
+		}
 	}
 
 	/**
