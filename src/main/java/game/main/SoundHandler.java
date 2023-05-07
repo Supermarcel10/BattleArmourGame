@@ -30,9 +30,15 @@ public class SoundHandler implements Runnable {
 	private final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 	private Thread thread;
 
+	private final CustomPlayer[] playerPlayer = new CustomPlayer[2];
+	private final Thread[] playerThread = new Thread[2];
+
+	private CustomPlayer menuPlayer;
+	private Thread menuThread;
+
 	private static final String[] musicArray = AM.music.values().toArray(new String[0]);
 	private static final AtomicInteger currentSongIndex = new AtomicInteger(new Random().nextInt(musicArray.length));
-	private CustomPlayer player;
+	private CustomPlayer bgmPlayer;
 	private Thread bgmThread;
 
 	/**
@@ -48,14 +54,14 @@ public class SoundHandler implements Runnable {
 	 * </p>
 	 */
 	public void playBackgroundMusic() {
-		if (bgmThread != null) bgmThread.interrupt();
+		if (bgmThread != null) bgmPlayer = null;
 
 		bgmThread = new Thread(() -> {
 			try {
-				while (player == null || !player.stopRequested) {
-					player = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex.get()]));
-					player.setVolume(Config.musicVolume);
-					player.play();
+				while (bgmPlayer == null || !bgmPlayer.stopRequested) {
+					bgmPlayer = new CustomPlayer(new FileInputStream(musicArray[currentSongIndex.get()]));
+					bgmPlayer.setVolume(Config.musicVolume);
+					bgmPlayer.play();
 					currentSongIndex.set((currentSongIndex.get() + 1) % musicArray.length);
 				}
 			} catch (JavaLayerException | FileNotFoundException ignored) {}
@@ -69,7 +75,53 @@ public class SoundHandler implements Runnable {
 	public void stopBackgroundMusic() {
 		if (bgmThread != null) {
 			bgmThread.interrupt();
-			player.stop();
+			bgmPlayer.stop();
+		}
+	}
+
+	public void playMenuMusic() {
+		if (menuThread != null) menuPlayer = null;
+
+		menuThread = new Thread(() -> {
+			try {
+				while (menuPlayer == null || !menuPlayer.stopRequested) {
+					menuPlayer = new CustomPlayer(new FileInputStream(AM.miscSound.get("menuMusic")));
+					menuPlayer.setVolume(Config.musicVolume);
+					menuPlayer.play();
+				}
+			} catch (JavaLayerException | FileNotFoundException ignored) {}
+		});
+		menuThread.start();
+	}
+
+	public void stopMenuMusic() {
+		if (menuThread != null) {
+			menuThread.interrupt();
+			menuPlayer.stop();
+		}
+	}
+
+	public void playPlayerMovement(int playerIndex) {
+		if (playerPlayer[playerIndex] != null && !playerPlayer[playerIndex].stopRequested) return;
+
+		if (playerThread[playerIndex] != null) playerPlayer[playerIndex] = null;
+
+		playerThread[playerIndex] = new Thread(() -> {
+			try {
+				while (playerPlayer[playerIndex] == null || !playerPlayer[playerIndex].stopRequested) {
+					playerPlayer[playerIndex] = new CustomPlayer(new FileInputStream(AM.tankSound.get("tankMove")));
+					playerPlayer[playerIndex].setVolume(Config.musicVolume);
+					playerPlayer[playerIndex].play();
+				}
+			} catch (JavaLayerException | FileNotFoundException ignored) {}
+		});
+		playerThread[playerIndex].start();
+	}
+
+	public void stopPlayerMovement(int playerIndex) {
+		if (playerThread[playerIndex] != null) {
+			playerThread[playerIndex].interrupt();
+			playerPlayer[playerIndex].stop();
 		}
 	}
 
@@ -98,11 +150,7 @@ public class SoundHandler implements Runnable {
 				CustomPlayer player = new CustomPlayer(new FileInputStream(queue.take()));
 				player.setVolume(Config.soundVolume);
 
-				new Thread(() -> {
-					try {
-						player.play();
-					} catch (JavaLayerException ignored) {}
-				}).start();
+				new Thread(player::play).start();
 			}
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
@@ -140,9 +188,25 @@ class CustomPlayer extends AdvancedPlayer {
 	}
 
 	@Override
-	public boolean play(int frames) throws JavaLayerException {
+	public void play() {
 		stopRequested = false;
-		return super.play(frames);
+
+		try {
+			super.play();
+		} catch (JavaLayerException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public boolean play(int frames) {
+		stopRequested = false;
+
+		try {
+			return super.play(frames);
+		} catch (JavaLayerException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 
 	public void stop() {

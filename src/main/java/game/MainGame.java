@@ -80,6 +80,9 @@ public class MainGame {
 		// Create the window and main menu.
 		WindowHandler.createWindow();
 
+		// Play the menu music.
+		soundHandler.playMenuMusic();
+
 		// Disable the gravity and change background color.
 		world.setGravity(0);
 		view.setBackground(Color.decode("#fcf8de"));
@@ -115,6 +118,7 @@ public class MainGame {
 		Arrays.stream(blockCosts).forEach(a -> Arrays.fill(a, 1));
 
 		// Play the game started sound.
+		soundHandler.stopMenuMusic();
 		soundHandler.playBackgroundMusic();
 		soundHandler.play(AM.miscSound.get("gameStart"));
 
