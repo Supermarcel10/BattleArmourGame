@@ -16,7 +16,7 @@ import static game.MainGame.*;
 // TODO: REWRITE THIS CLASS
 public class WindowDeath extends WindowHandler {
 	public static void createDeathMenu() {
-		// Play death sound andd pause background music.
+		// Play death sound and pause background music.
 		soundHandler.stopBackgroundMusic();
 		soundHandler.stopPlayerMovement(0);
 		soundHandler.stopPlayerMovement(1);
