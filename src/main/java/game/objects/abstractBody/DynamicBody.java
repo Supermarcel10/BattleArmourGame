@@ -1,13 +1,10 @@
 package game.objects.abstractBody;
 
 import city.cs.engine.*;
-import game.IO.AM;
 import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
-import static game.MainGame.scaleFactor;
-import static game.MainGame.scaledGridSize;
-import static game.MainGame.world;
+import static game.MainGame.*;
 
 
 /**
@@ -42,15 +39,6 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 		super(world, bodyShape);
 		this.speed = speed;
 		setPosition(position);
-	}
-
-	public void explode() {
-		destroy();
-
-		soundHandler.play(AM.tankSound.get("tankExplode"));
-		// TODO: Add explosion animation.
-		// TODO: Add explosion sound.
-		// TODO: Add explosion damage.
 	}
 
 	/**
