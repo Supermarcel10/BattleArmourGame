@@ -29,6 +29,8 @@ The high scores are stored in a database, which can be accessed by the player(s)
 Once the players get bored with the game, they can also create their own maps and play on them as well as share them with other players.
 They can also easily add new textures and blocks with customised properties.
 
+The general game example video can be found [here](https://youtu.be/tA_aZCYutT4).
+
 ## <u>OPTIONS & CONTROLS</u>
 
 The default controls are WASD for movement and SPACE for shooting [PLAYER 1].<br>
