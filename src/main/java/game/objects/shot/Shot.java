@@ -94,7 +94,7 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 		if (sensorEvent.getContactBody() instanceof Block b && b.type.isSolid) {
 			switch (type) {
 				case BASIC, PENETRATING -> b.damage(damage, shooter);
-				case EXPLOSIVE -> explode();
+//				case EXPLOSIVE -> explode(); // TODO: Fix this.
 			}
 
 			destroy();
@@ -114,7 +114,7 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 						if (penetratedBodies.size() >= type.numberOfPenetrations) destroy();
 					}
 				}
-				case EXPLOSIVE -> explode();
+//				case EXPLOSIVE -> explode(); // TODO: Fix this.
 			}
 		}
 	}
