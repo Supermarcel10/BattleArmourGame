@@ -1,6 +1,7 @@
 package game.objects.block;
 
 import city.cs.engine.*;
+import game.IO.AM;
 import game.objects.abstractBody.StaticBody;
 import game.objects.tank.Player;
 import game.objects.tank.Tank;
@@ -16,7 +17,8 @@ import static game.MainGame.*;
 public class Block extends StaticBody {
 	private static final BoxShape shape = new BoxShape(scaledGridSize * scaleFactor, scaledGridSize * scaleFactor);
 	private final int damageScore, destroyScore;
-	private static BodyImage image;
+	private final BodyImage image;
+	private static final BodyImage[] damageImage = new BodyImage[3];
 
 	public final BlockType type;
 
@@ -49,7 +51,13 @@ public class Block extends StaticBody {
 		}
 
 		this.type = type;
+
 		image = new BodyImage(type.image, scaledGridSize * 2 * scaleFactor);
+		addImage(image);
+
+		for (int i = 0; i < damageImage.length; i++) {
+			damageImage[i] = new BodyImage(AM.image.get("damage" + (i + 1)), scaledGridSize * 2 * scaleFactor);
+		};
 
 		destroyScore = type.destroyScore;
 		damageScore = type.damageScore;
@@ -65,7 +73,6 @@ public class Block extends StaticBody {
 
 		if (type.isDrivable) this.getFixtureList().get(0).destroy();
 
-		addImage(image);
 		// TODO: Fix this.
 		pos = pos.mul((scaledGridSize * 2) * scaleFactor);
 		setPositionJBox(pos);
@@ -81,6 +88,21 @@ public class Block extends StaticBody {
 
 	public Block(@NotNull BlockType type, int x, int y) throws IllegalStateException {
 		this(type, new Vec2(x, y));
+	}
+
+	public void animateDamage() {
+		if (health <= 0) return;
+
+		removeAllImages();
+		addImage(image);
+
+		if (health <= maxHealth / 3) {
+			addImage(damageImage[2]);
+		} else if (health <= maxHealth / 3 * 2) {
+			addImage(damageImage[1]);
+		} else {
+			addImage(damageImage[0]);
+		}
 	}
 
 	/**
@@ -107,7 +129,11 @@ public class Block extends StaticBody {
 				blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = -1;
 			}
 		} else if (type.isSolid) {
-			blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = health + 1;
+			// TODO: Temporarily make it impassable
+			if (health <= 0) blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = 1;
+			else blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = -1;
+
+//			blockCosts[(int) pos.x + hGridSize][(int) pos.y + hGridSize] = (health * 300) + 1;
 		}
 	}
 
@@ -143,7 +169,6 @@ public class Block extends StaticBody {
 		} else soundHandler.play(destroySound);
 
 		calculateBlockCost();
-
-		// TODO: Add damage animation.
+		animateDamage();
 	}
 }
