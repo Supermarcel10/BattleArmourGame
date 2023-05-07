@@ -88,7 +88,6 @@ public class Enemy extends Tank {
 	}
 
 	private void pathFind() {
-		System.out.println("Pathfinding");
 		AStar.Node start = new AStar.Node((int) (Math.floor(getPosition().x)) + hGridSize, (int) (Math.floor(getPosition().y)) + hGridSize);
 
 		AStar.Node end1 = null;
