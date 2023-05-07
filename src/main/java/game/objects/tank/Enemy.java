@@ -17,10 +17,11 @@ public class Enemy extends Tank {
 	private final static int RECALCULATE_PATH_RATE = 60;
 	private int untilRecalculateUpdate = 0;
 
+	private final int originalShootingDelay = shootingDelay;
+
 	public final TankType type;
 
 	List<AStar.Node> path;
-
 	public Player target;
 
 	public Enemy(@NotNull TankType type, Vec2 position) {
@@ -43,7 +44,7 @@ public class Enemy extends Tank {
 	private void shootIfPlayerInSight() {
 		Vec2 lookDirection = radiansToVec2(getAngle());
 
-		if (canShoot && !Objects.equals(lookDirection, new Vec2(0, 0))) {
+		if (type != TankType.EXPLODING && canShoot && !Objects.equals(lookDirection, new Vec2(0, 0))) {
 			Vec2 pos = getPosition();
 			pos = new Vec2(pos.x + hGridSize, pos.y + hGridSize);
 			int blocksEncountered = 0, distance = 0;
@@ -61,13 +62,24 @@ public class Enemy extends Tank {
 					else return;
 				}
 
+				// Change the shooting delay slightly to make the enemies more human.
+				shootingDelay = (int) (originalShootingDelay * 2 + (Math.random() * 250));
+				shootingTimer.setInitialDelay(shootingDelay);
+				shootingTimer.setDelay(shootingDelay);
+
 				for (Player p : player) {
 					// If the player is not in the game, dead or not moving: skip
-					if (p == null || p.health <= 0 || Objects.equals(p.moveDirection, new Vec2(0, 0))) continue;
+					if (p == null || p.health <= 0) continue;
 
-					// Check if the player is within shooting conditions.
-					if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1 + (distance / 10f))) {
-						shoot();
+					if (Objects.equals(p.moveDirection, new Vec2(0, 0))) {
+						// Check if the player is within shooting conditions.
+						if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1)) {
+							shoot();
+						}
+
+//						if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1 + (distance / 10f))) {
+//							shoot();
+//						}
 					}
 				}
 			}
