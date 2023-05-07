@@ -23,7 +23,7 @@ public class Pickup extends DynamicBody implements StepListener {
 	public final PickupType type;
 
 	public Pickup(@NotNull PickupType type, Vec2 position) {
-		super(0f);
+		super(0);
 		this.type = type;
 
 		setPosition(position);

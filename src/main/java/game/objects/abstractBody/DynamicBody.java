@@ -10,8 +10,9 @@ import static game.MainGame.*;
 /**
  * Custom dynamic body class that extends DynamicBody.
  */
-public class DynamicBody extends city.cs.engine.DynamicBody {
-	public float speed;
+public abstract class DynamicBody extends city.cs.engine.DynamicBody {
+	public float movePollingRate = 1;
+	public float currentMovePoll = 0;
 	public Vec2 moveDirection = new Vec2(0, 0);
 
 	public DynamicBody(Vec2 position) {
@@ -19,14 +20,14 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 		setPosition(position);
 	}
 
-	public DynamicBody(float speed){
+	public DynamicBody(int movePollingRate){
 		super(world);
-		this.speed = speed;
+		this.movePollingRate = movePollingRate;
 	}
 
-	public DynamicBody(float speed, Vec2 position) {
+	public DynamicBody(int movePollingRate, Vec2 position) {
 		super(world);
-		this.speed = speed;
+		this.movePollingRate = movePollingRate;
 		setPosition(position);
 	}
 
@@ -35,9 +36,9 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 		setPosition(position);
 	}
 
-	public DynamicBody(float speed, Vec2 position, Shape bodyShape) {
+	public DynamicBody(int movePollingRate, Vec2 position, Shape bodyShape) {
 		super(world, bodyShape);
-		this.speed = speed;
+		this.movePollingRate = movePollingRate;
 		setPosition(position);
 	}
 
@@ -54,7 +55,7 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 	 * Sets the position of the body using JBox2D positioning Vector2.
 	 * @param position JBox2D Positioning Vector2
 	 */
-	public void setPositionJBox(@NotNull Vec2 position) {
+	public void setPositionJBox(Vec2 position) {
 		super.setPosition(position);
 	}
 
@@ -102,8 +103,23 @@ public class DynamicBody extends city.cs.engine.DynamicBody {
 		return radiansToVec2(degrees * (float) Math.PI / 180);
 	}
 
+	public void updateMovement() {}
+
 	/**
 	 * Method for overriding updating of the body.
 	 */
-	public void update() {}
+	/**
+	 * Update the tank object position and angle based on the current movement direction and speed.
+	 */
+	public void update() {
+		if (currentMovePoll == 0) {
+			updateMovement();
+			currentMovePoll = movePollingRate;
+		} else currentMovePoll--;
+
+		// Angle the tank towards the moving direction.
+		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
+			setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
+		}
+	}
 }

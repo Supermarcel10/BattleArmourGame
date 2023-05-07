@@ -9,20 +9,20 @@ import org.jetbrains.annotations.NotNull;
  * An enum containing all the different types of tanks.
  */
 public enum TankType {
-	PLAYER(1, 0.4f, -5000, AM.image.get("player")),
-	BASIC(1, 0.4f, 100, AM.image.get("basicEnemy")),
-	HEAVY(3, 0.3f, 300, AM.image.get("heavyEnemy")),
-	FAST(1, 0.6f, 250, AM.image.get("fastEnemy")),
-	EXPLODING(1, 0.5f, 250, AM.image.get("explodingEnemy"));
+	PLAYER(1, 2, -5000, AM.image.get("player")),
+	BASIC(1, 2, 100, AM.image.get("basicEnemy")),
+	HEAVY(3, 4, 300, AM.image.get("heavyEnemy")),
+	FAST(1, 1, 250, AM.image.get("fastEnemy")),
+	EXPLODING(1, 3, 250, AM.image.get("explodingEnemy"));
 
 	public final int health;
-	public final float speed;
+	public final int updateFrequency;
 	public final int scoreValue;
 	public final String image;
 
-	TankType(int health, float speed, int scoreValue, String image) {
+	TankType(int health, int updateFrequency, int scoreValue, String image) {
 		this.health = health;
-		this.speed = speed;
+		this.updateFrequency = updateFrequency;
 		this.scoreValue = scoreValue;
 		this.image = image;
 	}

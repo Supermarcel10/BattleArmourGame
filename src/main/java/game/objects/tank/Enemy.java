@@ -17,15 +17,19 @@ public class Enemy extends Tank {
 	private final static int RECALCULATE_PATH_RATE = 60;
 	private int untilRecalculateUpdate = 0;
 
-	List<Point> path;
+	public final TankType type;
+
+	List<AStar.Node> path;
 
 	public Player target;
 
 	public Enemy(@NotNull TankType type, Vec2 position) {
-		super(position);
+		super(type.updateFrequency, position);
+
+		this.type = type;
+
 		this.addImage(new BodyImage(type.image, halfSize * 2));
 		this.setMaxHealth(type.health);
-		this.speed = type.speed;
 		this.scoreValue = type.scoreValue;
 	}
 
@@ -112,12 +116,14 @@ public class Enemy extends Tank {
 		// PATHFINDING
 		if (untilRecalculateUpdate == 0) {
 			untilRecalculateUpdate = RECALCULATE_PATH_RATE;
-			pathFind();
+//			pathFind();
+
+			// Remove the last node in the path, as it is the current position of the player.
+			if (path != null && path.size() > 0) path.remove(path.size() - 1);
 		}
 //		else untilRecalculateUpdate--;
 
 		// MOVEMENT
-		moveDirection = new Vec2(0, -1);
 		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
 			setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
 		}

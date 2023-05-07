@@ -14,6 +14,7 @@ import java.util.List;
 
 import static game.MainGame.*;
 import static game.objects.tank.Tank.halfSize;
+import static game.objects.tank.Tank.roundToNearestQuarter;
 
 
 /**
@@ -25,24 +26,23 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 	protected List<Tank> penetratedBodies = new ArrayList<>();
 	protected int damage;
 	protected Tank shooter;
+	public float speed;
 
-	public Shot(Vec2 position, @NotNull Vec2 travelDirection, Tank shooter, float speed, int damage, ShotType type) {
-		super(speed);
+	public Shot(Vec2 position, @NotNull Vec2 travelDirection, @NotNull Tank shooter, float shotSpeed, int damage, ShotType type) {
+		super(shooter.shotPollingSpeed);
 		setPositionJBox(position);
 
+		moveDirection = travelDirection;
 		this.shooter = shooter;
-		this.speed = speed;
 		this.damage = damage;
 		this.type = type;
+		speed = shotSpeed;
 
 		shots.add(this);
 
 		// Create a new ghostly fixture
 		new GhostlyFixture(this, shape);
 		Sensor sensor = new Sensor(this, shape);
-
-		// Apply impulse
-		applyImpulse(travelDirection.mul(speed));
 
 		// Change properties
 		setFillColor(java.awt.Color.RED);
@@ -119,9 +119,20 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 		}
 	}
 
+	public void updateMovement() {
+		// Remove redundant calls
+		if (moveDirection.equals(new Vec2(0, 0))) return;
+
+		// Get the updated player object position based on the current movement direction and speed.
+		Vec2 newPosition = getPosition().add(moveDirection.mul(speed));
+
+		// If no collisions occur, move the player.
+		setPosition(new Vec2(roundToNearestQuarter(newPosition.x), roundToNearestQuarter(newPosition.y)));
+	}
+
 	@Override
 	public void preStep(StepEvent stepEvent) {
-			checkShotCollided();
+		checkShotCollided();
 	}
 
 	@Override public void endContact(SensorEvent sensorEvent) {}
