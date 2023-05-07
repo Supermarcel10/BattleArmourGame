@@ -76,10 +76,10 @@ public class Enemy extends Tank {
 						if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1)) {
 							shoot();
 						}
-
-//						if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1 + (distance / 10f))) {
-//							shoot();
-//						}
+					} else {
+						if (isWithinDistance(p.getPosition(), new Vec2(pos.x - hGridSize, pos.y - hGridSize), 1 + (distance / 20f))) {
+							shoot();
+						}
 					}
 				}
 			}
