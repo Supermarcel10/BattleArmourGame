@@ -6,6 +6,7 @@ import org.jbox2d.common.Vec2;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.List;
 
 import static game.MainGame.*;
 
@@ -87,38 +88,30 @@ public class Enemy extends Tank {
 	}
 
 	private void pathFind() {
-		Point start = new Point((int) (getPosition().x + hGridSize), (int) (getPosition().y + hGridSize));
+		System.out.println("Pathfinding");
+		AStar.Node start = new AStar.Node((int) (Math.floor(getPosition().x)) + hGridSize, (int) (Math.floor(getPosition().y)) + hGridSize);
 
-		List<Point> p1Trace = new ArrayList<>();
-		List<Point> p2Trace = new ArrayList<>();
-		List<Point> baseTrace = new ArrayList<>();
-
-		if (target == null) {
-			if (player[0] != null && player[0].health > 0) {
-				Point end = new Point((int) (player[0].getPosition().x + hGridSize), (int) (player[0].getPosition().y + hGridSize));
-				p1Trace = aStar(blockCosts, start, end);
-			}
-
-			if (player[1] != null && player[1].health > 0) {
-				Point end = new Point((int) (player[1].getPosition().x + hGridSize), (int) (player[1].getPosition().y + hGridSize));
-				p2Trace = aStar(blockCosts, start, end);
-			}
-
-			Point end = new Point((int) (player[0].getPosition().x + hGridSize), (int) (player[0].getPosition().y + hGridSize));
-			baseTrace = aStar(blockCosts, start, end);
+		AStar.Node end1 = null;
+		if (player[0].health > 0) {
+			end1 = new AStar.Node((int) (player[0].getPosition().x + hGridSize), (int) (player[0].getPosition().y + hGridSize));
 		}
 
-		path = p1Trace;
-
-		outputDebug();
-
-		System.out.println("Path: " + path);
-
-		if (!path.isEmpty()) {
-			System.out.println("Travel cost: " + path.get(path.size() - 1).getG());
-		} else {
-			System.out.println("No path found.");
+		AStar.Node end2 = null;
+		if (player.length > 1 && player[1] != null && player[1].health > 0) {
+			end2 = new AStar.Node((int) (player[1].getPosition().x + hGridSize), (int) (player[1].getPosition().y + hGridSize));
 		}
+
+		AStar.Node targetEnd = null;
+
+		if (end1 != null && end2 != null) {
+			double distanceToEnd1 = Math.sqrt(Math.pow(start.x - end1.x, 2) + Math.pow(start.y - end1.y, 2));
+			double distanceToEnd2 = Math.sqrt(Math.pow(start.x - end2.x, 2) + Math.pow(start.y - end2.y, 2));
+
+			targetEnd = (distanceToEnd1 < distanceToEnd2) ? end1 : end2;
+		} else if (end1 != null) targetEnd = end1;
+		else if (end2 != null) targetEnd = end2;
+
+		if (targetEnd != null) path = AStar.findPath(blockCosts, start, targetEnd);
 	}
 
 	/**
@@ -128,213 +121,149 @@ public class Enemy extends Tank {
 		// PATHFINDING
 		if (untilRecalculateUpdate == 0) {
 			untilRecalculateUpdate = RECALCULATE_PATH_RATE;
-//			pathFind();
+			pathFind();
 
 			// Remove the last node in the path, as it is the current position of the player.
 			if (path != null && path.size() > 0) path.remove(path.size() - 1);
-		}
-//		else untilRecalculateUpdate--;
+		} else untilRecalculateUpdate--;
 
 		// MOVEMENT
-		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
-			setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
-		}
-
-		if (path != null && path.size() > 1) {
+		if (path != null && path.size() >= 1) {
 			Vec2 currentPosition = new Vec2(getPosition().x + hGridSize, getPosition().y + hGridSize);
-			Point nextPointInPath = path.get(1);
+			AStar.Node nextPointInPath = path.get(0);
 
-			// TODO: Fix the fact that the enemy might go past the next point in the path.
-			if (isWithinDistance(currentPosition, new Vec2(nextPointInPath.x, nextPointInPath.y), 0.1f) && path.size() > 2) {
+			if (isWithinDistance(currentPosition, new Vec2(nextPointInPath.x, nextPointInPath.y), 0.1f)) {
 				path.remove(0);
-				nextPointInPath = path.get(1);
+
+				if (path.isEmpty()) return;
+				nextPointInPath = path.get(0);
 			}
 
-			// TODO: Something is not right here.
-//			double xDiff = Math.abs(nextPointInPath.x - currentPosition.x);
-//			int xSign = (int) Math.signum(nextPointInPath.x - currentPosition.x);
+			float deltaX = nextPointInPath.x - currentPosition.x;
+			float deltaY = nextPointInPath.y - currentPosition.y;
 
-//			int xSign = nextPointInPath.x > currentPosition.x ? 1 : -1;
-//			double xComponent = xSign * Math.sqrt(1.0 - Math.pow(10e-9, 2));
-//
-//			int ySign = nextPointInPath.y > currentPosition.y ? 1 : -1;
-//			double yComponent = ySign * Math.sqrt(1.0 - Math.pow(10e-9, 2));
-//
-//			moveDirection = new Vec2((float) xComponent, (float) yComponent);
+			if (Math.abs(deltaX) > Math.abs(deltaY)) {
+				moveDirection =  new Vec2((int)Math.signum(deltaX), 0);
+			} else {
+				moveDirection = new Vec2(0, (int) Math.signum(deltaY));
+			}
 
-//			moveDirection = new Vec2(nextPointInPath.x - currentPosition.x, nextPointInPath.y - currentPosition.y);
-//
-//			System.out.println(moveDirection);
+			super.update();
+		}
 
-//			Vec2 newPosition = getPositionJBox().add(moveDirection.mul(speed * scaleFactor));
-//			setPositionJBox(newPosition);
-//
-//			if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
-//				setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
-//			}
+		if (!(moveDirection.x == 0 && moveDirection.y == 0)) {
+			setAngle((float) (Vec2ToDegrees(moveDirection) * Math.PI / -180));
+		} else if (path != null && path.size() == 0) {
+			setAngle((float) (Vec2ToDegrees(new Vec2(player[0].getPosition().x - getPosition().x, player[0].getPosition().y - getPosition().y)) * Math.PI / -180));
 		}
 
 		// SHOOTING
 		shootIfPlayerInSight();
 	}
 
-	public static List<Point> aStar(int[][] maze, Point start, Point end) {
-		FastOpenSet openSet = new FastOpenSet();
-		Set<Point> closedSet = new HashSet<>();
+	static class AStar {
+		public static int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
-		openSet.add(start);
+		public static class Node {
+			int x;
+			int y;
+			int cost = 0;
+			Node parent = null;
 
-		while (!openSet.isEmpty()) {
-			Point current = openSet.poll();
-			closedSet.add(current);
-
-			if (current.equals(end)) {
-				return reconstructPath(current);
+			public Node(int x, int y, int cost, Node parent) {
+				this.x = x;
+				this.y = y;
+				this.cost = cost;
+				this.parent = parent;
 			}
 
-			int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-			for (int[] direction : directions) {
-				int newY = current.y + direction[0];
-				int newX = current.x + direction[1];
+			public Node(int x, int y) {
+				this.x = x;
+				this.y = y;
+			}
 
-				if (newY >= 0 && newY < maze.length && newX >= 0 && newX < maze[0].length) {
-					if (maze[newY][newX] == -1) continue;
+			@Override
+			public boolean equals(Object o) {
+				if (this == o) return true;
+				if (o == null || getClass() != o.getClass()) return false;
+				Node node = (Node) o;
+				return x == node.x && y == node.y;
+			}
 
-					Point neighbor = new Point(newX, newY);
-					neighbor.setParent(current);
-					neighbor.setG(current.getG() + maze[newY][newX]);
-					neighbor.setH(heuristic(neighbor, end));
-					neighbor.setF(neighbor.getG() + neighbor.getH());
+			@Override
+			public String toString() {
+				return String.format("Node {x=%s, y=%s, cost=%d, parent=%s}", x, y, cost, parent);
+			}
 
+			@Override
+			public int hashCode() {
+				return Objects.hash(x, y);
+			}
+		}
+
+		public static List<Node> findPath(int[][] grid, Node startNode, Node endNode) {
+			PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingInt(node -> node.cost));
+			HashSet<Node> closedSet = new HashSet<>();
+
+			openSet.add(startNode);
+
+			while (!openSet.isEmpty()) {
+				Node currentNode = openSet.poll();
+
+				// If we have reached the end node, we can return the path
+				if (currentNode.x == endNode.x && currentNode.y == endNode.y) return buildPath(currentNode);
+
+				// Firm the current node as explored
+				closedSet.add(currentNode);
+
+				// Explore all the neighbors
+				for (int[] direction : directions) {
+					int newX = currentNode.x + direction[0];
+					int newY = currentNode.y + direction[1];
+
+					// Check if the new node is out of bounds or an obstacle
+					if (newX < 0 || newX >= grid[0].length || newY < 0 || newY >= grid.length || grid[newX][newY] == -1) continue;
+
+					Node neighbor = new Node(newX, newY, currentNode.cost + grid[newX][newY] - manhattanHeuristic(currentNode, endNode) + manhattanHeuristic(newX, newY, endNode), currentNode);
+
+					// Check if the new node has already been explored
 					if (closedSet.contains(neighbor)) continue;
-					if (!openSet.contains(neighbor)) {
+
+					// Check if the new node is already in the open set
+					// If an existing node has a higher cost than the current node, replace it
+					Optional<Node> existingNode = openSet.stream().filter(node -> node.x == newX && node.y == newY).findFirst();
+					if (existingNode.isPresent()) {
+						if (existingNode.get().cost > neighbor.cost) {
+							openSet.remove(existingNode.get());
+							openSet.add(neighbor);
+						}
+					} else {
 						openSet.add(neighbor);
-					} else if (openSet.get(neighbor).getG() > neighbor.getG()) {
-						openSet.update(neighbor);
 					}
 				}
 			}
-		}
-		return Collections.emptyList();
-	}
 
-	private static int heuristic(@NotNull Point a, @NotNull Point b) {
-		return Math.abs(a.y - b.y) + Math.abs(a.x - b.x);
-	}
-
-	private static @NotNull List<Point> reconstructPath(Point current) {
-		List<Point> path = new ArrayList<>();
-		while (current != null) {
-			path.add(0, current);
-			current = current.getParent();
-		}
-		return path;
-	}
-
-	static class Point {
-		int x;
-		int y;
-		int f; // Total cost
-		int g; // Cost from start
-		int h; // Estimated distance to end
-		Point parent;
-
-		public Point(int x, int y) {
-			this.x = x;
-			this.y = y;
+			return Collections.emptyList();
 		}
 
-		public int getF() {
-			return f;
+		private static int manhattanHeuristic(int x1, int y1, @NotNull Node n2) {
+			return Math.abs(x1 - n2.x) + Math.abs(y1 - n2.y);
 		}
 
-		public void setF(int f) {
-			this.f = f;
+		private static int manhattanHeuristic(@NotNull Node n1, @NotNull Node n2) {
+			return Math.abs(n1.x - n2.x) + Math.abs(n1.y - n2.y);
 		}
 
-		public int getG() {
-			return g;
-		}
+		private static @NotNull List<Node> buildPath(Node node) {
+			List<Node> path = new ArrayList<>();
 
-		public void setG(int g) {
-			this.g = g;
-		}
-
-		public int getH() {
-			return h;
-		}
-
-		public void setH(int h) {
-			this.h = h;
-		}
-
-		public Point getParent() {
-			return parent;
-		}
-
-		public void setParent(Point parent) {
-			this.parent = parent;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) return true;
-			if (obj == null || getClass() != obj.getClass()) return false;
-			Point point = (Point) obj;
-			return y == point.y && x == point.x;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(y, x);
-		}
-
-		@Override
-		public String toString() {
-			return "(" + y + ", " + x + ")";
-		}
-	}
-
-	static class FastOpenSet {
-		private final PriorityQueue<Point> priorityQueue;
-		private final HashSet<Point> hashSet;
-
-		public FastOpenSet() {
-			this.priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Point::getF));
-			this.hashSet = new HashSet<>();
-		}
-
-		public void add(Point point) {
-			priorityQueue.add(point);
-			hashSet.add(point);
-		}
-
-		public boolean contains(Point point) {
-			return hashSet.contains(point);
-		}
-
-		public Point poll() {
-			Point point = priorityQueue.poll();
-			hashSet.remove(point);
-			return point;
-		}
-
-		public boolean isEmpty() {
-			return priorityQueue.isEmpty();
-		}
-
-		public Point get(Point point) {
-			for (Point p : priorityQueue) {
-				if (p.equals(point)) {
-					return p;
-				}
+			while (node != null) {
+				path.add(node);
+				node = node.parent;
 			}
-			return null;
-		}
 
-		public void update(Point point) {
-			priorityQueue.remove(point);
-			priorityQueue.add(point);
+			Collections.reverse(path);
+			return path;
 		}
 	}
 }
