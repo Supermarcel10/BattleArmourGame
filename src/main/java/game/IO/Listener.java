@@ -7,7 +7,6 @@ import game.main.GameState;
 import game.main.LevelCreator;
 import game.objects.block.BlockType;
 import game.window.WindowDeath;
-import game.window.WindowHandler;
 import game.objects.tank.Enemy;
 import game.window.WindowPlay;
 import org.jbox2d.common.Vec2;
@@ -101,19 +100,19 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	public void keyPressed(@NotNull KeyEvent e) {
 		if (gameState == GameState.GAME) {
 			if (player[0] != null) {
-				if (Config.key_binding.getOrDefault("player1-LEFT", 'a') == e.getKeyChar()) player[0].moveDirection = new Vec2(-1, 0);
-				else if (Config.key_binding.getOrDefault("player1-RIGHT", 'd') == e.getKeyChar()) player[0].moveDirection = new Vec2(1, 0);
-				else if (Config.key_binding.getOrDefault("player1-UP", 'w') == e.getKeyChar()) player[0].moveDirection = new Vec2(0, 1);
-				else if (Config.key_binding.getOrDefault("player1-DOWN", 's') == e.getKeyChar()) player[0].moveDirection = new Vec2(0, -1);
-				else if (Config.key_binding.getOrDefault("player1-SHOOT", ' ') == e.getKeyChar()) player[0].shoot();
+				if (Config.key_binding.get("player1-LEFT") == e.getKeyCode()) player[0].moveDirection = new Vec2(-1, 0);
+				else if (Config.key_binding.get("player1-RIGHT") == e.getKeyCode()) player[0].moveDirection = new Vec2(1, 0);
+				else if (Config.key_binding.get("player1-UP") == e.getKeyCode()) player[0].moveDirection = new Vec2(0, 1);
+				else if (Config.key_binding.get("player1-DOWN") == e.getKeyCode()) player[0].moveDirection = new Vec2(0, -1);
+				else if (Config.key_binding.get("player1-SHOOT") == e.getKeyCode()) player[0].shoot();
 			}
 
 			if (player[1] != null) {
-				if (Config.key_binding.getOrDefault("player2-LEFT", '←') == e.getKeyChar()) player[1].moveDirection = new Vec2(-1, 0);
-				else if (Config.key_binding.getOrDefault("player2-RIGHT", '→') == e.getKeyChar()) player[1].moveDirection = new Vec2(1, 0);
-				else if (Config.key_binding.getOrDefault("player2-UP", '↑') == e.getKeyChar()) player[1].moveDirection = new Vec2(0, 1);
-				else if (Config.key_binding.getOrDefault("player2-DOWN", '↓') == e.getKeyChar()) player[1].moveDirection = new Vec2(0, -1);
-				else if (Config.key_binding.getOrDefault("player2-SHOOT", '\n') == e.getKeyChar()) player[1].shoot();
+				if (Config.key_binding.get("player2-LEFT") == e.getKeyCode()) player[1].moveDirection = new Vec2(-1, 0);
+				else if (Config.key_binding.get("player2-RIGHT") == e.getKeyCode()) player[1].moveDirection = new Vec2(1, 0);
+				else if (Config.key_binding.get("player2-UP") == e.getKeyCode()) player[1].moveDirection = new Vec2(0, 1);
+				else if (Config.key_binding.get("player2-DOWN") == e.getKeyCode()) player[1].moveDirection = new Vec2(0, -1);
+				else if (Config.key_binding.get("player2-SHOOT") == e.getKeyCode()) player[1].shoot();
 			}
 		}
 	}
@@ -126,19 +125,21 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	@Override
 	public void keyReleased(@NotNull KeyEvent e) {
 		if (player[0] != null) {
-			if (Config.key_binding.getOrDefault("player1-LEFT", 'a') == e.getKeyChar() ||
-					Config.key_binding.getOrDefault("player1-RIGHT", 'd') == e.getKeyChar())
+			if (Config.key_binding.get("player1-LEFT") == e.getKeyCode() ||
+					Config.key_binding.get("player1-RIGHT") == e.getKeyCode())
 				player[0].moveDirection = new Vec2(0, player[0].moveDirection.y);
-			else if (Config.key_binding.getOrDefault("player1-UP", 'w') == e.getKeyChar() ||
-					Config.key_binding.getOrDefault("player1-DOWN", 's') == e.getKeyChar())
+			else if (Config.key_binding.get("player1-UP") == e.getKeyCode() ||
+					Config.key_binding.get("player1-DOWN") == e.getKeyCode())
 				player[0].moveDirection = new Vec2(player[0].moveDirection.x, 0);
 		}
 
 		if (player[1] != null) {
-			switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> player[1].moveDirection = new Vec2(0, player[1].moveDirection.y);
-				case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> player[1].moveDirection = new Vec2(player[0].moveDirection.x, 0);
-			}
+			if (Config.key_binding.get("player2-LEFT") == e.getKeyCode() ||
+					Config.key_binding.get("player2-RIGHT") == e.getKeyCode())
+				player[1].moveDirection = new Vec2(0, player[1].moveDirection.y);
+			else if (Config.key_binding.get("player2-UP") == e.getKeyCode() ||
+					Config.key_binding.get("player2-DOWN") == e.getKeyCode())
+				player[1].moveDirection = new Vec2(player[1].moveDirection.x, 0);
 		}
 	}
 
@@ -148,8 +149,8 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 	 */
 	@Override
 	public void preStep(StepEvent ignored) {
-		if (player[0] != null && !Objects.equals(player[0].moveDirection, new Vec2(0, 0))) player[0].update();
-		if (player[1] != null && !Objects.equals(player[1].moveDirection, new Vec2(0, 0))) player[1].update();
+		if (player[0] != null) player[0].update();
+		if (player[1] != null) player[1].update();
 
 		for (Enemy enemy : enemies) enemy.update();
 
