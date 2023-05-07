@@ -97,7 +97,6 @@ public class Shot extends DynamicBody implements SensorListener, StepListener {
 	@Override
 	public void beginContact(@NotNull SensorEvent sensorEvent) {
 		if (sensorEvent.getContactBody() instanceof Block b && b.type.isSolid) {
-			System.out.println("Shot collided with block.");
 			switch (type) {
 				case BASIC, PENETRATING -> b.damage(damage, shooter);
 //				case EXPLOSIVE -> explode(); // TODO: Fix this.

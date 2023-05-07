@@ -133,39 +133,6 @@ public class MainGame {
 		}
 	}
 
-	public static void outputDebug() {
-		System.out.println("");
-
-		for (int y = gridSize - 1; y >= 0; y--) {
-			for (int x = 0; x < gridSize; x++) {
-				Block b = blocks[x][y];
-
-				if (b != null) {
-					System.out.print(b.type.toString().toCharArray()[0] + "  ");
-				} else {
-					System.out.print("   ");
-				}
-			}
-			System.out.print("\n");
-		}
-
-		System.out.println("");
-
-		for (int y = gridSize - 1; y >= 0; y--) {
-			for (int x = 0; x < gridSize; x++) {
-				Block b = blocks[x][y];
-				int cost = blockCosts[x][y];
-
-				if (cost == -1) {
-					System.out.print("N  ");
-				} else {
-					System.out.print(cost + "  ");
-				}
-			}
-			System.out.print("\n");
-		}
-	}
-
 	public static void resetGame() {
 		if (spawnThread.isAlive()) spawnThread.interrupt();
 
