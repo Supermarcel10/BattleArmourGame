@@ -21,8 +21,8 @@ public enum PickupType {
 	SPEED_BOOST("powerupLow", 4),
 	FAST_SHOT("powerupLow", 8),
 	BULLET_PROPULSION("powerupLow", 4),
-	PENETRATING_BULLETS("powerupHigh", 10, 5),
-	EXPLOSIVE_BULLETS("powerupHigh", 10, 2);
+	PENETRATING_BULLETS("powerupHigh", 10, 5);
+//	EXPLOSIVE_BULLETS("powerupHigh", 10, 2);
 
 	public final String image;
 
@@ -52,18 +52,19 @@ public enum PickupType {
 			case QUAD_SHOT -> player.shotStyle.put(ShotStyle.QUAD, bulletCount);
 			case DOUBLE_DAMAGE -> player.shotDamage *= 2;
 			case SHIELD -> player.addShield();
-//			case SPEED_BOOST -> {
-//				player.movePollingRate -= 2;
-//				player.currentMovePoll -= 2;
-//			}
+			case SPEED_BOOST -> {
+				player.movePollingRate -= 1;
+				player.currentMovePoll = Math.max(player.currentMovePoll - 1, 0);
+
+			}
 			case FAST_SHOT -> player.changeShootingDelay(350);
-			case BULLET_PROPULSION -> player.shotSpeed = 300f;
+			case BULLET_PROPULSION -> player.shotSpeed = 1f;
 			case PENETRATING_BULLETS -> player.availableShots.add(new HashMap<>(){{
 				put(ShotType.PENETRATING, bulletCount);
 			}});
-			case EXPLOSIVE_BULLETS -> player.availableShots.add(new HashMap<>(){{
-				put(ShotType.EXPLOSIVE, bulletCount);
-			}});
+//			case EXPLOSIVE_BULLETS -> player.availableShots.add(new HashMap<>(){{
+//				put(ShotType.EXPLOSIVE, bulletCount);
+//			}});
 		}
 	}
 
@@ -76,11 +77,11 @@ public enum PickupType {
 			case QUAD_SHOT -> player.shotStyle.remove(ShotStyle.QUAD);
 			case DOUBLE_DAMAGE -> player.shotDamage /= 2;
 			case SHIELD -> player.removeShield();
-//			case SPEED_BOOST -> player.movePollingRate += 2;
+			case SPEED_BOOST -> player.movePollingRate += 1;
 			case FAST_SHOT -> player.changeShootingDelay(500);
-			case BULLET_PROPULSION -> player.shotSpeed = 150f;
+			case BULLET_PROPULSION -> player.shotSpeed = 0.5f;
 			case PENETRATING_BULLETS -> player.availableShots.removeIf(shot -> shot.containsKey(ShotType.PENETRATING));
-			case EXPLOSIVE_BULLETS -> player.availableShots.removeIf(shot -> shot.containsKey(ShotType.EXPLOSIVE));
+//			case EXPLOSIVE_BULLETS -> player.availableShots.removeIf(shot -> shot.containsKey(ShotType.EXPLOSIVE));
 		}
 	}
 }
