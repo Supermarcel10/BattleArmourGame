@@ -155,8 +155,6 @@ public class Listener implements KeyListener, MouseListener, StepListener {
 
 		for (Enemy enemy : enemies) enemy.update();
 
-		for (Shot shot : shots) shot.update();
-
 		if ((MainGame.basePos != null && blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y] != null &&
 				blocks[(int) MainGame.basePos.x][(int) MainGame.basePos.y].health <= 0) || // Base destroyed.
 				(player[0] != null && player[1] == null && player[0].health <= 0) || // Single-player plr1 dead.
