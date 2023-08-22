@@ -17,7 +17,7 @@ I will also make custom perks and balance the game in the way I believe it is di
 <img src="src/main/resources/documentation/gameplay1.png" alt="Gameplay" width="50%"/><img src="src/main/resources/documentation/gameplay2.png" alt="Gameplay" width="50%"/>
 
 The game features both single player and co-op modes.<br>
-Players can move around the map and shoot bullets at <a href="enemies">enemies</a> and destroy blocks.<br>
+Players can move around the map and shoot bullets at <a href="enemies">enemies</a> and <a href="blocks">blocks</a>.<br>
 The idea of the game is to get the <a href="#high-score">highest score</a> and compete with other teams and players.<br>
 Skill and intuition are also a big part of the game, as the player(s) can dodge bullets, destroy enemies and blocks as shown on the image.<br>
 There are plenty of <a href="#perks">perks</a> which can be picked up by the player(s) to give them an advantage whilst making the game more interactive.
@@ -110,8 +110,8 @@ The choice of perks is random, but the chance of a perk spawning is the same for
 | <img src="src/main/resources/img/pickup/penetratingBullets.png" alt="Penetrating Bullets Perk" height="32"/><a name="perk-penetrating-bullets"></a> |                  **PENETRATING BULLETS**                   | Allows the player to shoot through multiple enemies.                                                   |
 |                      <img src="src/main/resources/img/pickup/explosiveBullets.png" alt="Explosive Bullets Perk" height="32"/>                       | <span style="color: red;">~~**EXPLOSIVE BULLETS**~~</span> | <span style="color: red;">~~Allows the player to shoot bullets which explode on impact.~~ (WIP)</span> |
 
-
-## <u>BLOCKS</u>
+<a name="blocks"></a>
+<h2 style="text-decoration: underline;">BLOCKS</h2>
 ### <u>Block Types</u>
 
 |                                                   Image                                                   | Block Name | Description                                                                                            |
