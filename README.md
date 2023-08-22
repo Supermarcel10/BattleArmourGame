@@ -14,19 +14,15 @@ My version will be implementing something similar to the original game, with a s
 I will also make custom perks and balance the game in the way I believe it is difficult enough to be engaging, but still physically doable.
 
 ## <u>GAMEPLAY</u>
+<img src="src/main/resources/documentation/gameplay1.png" alt="Gameplay" style="float: right; margin-left: 20px;" width=50%/>
 
-<div style="overflow: auto;">
-    <img src="src/main/resources/documentation/gameplay1.png" alt="Gameplay" style="float: right; margin-left: 20px;" width=50%/>
-    <p>
-        The game features both single player and co-op modes.<br><br>
-        Players can move around the map and shoot bullets at enemies and destroy blocks.<br><br>
-        The idea of the game is to get the highest score and compete with other teams and players.<br><br>
-        Skill and intuition are also a big part of the game, as the player(s) can dodge bullets, destroy enemies and blocks as shown on the <a href="src/main/resources/documentation/gameplay1.png">image</a> on the side.<br><br>
-        There are plenty of <a href="#perks">perks</a> which can be picked up by the player(s) to give them an advantage whilst making the game more interactive.
-    </p>
-</div><br>
+The game features both single player and co-op modes.<br>
+Players can move around the map and shoot bullets at enemies and destroy blocks.<br>
+The idea of the game is to get the highest score and compete with other teams and players.<br>
+Skill and intuition are also a big part of the game, as the player(s) can dodge bullets, destroy enemies and blocks as shown on the <a href="src/main/resources/documentation/gameplay1.png">image</a><br>
+There are plenty of <a href="#perks">perks</a> which can be picked up by the player(s) to give them an advantage whilst making the game more interactive.
 
-Different enemy types also have different properties, such as the exploding enemy which explodes on death.
+Different <a href="enemy-types">enemy types</a> also have different properties, such as the exploding enemy which explodes on death.
 
 The game also features a procedural spawning system, which means that enemies will spawn forever, until the player(s) lose.
 The high scores are stored in a database, which can be accessed by the player(s) to see their high scores.
@@ -64,7 +60,8 @@ The higher the score, the faster enemies will spawn.<br>
 The spawn tables are also weighted, so the higher the score, the more likely it is for a higher tier enemy to spawn.<br>
 With co-op, the spawn rate is also increased due to the increased advantage the players have.
 
-### <u>Enemy Types</u>
+<a name="enemy-types"></a>
+<h3 style="text-decoration: underline;">Enemy Types</h3>
 - **BASIC** enemies are the weakest enemies. They are the fastest and have the least health.
 - **HEAVY** enemies are the strongest enemies. They are the slowest and have the most health.
 - **FAST** enemies are the fastest basic enemies.
@@ -127,6 +124,8 @@ The build mode also features a block type called **NONE**. This block type is us
 There can only be 2 player spawn points and unlimited enemy points. The game will automatically pick up the spawn points and use them in the game.
 
 ## <u>BUILD MODE</u>
+
+<img src="src/main/resources/documentation/levelEditor.png" alt="Gameplay" style="float: right; margin-left: 20px;" width=30%/>
 
 The build mode allows the player to create their own maps, share them and play them.
 To load a map, the player must press `L` on the keyboard. This will open a file chooser, where the player can select a map file to load.
