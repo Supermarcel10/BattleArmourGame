@@ -1,6 +1,6 @@
 # <u>Game *"Battle Armour"*</u>
 
-## <u>Concept</u>
+## <u>CONCEPT</u>
 
 This game is heavily inspired on the arcade game [Tank Battalion](https://en.wikipedia.org/wiki/Tank_Battalion), created by Namco, released in 1980.
 The original game was created and originally released in Japan under the name of "タンクバタリアン (Tanku Batarian)". A year later it was released to the US market.
@@ -15,12 +15,17 @@ I will also make custom perks and balance the game in the way I believe it is di
 
 ## <u>GAMEPLAY</u>
 
-The game features both single player and co-op modes.
-Players can move around the map and shoot bullets at enemies and destroy blocks.
-The idea of the game is to get the highest score and compete with other teams and players.
-It's also a game that teaches cooperation, as the players can work together to destroy higher tier enemies such as heavies.
+<div style="overflow: auto;">
+    <img src="src/main/resources/documentation/gameplay1.png" alt="Gameplay" style="float: right; margin-left: 20px;" width=50%/>
+    <p>
+        The game features both single player and co-op modes.<br><br>
+        Players can move around the map and shoot bullets at enemies and destroy blocks.<br><br>
+        The idea of the game is to get the highest score and compete with other teams and players.<br><br>
+        Skill and intuition are also a big part of the game, as the player(s) can dodge bullets, destroy enemies and blocks as shown on the <a href="src/main/resources/documentation/gameplay1.png">image</a> on the side.<br><br>
+        There are plenty of <a href="#perks">perks</a> which can be picked up by the player(s) to give them an advantage whilst making the game more interactive.
+    </p>
+</div><br>
 
-The game also has plenty of perks which can be picked up by the player to give them an advantage and make the game interactive.
 Different enemy types also have different properties, such as the exploding enemy which explodes on death.
 
 The game also features a procedural spawning system, which means that enemies will spawn forever, until the player(s) lose.
@@ -28,8 +33,6 @@ The high scores are stored in a database, which can be accessed by the player(s)
 
 Once the players get bored with the game, they can also create their own maps and play on them as well as share them with other players.
 They can also easily add new textures and blocks with customised properties.
-
-The general game example video can be found [here](https://youtu.be/tA_aZCYutT4).
 
 ## <u>OPTIONS & CONTROLS</u>
 
@@ -68,7 +71,8 @@ With co-op, the spawn rate is also increased due to the increased advantage the 
 - **EXPLODING** enemies are a special type of enemy which explodes on death, dealing damage to the player and damaging all nearby blocks in the vicinity.<br>
 They will also prefer to target the base over the player.
 
-## <u>PERKS</u>
+<a name="perks"></a>
+<h2 style="text-decoration: underline;">PERKS</h2>
 
 ### <u>Perk Information</u>
 
